@@ -14,24 +14,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  *
- * @author rober
+ * @author Roberth :)
  */
 @Entity
 @Table(name = "areas")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a")})
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Area implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,19 +41,16 @@ public class Area implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "activo")
-    private short activo;
+    private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
     private List<Alerta> alertaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areasId")
@@ -61,102 +58,4 @@ public class Area implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areasId")
     private List<GastoReparacion> gastoReparacionList;
 
-    public Area() {
-    }
-
-    public Area(Long id) {
-        this.id = id;
-    }
-
-    public Area(Long id, String nombre, String descripcion, short activo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.activo = activo;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public short getActivo() {
-        return activo;
-    }
-
-    public void setActivo(short activo) {
-        this.activo = activo;
-    }
-
-    @XmlTransient
-    public List<Alerta> getAlertaList() {
-        return alertaList;
-    }
-
-    public void setAlertaList(List<Alerta> alertaList) {
-        this.alertaList = alertaList;
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
-    }
-
-    @XmlTransient
-    public List<GastoReparacion> getGastoReparacionList() {
-        return gastoReparacionList;
-    }
-
-    public void setGastoReparacionList(List<GastoReparacion> gastoReparacionList) {
-        this.gastoReparacionList = gastoReparacionList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Area)) {
-            return false;
-        }
-        Area other = (Area) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "org.una.UNAeropuerto.entities.Area[ id=" + id + " ]";
-    }
-    
 }
