@@ -46,7 +46,7 @@ public class Pista implements Serializable {
     private String numeroPista;
     @Basic(optional = false)
     @Column(name = "longitud")
-    private float longitud;
+    private Float longitud;
     @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;

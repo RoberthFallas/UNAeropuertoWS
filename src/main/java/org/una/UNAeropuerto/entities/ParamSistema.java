@@ -42,7 +42,7 @@ public class ParamSistema implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "vuelos_hora")
-    private Integer vuelosHora;
+    private Short vuelosHora;
     @Basic(optional = false)
     @Column(name = "tiempo_inactividad")
     private Integer tiempoInactividad;
