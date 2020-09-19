@@ -41,7 +41,7 @@ public class Alerta implements Serializable {
     private Long id;
     @Basic(optional = false)
     @Column(name = "tipo")
-    private Short tipo;
+    private Byte tipo;
     @Basic(optional = false)
     @Size(min = 1, max = 20)
     @Column(name = "titulo")

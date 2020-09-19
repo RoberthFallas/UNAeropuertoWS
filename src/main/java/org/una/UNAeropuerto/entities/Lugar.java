@@ -14,24 +14,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  *
- * @author rober
+ * @author Roberth :)
  */
 @Entity
 @Table(name = "lugares")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Lugar.findAll", query = "SELECT l FROM Lugar l")})
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Lugar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,86 +41,13 @@ public class Lugar implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 60)
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "activo")
-    private short activo;
+    private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugaresId")
     private List<Direccion> direccionList;
 
-    public Lugar() {
-    }
-
-    public Lugar(Long id) {
-        this.id = id;
-    }
-
-    public Lugar(Long id, String nombre, short activo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.activo = activo;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public short getActivo() {
-        return activo;
-    }
-
-    public void setActivo(short activo) {
-        this.activo = activo;
-    }
-
-    @XmlTransient
-    public List<Direccion> getDireccionList() {
-        return direccionList;
-    }
-
-    public void setDireccionList(List<Direccion> direccionList) {
-        this.direccionList = direccionList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Lugar)) {
-            return false;
-        }
-        Lugar other = (Lugar) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "org.una.UNAeropuerto.entities.Lugar[ id=" + id + " ]";
-    }
-    
 }
