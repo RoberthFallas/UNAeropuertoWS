@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="org.una_UNAeropuerto_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>org.una.UNAeropuerto.entities.Direccion</class>
+    <class>org.una.UNAeropuerto.entities.Aerolinea</class>
+    <class>org.una.UNAeropuerto.entities.Area</class>
+    <class>org.una.UNAeropuerto.entities.Cobro</class>
+    <class>org.una.UNAeropuerto.entities.Alerta</class>
+    <class>org.una.UNAeropuerto.entities.Provedor</class>
+    <class>org.una.UNAeropuerto.entities.TipoServicio</class>
+    <class>org.una.UNAeropuerto.entities.Avion</class>
+    <class>org.una.UNAeropuerto.entities.RolUsuario</class>
+    <class>org.una.UNAeropuerto.entities.Rol</class>
+    <class>org.una.UNAeropuerto.entities.ParamSistema</class>
+    <class>org.una.UNAeropuerto.entities.Bitacora</class>
+    <class>org.una.UNAeropuerto.entities.Pista</class>
+    <class>org.una.UNAeropuerto.entities.Usuario</class>
+    <class>org.una.UNAeropuerto.entities.Hangar</class>
+    <class>org.una.UNAeropuerto.entities.GastoReparacion</class>
+    <class>org.una.UNAeropuerto.entities.ServicioMantenimiento</class>
+    <class>org.una.UNAeropuerto.entities.Vuelo</class>
+    <class>org.una.UNAeropuerto.entities.Tipo</class>
+    <class>org.una.UNAeropuerto.entities.Lugar</class>
+    <class>org.una.UNAeropuerto.entities.DetalleServicio</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://107.180.0.205:3306/BD_PF_Grupo3?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="BD_PF_Grupo3_U"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="c)6UeR3!jREC7X8"/>
+    </properties>
+  </persistence-unit>
+</persistence>
