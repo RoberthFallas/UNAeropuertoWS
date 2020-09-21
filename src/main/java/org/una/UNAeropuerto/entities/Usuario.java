@@ -22,9 +22,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -58,16 +60,18 @@ public class Usuario implements Serializable {
     @Column(name = "apellidos")
     private String apellidos;
     @Basic(optional = false)
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "contrasenna")
+    @Setter(AccessLevel.NONE)
     private String contrasenna;
-    @Size(max = 45)
+    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_nacimiento")
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     @Basic(optional = false)
     @Column(name = "fecha_ingreso")
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
+    @Basic(optional = false)
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
@@ -81,5 +85,9 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Area areasId;
+
+    public void refreshContrasenna(String newPassword) {
+        this.contrasenna = newPassword;
+    }
 
 }
