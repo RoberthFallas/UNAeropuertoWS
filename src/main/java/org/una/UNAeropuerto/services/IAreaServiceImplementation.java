@@ -61,4 +61,22 @@ public class IAreaServiceImplementation implements IAreaService {
         return new ArrayList();
     }
 
+    @Override
+    public AreaDto update(AreaDto area) {
+        Optional<Area> result = areaRepo.findById(area.getId());
+        if (result.isPresent()) {
+            Area entity = MapperUtils.entityFromDto(area, Area.class);
+            entity = areaRepo.save(entity);
+            return MapperUtils.DtoFromEntity(entity, AreaDto.class);
+        }
+        return null;
+    }
+
+    @Override
+    public AreaDto create(AreaDto usuario) {
+        Area entityUser = MapperUtils.entityFromDto(usuario, Area.class);
+        entityUser = areaRepo.save(entityUser);
+        return MapperUtils.DtoFromEntity(entityUser, AreaDto.class);
+    }
+
 }

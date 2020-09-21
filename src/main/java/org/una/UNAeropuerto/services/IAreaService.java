@@ -21,4 +21,8 @@ public interface IAreaService {
     public List<AreaDto> findByNombre(String nombre);
 
     public List<AreaDto> findByDescripcion(String descripcion);
+
+    public AreaDto update(AreaDto usuario);
+
+    public AreaDto create(AreaDto usuario);
 }
