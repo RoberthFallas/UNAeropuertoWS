@@ -29,7 +29,7 @@ public class UsuarioDto {
     private String nombre;
     private String apellidos;
     private String contrasenna;
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     private Date fechaIngreso;
     private Date fechaModificacion;
     private Boolean activo;
