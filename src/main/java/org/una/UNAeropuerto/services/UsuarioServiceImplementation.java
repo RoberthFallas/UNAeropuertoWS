@@ -5,8 +5,11 @@
  */
 package org.una.UNAeropuerto.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.UsuarioDto;
@@ -23,6 +26,8 @@ public class UsuarioServiceImplementation implements IUsuarioService {
 
     @Autowired
     private IUsuarioRepository userRepo;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -36,33 +41,82 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UsuarioDto getByCedula(String cedula) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Optional<Usuario> result = userRepo.findByCedula(cedula);
+        if (result.isPresent()) {
+            UsuarioDto dtoUser = MapperUtils.DtoFromEntity(result.get(), UsuarioDto.class);
+            return dtoUser;
+        }
+        return null;
     }
 
     @Override
-    public UsuarioDto findByCedulaAproximada(String parameter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional(readOnly = true)
+    public List<UsuarioDto> findByCedulaAproximada(String parameter) {
+        Optional<List<Usuario>> result = userRepo.findByCedulaContaining(parameter);
+        if (!result.get().isEmpty()) {
+            List<UsuarioDto> dtoUserList = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
+            return dtoUserList;
+        }
+        return null;
     }
 
     @Override
-    public UsuarioDto findByNameAndApellidos(String nombre, String apellidos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional(readOnly = true)
+    public List<UsuarioDto> findByNombreAndApellidos(String nombre, String apellidos) {
+        Optional<List<Usuario>> result = userRepo.findByNombreAndApellido(nombre, apellidos);
+        if (!result.get().isEmpty()) {
+            List<UsuarioDto> dtoUserList = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
+            return dtoUserList;
+        }
+        return new ArrayList();
     }
 
     @Override
+    @Transactional
     public UsuarioDto update(UsuarioDto usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (userRepo.findById(usuario.getId()).isPresent()) {
+            Usuario entity = MapperUtils.entityFromDto(usuario, Usuario.class);
+            encodePassword(entity, usuario);
+            entity = userRepo.save(entity);
+            return MapperUtils.DtoFromEntity(entity, UsuarioDto.class);
+        }
+        return null;
     }
 
     @Override
+    @Transactional
     public UsuarioDto create(UsuarioDto usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario entityUser = MapperUtils.entityFromDto(usuario, Usuario.class);
+        encodePassword(entityUser, usuario);
+        entityUser = userRepo.save(entityUser);
+        return MapperUtils.DtoFromEntity(entityUser, UsuarioDto.class);
     }
 
     @Override
+    @Transactional
     public UsuarioDto ocultarById(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Optional<Usuario> result = userRepo.findById(id);
+        if (result.isPresent()) {
+            Usuario entityUser = result.get();
+            entityUser.setActivo(false);
+            entityUser = userRepo.save(entityUser);
+            return MapperUtils.DtoFromEntity(entityUser, UsuarioDto.class);
+        }
+        return null;
+    }
+
+    private void encodePassword(Usuario user, UsuarioDto userDto) {
+        if (!userDto.getContrasenna().isBlank()) {
+            if (!user.getContrasenna().isBlank()) {
+                if (!passwordEncoder.matches(user.getContrasenna(), userDto.getContrasenna())) {
+                    user.setContrasenna(passwordEncoder.encode(userDto.getContrasenna()));
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Contraseña no es válida o se encuntra vacía (no se pude encriptar)");
+        }
     }
 
 }

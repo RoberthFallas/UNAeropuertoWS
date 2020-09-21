@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.services;
 
+import java.util.List;
 import org.una.UNAeropuerto.dto.UsuarioDto;
 
 /**
@@ -17,9 +18,9 @@ public interface IUsuarioService {
 
     public UsuarioDto getByCedula(String cedula);
 
-    public UsuarioDto findByCedulaAproximada(String parameter);
+    public List<UsuarioDto> findByCedulaAproximada(String parameter);
 
-    public UsuarioDto findByNameAndApellidos(String nombre, String apellidos);
+    public List<UsuarioDto> findByNombreAndApellidos(String nombre, String apellidos);
 
     public UsuarioDto update(UsuarioDto usuario);
 

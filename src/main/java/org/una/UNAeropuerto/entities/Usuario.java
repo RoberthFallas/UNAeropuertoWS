@@ -61,13 +61,14 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "contrasenna")
     private String contrasenna;
-    @Size(max = 45)
+    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_nacimiento")
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     @Basic(optional = false)
     @Column(name = "fecha_ingreso")
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
+    @Basic(optional = false)
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;

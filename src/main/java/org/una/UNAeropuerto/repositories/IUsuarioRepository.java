@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.una.UNAeropuerto.entities.Usuario;
 
 /**
@@ -22,6 +23,6 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     public Optional<List<Usuario>> findByCedulaContaining(String parameter);
 
     @Query("select u from Usuario u where UPPER(u.nombre) like CONCAT('%',UPPER(:nombre),'%') and UPPER(u.apellidos) like CONCAT('%',UPPER(:apellidos),'%')")
-    public Optional<List<Usuario>> findByNombreAndApellido(String nombre, String apellidos);
+    public Optional<List<Usuario>> findByNombreAndApellido(@Param("nombre") String nombre, @Param("apellidos") String apellidos);
 
 }
