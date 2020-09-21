@@ -22,7 +22,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
     public Optional<List<Usuario>> findByCedulaContaining(String parameter);
 
-    @Query("select u from Usuario u where UPPER(u.nombre) like CONCAT('%',UPPER(:nombre),'%') and UPPER(u.apellidos) like CONCAT('%',UPPER(:apellidos),'%')")
+    @Query("select u from Usuario u where UPPER(u.nombre) like CONCAT('%',UPPER(:nombre),'%') or UPPER(u.apellidos) like CONCAT('%',UPPER(:apellidos),'%')")
     public Optional<List<Usuario>> findByNombreAndApellido(@Param("nombre") String nombre, @Param("apellidos") String apellidos);
 
 }

@@ -76,8 +76,10 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     @Override
     @Transactional
     public UsuarioDto update(UsuarioDto usuario) {
-        if (userRepo.findById(usuario.getId()).isPresent()) {
+        Optional<Usuario> result = userRepo.findById(usuario.getId());
+        if (result.isPresent()) {
             Usuario entity = MapperUtils.entityFromDto(usuario, Usuario.class);
+            entity.refreshContrasenna(result.get().getContrasenna());
             encodePassword(entity, usuario);
             entity = userRepo.save(entity);
             return MapperUtils.DtoFromEntity(entity, UsuarioDto.class);
@@ -109,14 +111,18 @@ public class UsuarioServiceImplementation implements IUsuarioService {
 
     private void encodePassword(Usuario user, UsuarioDto userDto) {
         if (!userDto.getContrasenna().isBlank()) {
-            if (!user.getContrasenna().isBlank()) {
-                if (!passwordEncoder.matches(user.getContrasenna(), userDto.getContrasenna())) {
-                    user.setContrasenna(passwordEncoder.encode(userDto.getContrasenna()));
+            if (user.getContrasenna() == null) {
+                user.refreshContrasenna(passwordEncoder.encode(userDto.getContrasenna()));
+                return;
+            } else {
+                if (!user.getContrasenna().equals(userDto.getContrasenna())) {
+                    if (!passwordEncoder.matches(userDto.getContrasenna(), user.getContrasenna())) {
+                        user.refreshContrasenna(passwordEncoder.encode(userDto.getContrasenna()));
+                    }
                 }
+                return;
             }
-        } else {
-            throw new IllegalArgumentException("Contraseña no es válida o se encuntra vacía (no se pude encriptar)");
         }
+        throw new IllegalArgumentException("Contraseña no es válida o se encuntra vacía (no se pude encriptar)");
     }
-
 }
