@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.AreaDto;
 import org.una.UNAeropuerto.entities.Area;
 import org.una.UNAeropuerto.repositories.IAreaRepository;
@@ -20,12 +21,13 @@ import org.una.UNAeropuerto.services.utils.MapperUtils;
  * @author Roberth :)
  */
 @Service
-public class IAreaServiceImplementation implements IAreaService {
+public class AreaServiceImplementation implements IAreaService {
 
     @Autowired
     IAreaRepository areaRepo;
 
     @Override
+    @Transactional(readOnly = true)
     public AreaDto getById(long id) {
         Optional<Area> result = areaRepo.findById(id);
         if (result.isPresent()) {
@@ -35,6 +37,7 @@ public class IAreaServiceImplementation implements IAreaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AreaDto getByNombre(String nombre) {
         Optional<Area> result = areaRepo.findByNombre(nombre);
         if (result.isPresent()) {
@@ -44,24 +47,27 @@ public class IAreaServiceImplementation implements IAreaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AreaDto> findByNombre(String nombre) {
         Optional<List<Area>> result = areaRepo.findByNombreContaining(nombre);
-        if (!result.get().isEmpty()) {
+        if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), AreaDto.class);
         }
         return new ArrayList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AreaDto> findByDescripcion(String descripcion) {
         Optional<List<Area>> result = areaRepo.findByDescripcionContaining(descripcion);
-        if (!result.get().isEmpty()) {
+        if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), AreaDto.class);
         }
         return new ArrayList();
     }
 
     @Override
+    @Transactional
     public AreaDto update(AreaDto area) {
         Optional<Area> result = areaRepo.findById(area.getId());
         if (result.isPresent()) {
@@ -73,6 +79,7 @@ public class IAreaServiceImplementation implements IAreaService {
     }
 
     @Override
+    @Transactional
     public AreaDto create(AreaDto usuario) {
         Area entityUser = MapperUtils.entityFromDto(usuario, Area.class);
         entityUser = areaRepo.save(entityUser);

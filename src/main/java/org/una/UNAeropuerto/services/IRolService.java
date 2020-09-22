@@ -18,12 +18,14 @@ public interface IRolService {
 
     public RolDto getByNombre(String nombre);
 
-    public RolDto findByDescripcion(String descripcion);
+    public List<RolDto> findByNombre(String nombre);
+
+    public List<RolDto> findByDescripcion(String descripcion);
 
     public List<RolDto> findByestado(boolean esatdo);
 
-    public RolDto create(long id);
+    public RolDto create(RolDto rol);
 
-    public RolDto update(long id);
+    public RolDto update(RolDto rol);
 
 }

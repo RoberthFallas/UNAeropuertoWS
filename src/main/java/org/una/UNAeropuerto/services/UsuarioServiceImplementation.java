@@ -55,7 +55,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioDto> findByCedulaAproximada(String parameter) {
         Optional<List<Usuario>> result = userRepo.findByCedulaContaining(parameter);
-        if (!result.get().isEmpty()) {
+        if (result.isPresent()) {
             List<UsuarioDto> dtoUserList = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
             return dtoUserList;
         }
@@ -66,7 +66,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioDto> findByNombreAndApellidos(String nombre, String apellidos) {
         Optional<List<Usuario>> result = userRepo.findByNombreAndApellido(nombre, apellidos);
-        if (!result.get().isEmpty()) {
+        if (result.isPresent()) {
             List<UsuarioDto> dtoUserList = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
             return dtoUserList;
         }

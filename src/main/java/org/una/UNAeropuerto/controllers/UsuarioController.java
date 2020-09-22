@@ -63,7 +63,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("findByCedAprox/{param}")
+    @GetMapping("findByCed/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuya cédula coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
