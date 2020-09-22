@@ -34,8 +34,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     public UsuarioDto getById(long id) {
         Optional<Usuario> result = userRepo.findById(id);
         if (result.isPresent()) {
-            UsuarioDto dtoUser = MapperUtils.DtoFromEntity(result.get(), UsuarioDto.class);
-            return dtoUser;
+            return MapperUtils.DtoFromEntity(result.get(), UsuarioDto.class);
         }
         return null;
     }
@@ -45,8 +44,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     public UsuarioDto getByCedula(String cedula) {
         Optional<Usuario> result = userRepo.findByCedula(cedula);
         if (result.isPresent()) {
-            UsuarioDto dtoUser = MapperUtils.DtoFromEntity(result.get(), UsuarioDto.class);
-            return dtoUser;
+            return MapperUtils.DtoFromEntity(result.get(), UsuarioDto.class);
         }
         return null;
     }
@@ -56,10 +54,9 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     public List<UsuarioDto> findByCedulaAproximada(String parameter) {
         Optional<List<Usuario>> result = userRepo.findByCedulaContaining(parameter);
         if (result.isPresent()) {
-            List<UsuarioDto> dtoUserList = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
-            return dtoUserList;
+            return MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
         }
-        return null;
+        return new ArrayList();
     }
 
     @Override
@@ -67,8 +64,7 @@ public class UsuarioServiceImplementation implements IUsuarioService {
     public List<UsuarioDto> findByNombreAndApellidos(String nombre, String apellidos) {
         Optional<List<Usuario>> result = userRepo.findByNombreAndApellido(nombre, apellidos);
         if (result.isPresent()) {
-            List<UsuarioDto> dtoUserList = MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
-            return dtoUserList;
+            return MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
         }
         return new ArrayList();
     }
