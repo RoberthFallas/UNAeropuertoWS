@@ -42,7 +42,7 @@ public class UsuarioController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,13 +57,13 @@ public class UsuarioController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("findByCedAprox/{param}")
+    @GetMapping("findByCed/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuya cédula coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
@@ -72,7 +72,7 @@ public class UsuarioController {
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -81,13 +81,14 @@ public class UsuarioController {
     @GetMapping("findByNombAndApell/{nomb}/{apell}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
-    public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre, @PathVariable(value = "apell") String apellidos) {
+    public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre,
+             @PathVariable(value = "apell") String apellidos) {
         try {
             List<UsuarioDto> result = userService.findByNombreAndApellidos(nombre, apellidos);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -129,7 +130,7 @@ public class UsuarioController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado", HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el usuario)", HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException IAE) {
             return new ResponseEntity<>(IAE, HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception e) {
