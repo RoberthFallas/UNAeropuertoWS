@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.UNAeropuerto.dto.AreaDto;
-import org.una.UNAeropuerto.services.IAreaService;
+import org.una.UNAeropuerto.dto.RolDto;
+import org.una.UNAeropuerto.services.IRolService;
 
 /**
  *
  * @author Roberth :)
  */
 @RestController
-@RequestMapping("/areas")
-@Api(tags = {"Areas"})
-public class AreaController {
+@RequestMapping("/roles")
+@Api(tags = {"Roles"})
+public class RolController {
 
     @Autowired
-    private IAreaService areaService;
+    private IRolService rolService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo área basada en su Id", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            AreaDto result = areaService.getById(id);
+            RolDto result = rolService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -48,28 +48,13 @@ public class AreaController {
         }
     }
 
-    @GetMapping("getByNombre/{nombre}")
+    @GetMapping("getByNomb/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo usuario basado en su nombre", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            AreaDto result = areaService.getByNombre(nombre);
+            RolDto result = rolService.getByNombre(nombre);
             if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("findByNomb/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de áreas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
-    public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
-        try {
-            List<AreaDto> result = areaService.findByNombre(parametro);
-            if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
@@ -80,10 +65,40 @@ public class AreaController {
 
     @GetMapping("findByDescrip/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de áreas cuya descripcion coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
-    public ResponseEntity<?> findByDescripAprox(@PathVariable(value = "param") String parametro) {
+    @ApiOperation(value = "Obtiene una lista de roles cuya descrpción coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
+    public ResponseEntity<?> findByDescripcion(@PathVariable(value = "param") String param) {
         try {
-            List<AreaDto> result = areaService.findByDescripcion(parametro);
+            List<RolDto> result = rolService.findByDescripcion(param);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("findByNombre/{param}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
+    public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String param) {
+        try {
+            List<RolDto> result = rolService.findByNombre(param);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("findByEstado/{estado}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de roles basándose en su estado", response = RolDto.class, tags = "Roles")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
+        try {
+            List<RolDto> result = rolService.findByestado(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -95,9 +110,9 @@ public class AreaController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody AreaDto area) {
+    public ResponseEntity<?> create(@RequestBody RolDto rol) {
         try {
-            AreaDto result = areaService.create(area);
+            RolDto result = rolService.create(rol);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,13 +121,13 @@ public class AreaController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody AreaDto area) {
+    public ResponseEntity<?> update(@RequestBody RolDto rol) {
         try {
-            AreaDto result = areaService.update(area);
+            RolDto result = rolService.update(rol);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el rol)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

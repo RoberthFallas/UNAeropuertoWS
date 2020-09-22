@@ -63,7 +63,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("findByCedAprox/{param}")
+    @GetMapping("findByCed/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuya cédula coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
@@ -81,7 +81,8 @@ public class UsuarioController {
     @GetMapping("findByNombAndApell/{nomb}/{apell}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
-    public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre, @PathVariable(value = "apell") String apellidos) {
+    public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre,
+             @PathVariable(value = "apell") String apellidos) {
         try {
             List<UsuarioDto> result = userService.findByNombreAndApellidos(nombre, apellidos);
             if (!result.isEmpty()) {
