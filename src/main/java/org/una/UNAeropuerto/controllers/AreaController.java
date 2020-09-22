@@ -48,7 +48,7 @@ public class AreaController {
         }
     }
 
-    @GetMapping("getByNombre/{nombre}")
+    @GetMapping("/getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo usuario basado en su nombre", response = AreaDto.class, tags = "Areas")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
@@ -63,7 +63,7 @@ public class AreaController {
         }
     }
 
-    @GetMapping("findByNomb/{param}")
+    @GetMapping("/findByNomb/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de áreas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
@@ -78,7 +78,7 @@ public class AreaController {
         }
     }
 
-    @GetMapping("findByDescrip/{param}")
+    @GetMapping("/findByDescrip/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de áreas cuya descripcion coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
     public ResponseEntity<?> findByDescripAprox(@PathVariable(value = "param") String parametro) {

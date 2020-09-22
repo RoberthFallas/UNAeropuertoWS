@@ -48,7 +48,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("getByCedula/{ced}")
+    @GetMapping("/getByCedula/{ced}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo usuario basado en su número de cédula", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> getByCedula(@PathVariable(value = "ced") String cedula) {
@@ -63,7 +63,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("findByCed/{param}")
+    @GetMapping("/findByCed/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuya cédula coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
@@ -78,7 +78,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("findByNombAndApell/{nomb}/{apell}")
+    @GetMapping("/findByNombAndApell/{nomb}/{apell}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre,
@@ -94,7 +94,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("hideById/{id}")
+    @GetMapping("/hideById/{id}")
     @ResponseBody
     @ApiOperation(value = "Oculta del sistema a un usuario, basándose en su Id.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> hideById(@PathVariable(value = "id") long id) {
