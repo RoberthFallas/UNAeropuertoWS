@@ -434,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `BD_PF_Grupo3`.`alertas` (
   `titulo` VARCHAR(20) NOT NULL COMMENT 'Tìtulo de la notificacion',
   `cuerpo` VARCHAR(50) NOT NULL COMMENT 'Descrpcion o mnesaje de la notifiacion',
   `emisor` VARCHAR(40) NULL COMMENT 'Quien emite la notificacion',
-  `activa` VARCHAR(45) NOT NULL COMMENT 'Describe si la notificacion està activa. Para este caso concreto se establece como una notificaciòn activa aquella notificacion que no ha sido atendida por el gerente.',
+  `activa` TINYINT NOT NULL COMMENT 'Describe si la notificacion està activa. Para este caso concreto se establece como una notificaciòn activa aquella notificacion que no ha sido atendida por el gerente.',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   INDEX `fk_alerta_area1_idx` (`area_id` ASC) ,

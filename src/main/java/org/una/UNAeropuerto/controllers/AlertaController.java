@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.UNAeropuerto.dto.RolDto;
-import org.una.UNAeropuerto.services.IRolService;
+import org.una.UNAeropuerto.dto.AlertaDto;
+import org.una.UNAeropuerto.services.IAlertaService;
 
 /**
  *
  * @author Roberth :)
  */
 @RestController
-@RequestMapping("/roles")
-@Api(tags = {"Roles"})
-public class RolController {
+@RequestMapping("/alertas")
+@Api(tags = {"Alertas"})
+public class AlertaController {
 
     @Autowired
-    private IRolService rolService;
+    private IAlertaService alertaService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene una sola alerta basada en su Id", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            RolDto result = rolService.getById(id);
+            AlertaDto result = alertaService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -48,27 +48,12 @@ public class RolController {
         }
     }
 
-    @GetMapping("/getByNomb/{nombre}")
+    @GetMapping("/findByTipo/{tipo}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
+    @ApiOperation(value = "Obtiene una lista de alertas basadas en su tipo.", response = AlertaDto.class, tags = "Alertas")
+    public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "tipo") Byte tipo) {
         try {
-            RolDto result = rolService.getByNombre(nombre);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/findByDescrip/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuya descrpción coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByDescripcion(@PathVariable(value = "param") String param) {
-        try {
-            List<RolDto> result = rolService.findByDescripcion(param);
+            List<AlertaDto> result = alertaService.findByTipo(tipo);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -78,12 +63,12 @@ public class RolController {
         }
     }
 
-    @GetMapping("/findByNombre/{param}")
+    @GetMapping("/findByTitulo/{titulo}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String param) {
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coinsida con el parámetro.", response = AlertaDto.class, tags = "Alertas")
+    public ResponseEntity<?> findByTitulo(@PathVariable(value = "titulo") String titulo) {
         try {
-            List<RolDto> result = rolService.findByNombre(param);
+            List<AlertaDto> result = alertaService.findByTitulo(titulo);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -93,12 +78,27 @@ public class RolController {
         }
     }
 
-    @GetMapping("/findByEstado/{estado}")
+    @GetMapping("/findByEmisor/{describ}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles basándose en su estado", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coinsida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
+    public ResponseEntity<?> findByEmisor(@PathVariable(value = "describ") String emisor) {
         try {
-            List<RolDto> result = rolService.findByestado(estado);
+            List<AlertaDto> result = alertaService.findByEmisor(emisor);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/findByArea/{id}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de alertas que pertenezcan al área especificada", response = AlertaDto.class, tags = "Alertas")
+    public ResponseEntity<?> findByEmisor(@PathVariable(value = "id") Long id) {
+        try {
+            List<AlertaDto> result = alertaService.findByAreaIdId(id);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -110,9 +110,9 @@ public class RolController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody RolDto rol) {
+    public ResponseEntity<?> create(@RequestBody AlertaDto alert) {
         try {
-            RolDto result = rolService.create(rol);
+            AlertaDto result = alertaService.create(alert);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -121,13 +121,13 @@ public class RolController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody RolDto rol) {
+    public ResponseEntity<?> update(@RequestBody AlertaDto alert) {
         try {
-            RolDto result = rolService.update(rol);
+            AlertaDto result = alertaService.update(alert);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el rol)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el alerta)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

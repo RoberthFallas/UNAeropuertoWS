@@ -34,7 +34,7 @@ public class RolUsuarioController {
     @Autowired
     private IRolUsuarioService rolUserService;
 
-    @GetMapping("findByUserId/{id}")
+    @GetMapping("/findByUserId/{id}")
     @ResponseBody
     @ApiOperation(value = "Retorna lista de Roles_Usuario tomando como parámetro el Id del usuario al que pertenecen", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") long id) {
@@ -62,7 +62,7 @@ public class RolUsuarioController {
         }
     }
 
-    @GetMapping("changeStateById/{id}/{state}")
+    @GetMapping("/changeStateById/{id}/{state}")
     @ResponseBody
     @ApiOperation(value = "Cambia estado (Activo inactivo) de RolUsuaario especificado en id", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> changeStateById(@PathVariable(value = "id") long id,
