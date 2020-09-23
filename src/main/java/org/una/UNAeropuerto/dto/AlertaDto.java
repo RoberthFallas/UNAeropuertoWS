@@ -28,7 +28,7 @@ public class AlertaDto {
     private String titulo;
     private String cuerpo;
     private String emisor;
-    private String activa;
+    private Boolean activa;
     @Setter(AccessLevel.NONE)
     private AreaDto areaId;
 }

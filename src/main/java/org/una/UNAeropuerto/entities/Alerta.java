@@ -56,7 +56,7 @@ public class Alerta implements Serializable {
     @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Column(name = "activa")
-    private String activa;
+    private Boolean activa;
     @JoinColumn(name = "area_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Area areaId;
