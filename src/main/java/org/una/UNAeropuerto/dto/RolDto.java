@@ -25,4 +25,8 @@ public class RolDto {
     private Boolean activo;
     @Setter(AccessLevel.NONE)
     private List<RolUsuarioDto> rolUsuarioList;
+
+    public Long getId() {
+        return id;
+    }
 }

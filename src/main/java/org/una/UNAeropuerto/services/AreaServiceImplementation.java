@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.AreaDto;
 import org.una.UNAeropuerto.entities.Area;
 import org.una.UNAeropuerto.repositories.IAreaRepository;
-import org.una.UNAeropuerto.services.utils.MapperUtils;
+import org.una.UNAeropuerto.utils.MapperUtils;
 
 /**
  *
