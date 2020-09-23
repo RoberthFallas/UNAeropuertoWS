@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.RolDto;
 import org.una.UNAeropuerto.entities.Rol;
 import org.una.UNAeropuerto.repositories.IRolRepository;
-import org.una.UNAeropuerto.services.utils.MapperUtils;
+import org.una.UNAeropuerto.utils.MapperUtils;
 
 /**
  *

@@ -34,4 +34,7 @@ public class AreaDto {
     @Setter(AccessLevel.NONE)
     private List<GastoReparacionDto> gastoReparacionList;
 
+    public Long getId() {
+        return id;
+    }
 }
