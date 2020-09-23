@@ -23,5 +23,5 @@ public interface IRolRepository extends JpaRepository<Rol, Long> {
     public Optional<List<Rol>> findByDescripcionContaining(String descripcion);
 
     public Optional<List<Rol>> findByActivoLike(boolean activo);
-    
+
 }

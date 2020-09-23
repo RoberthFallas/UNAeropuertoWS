@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.UNAeropuerto.dto.UsuarioDto;
-import org.una.UNAeropuerto.services.IUsuarioService;
+import org.una.UNAeropuerto.dto.AerolineaDto;
+import org.una.UNAeropuerto.services.IAerolineaService;
 
 /**
  *
  * @author Roberth :)
  */
 @RestController
-@RequestMapping("/usuarios")
-@Api(tags = {"Usuarios"})
-public class UsuarioController {
+@RequestMapping("/aerolineas")
+@Api(tags = {"Aerolineas"})
+public class AerolineaController {
 
     @Autowired
-    private IUsuarioService userService;
+    private IAerolineaService aeroService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo usuario basado en su Id", response = UsuarioDto.class, tags = "Usuarios")
+    @ApiOperation(value = "Obtiene una sola aerolinea basada en su Id", response = AerolineaDto.class, tags = "Aerolineas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            UsuarioDto result = userService.getById(id);
+            AerolineaDto result = aeroService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -48,12 +48,12 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/getByCedula/{ced}")
+    @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo usuario basado en su número de cédula", response = UsuarioDto.class, tags = "Usuarios")
-    public ResponseEntity<?> getByCedula(@PathVariable(value = "ced") String cedula) {
+    @ApiOperation(value = "Obtiene una sola aerolinea basada en su nombre", response = AerolineaDto.class, tags = "Aerolineas")
+    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            UsuarioDto result = userService.getByCedula(cedula);
+            AerolineaDto result = aeroService.getByNombre(nombre);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -63,12 +63,12 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/findByCed/{param}")
+    @GetMapping("/findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de usuarios cuya cédula coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
-    public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
+    @ApiOperation(value = "Obtiene una lista de aerolineas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AerolineaDto.class, tags = "Aerolineas")
+    public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String parametro) {
         try {
-            List<UsuarioDto> result = userService.findByCedulaAproximada(parametro);
+            List<AerolineaDto> result = aeroService.findByNombre(parametro);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -78,32 +78,16 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/findByNombAndApell/{nomb}/{apell}")
+    @GetMapping("/findByEstado/{state}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
-    public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre,
-             @PathVariable(value = "apell") String apellidos) {
+    @ApiOperation(value = "Obtiene una lista de aerolineas cuyo estado coinsida con el parametro.", response = AerolineaDto.class, tags = "Aerolineas")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "state") Boolean state) {
         try {
-            List<UsuarioDto> result = userService.findByNombreAndApellidos(nombre, apellidos);
+            List<AerolineaDto> result = aeroService.findByEstado(state);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/hideById/{id}")
-    @ResponseBody
-    @ApiOperation(value = "Oculta del sistema a un usuario, basándose en su Id.", response = UsuarioDto.class, tags = "Usuarios")
-    public ResponseEntity<?> hideById(@PathVariable(value = "id") long id) {
-        try {
-            UsuarioDto result = userService.ocultarById(id);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("El usuario indicado no está en la base de datos (Id inválido)", HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -111,12 +95,10 @@ public class UsuarioController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody UsuarioDto usuario) {
+    public ResponseEntity<?> create(@RequestBody AerolineaDto aerolinea) {
         try {
-            UsuarioDto result = userService.create(usuario);
+            AerolineaDto result = aeroService.create(aerolinea);
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } catch (IllegalArgumentException IAE) {
-            return new ResponseEntity<>(IAE, HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -124,15 +106,13 @@ public class UsuarioController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody UsuarioDto usuario) {
+    public ResponseEntity<?> update(@RequestBody AerolineaDto aerolinea) {
         try {
-            UsuarioDto result = userService.update(usuario);
+            AerolineaDto result = aeroService.update(aerolinea);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el usuario)", HttpStatus.NO_CONTENT);
-        } catch (IllegalArgumentException IAE) {
-            return new ResponseEntity<>(IAE, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

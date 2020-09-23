@@ -7,6 +7,7 @@ package org.una.UNAeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,27 +19,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.UNAeropuerto.dto.RolDto;
-import org.una.UNAeropuerto.services.IRolService;
+import org.una.UNAeropuerto.dto.BitacoraDto;
+import org.una.UNAeropuerto.services.IBitacoraService;
 
 /**
  *
  * @author Roberth :)
  */
 @RestController
-@RequestMapping("/roles")
-@Api(tags = {"Roles"})
-public class RolController {
+@RequestMapping("/biatacoras")
+@Api(tags = {"Biatacoras"})
+public class BiatacoraController {
 
     @Autowired
-    private IRolService rolService;
+    private IBitacoraService bitacoraRepo;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene un sola bitácora basada en su Id", response = BitacoraDto.class, tags = "Biatacoras")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            RolDto result = rolService.getById(id);
+            BitacoraDto result = bitacoraRepo.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -48,58 +49,77 @@ public class RolController {
         }
     }
 
-    @GetMapping("/getByNomb/{nombre}")
+    @GetMapping("/getByUserId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
+    @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Biatacoras")
+    public ResponseEntity<?> getByUserId(@PathVariable(value = "id") long id) {
         try {
-            RolDto result = rolService.getByNombre(nombre);
+            List<BitacoraDto> result = bitacoraRepo.findByUserId(id);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/findByFecha/{fecha}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Biatacoras")
+    public ResponseEntity<?> findByFecha(@PathVariable(value = "fecha") String fecha) {
+        try {
+            Date fFecha = java.sql.Date.valueOf(fecha);
+            List<BitacoraDto> result = bitacoraRepo.findByFechaBitacora(fFecha);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/findBetweenFechas/{start}/{end}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de bitácoras que hallan sido creadas entre las fechas especificadas.", response = BitacoraDto.class, tags = "Biatacoras")
+    public ResponseEntity<?> findBetweenFechas(@PathVariable(value = "start") String start,
+            @PathVariable(value = "end") String end) {
+        try {
+            Date fStart = java.sql.Date.valueOf(start);
+            Date fEnd = java.sql.Date.valueOf(end);
+            List<BitacoraDto> result = bitacoraRepo.findBetweenDates(fStart, fEnd);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/findByEstado/{state}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Biatacoras")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "state") boolean state) {
+        try {
+            List<BitacoraDto> result = bitacoraRepo.findByEstado(state);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/changeStateById/{id}/{state}")
+    @ResponseBody
+    @ApiOperation(value = "Cambia el estado de la bitácora con el Id indicado.", response = BitacoraDto.class, tags = "Biatacoras")
+    public ResponseEntity<?> changeStateById(@PathVariable(value = "id") long id, @PathVariable(value = "state") boolean state) {
+        try {
+            BitacoraDto result = bitacoraRepo.changeStateById(id, state);
             if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/findByDescrip/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuya descrpción coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByDescripcion(@PathVariable(value = "param") String param) {
-        try {
-            List<RolDto> result = rolService.findByDescripcion(param);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/findByNombre/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String param) {
-        try {
-            List<RolDto> result = rolService.findByNombre(param);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/findByEstado/{estado}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles basándose en su estado", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
-        try {
-            List<RolDto> result = rolService.findByestado(estado);
-            if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
@@ -110,26 +130,13 @@ public class RolController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody RolDto rol) {
+    public ResponseEntity<?> create(@RequestBody BitacoraDto bitacora) {
         try {
-            RolDto result = rolService.create(rol);
+            BitacoraDto result = bitacoraRepo.create(bitacora);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/update")
-    @ResponseBody
-    public ResponseEntity<?> update(@RequestBody RolDto rol) {
-        try {
-            RolDto result = rolService.update(rol);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el rol)", HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
