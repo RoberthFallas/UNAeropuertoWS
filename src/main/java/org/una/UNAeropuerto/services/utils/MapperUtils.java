@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.services.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +33,9 @@ public class MapperUtils {
     }
 
     public static <D, E> List<D> DtoListFromEntityList(final Collection<E> entityList, Class<D> dtoClass) {
+        if(entityList == null){
+            return new ArrayList();
+        }
         return entityList.stream()
                 .map(entity -> DtoFromEntity(entity, dtoClass))
                 .collect(Collectors.toList());
