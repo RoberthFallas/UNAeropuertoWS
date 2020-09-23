@@ -65,7 +65,7 @@ public class RolController {
 
     @GetMapping("/findByDescrip/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuya descrpción coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de roles cuya descripción coincida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
     public ResponseEntity<?> findByDescripcion(@PathVariable(value = "param") String param) {
         try {
             List<RolDto> result = rolService.findByDescripcion(param);

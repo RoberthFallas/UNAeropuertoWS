@@ -50,7 +50,7 @@ public class AreaController {
 
     @GetMapping("/getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo usuario basado en su nombre", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene un solo area basado en su nombre", response = AreaDto.class, tags = "Areas")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             AreaDto result = areaService.getByNombre(nombre);

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.BitacoraDto;
 import org.una.UNAeropuerto.entities.Bitacora;
 import org.una.UNAeropuerto.repositories.IBitacoraRepository;
-import org.una.UNAeropuerto.services.utils.MapperUtils;
+import org.una.UNAeropuerto.utils.MapperUtils;
 
 /**
  *
