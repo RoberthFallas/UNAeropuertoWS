@@ -36,7 +36,7 @@ public class TipoController {
         }
     }
 
-    @GetMapping("/{nombre}")
+    @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoDto.class, tags = "Tipos")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
