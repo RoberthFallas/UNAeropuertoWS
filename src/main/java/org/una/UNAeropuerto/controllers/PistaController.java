@@ -19,27 +19,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.UNAeropuerto.dto.LugarDto;
-import org.una.UNAeropuerto.services.ILugarService;
+import org.una.UNAeropuerto.dto.PistaDto;
+import org.una.UNAeropuerto.services.IPistaService;
 
 /**
  *
  * @author Roberth :)
  */
 @RestController
-@RequestMapping("/lugares")
-@Api(tags = {"Lugares"})
-public class LugarController {
+@RequestMapping("/pistas")
+@Api(tags = {"Pistas"})
+public class PistaController {
 
     @Autowired
-    private ILugarService lugarService;
+    private IPistaService pistaService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Lugar basado en su Id", response = LugarDto.class, tags = "Lugares")
+    @ApiOperation(value = "Obtiene una sola Pista basada en su Id", response = PistaDto.class, tags = "Pistas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            LugarDto result = lugarService.getById(id);
+            PistaDto result = pistaService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -49,12 +49,12 @@ public class LugarController {
         }
     }
 
-    @GetMapping("getByNombre/{nombre}")
+    @GetMapping("getByNombre/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Lugar basado en su nombre", response = LugarDto.class, tags = "Lugares")
-    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
+    @ApiOperation(value = "Obtiene una sola Pista basada en su número de pista", response = PistaDto.class, tags = "Pistas")
+    public ResponseEntity<?> getByNumeroPista(@PathVariable(value = "numPista") String numPista) {
         try {
-            LugarDto result = lugarService.getByNombre(nombre);
+            PistaDto result = pistaService.getByNumeroPista(numPista);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -64,12 +64,12 @@ public class LugarController {
         }
     }
 
-    @GetMapping("findByNombre/{nombre}")
+    @GetMapping("findByNumeroPista/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "nombre") String nombre) {
+    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "numPista") String numPista) {
         try {
-            List<LugarDto> result = lugarService.findByNombre(nombre);
+            List<PistaDto> result = pistaService.findByNumeroPista(numPista);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -81,10 +81,10 @@ public class LugarController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares basándose en su estado", response = LugarDto.class, tags = "Lugares")
+    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
-            List<LugarDto> result = lugarService.findByEstado(estado);
+            List<PistaDto> result = pistaService.findByEstado(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -96,9 +96,9 @@ public class LugarController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody LugarDto lugar) {
+    public ResponseEntity<?> create(@RequestBody PistaDto pista) {
         try {
-            LugarDto result = lugarService.create(lugar);
+            PistaDto result = pistaService.create(pista);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -107,13 +107,13 @@ public class LugarController {
 
     @PutMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody LugarDto provedor) {
+    public ResponseEntity<?> update(@RequestBody PistaDto pista) {
         try {
-            LugarDto result = lugarService.update(provedor);
+            PistaDto result = pistaService.update(pista);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el lugar)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el la pista)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
