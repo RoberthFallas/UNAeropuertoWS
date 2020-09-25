@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface IAvionRepository extends JpaRepository<Avion, Long> {
 
     public Optional<List<Avion>> findByActivoLike(boolean activo);
+
     public Optional<Avion> findByMatricula(String matricula);
+
     public Optional<List<Avion>> findByAerolineasId(long id);
 
 

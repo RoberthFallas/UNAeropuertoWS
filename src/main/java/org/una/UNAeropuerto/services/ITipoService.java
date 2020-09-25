@@ -1,11 +1,9 @@
 package org.una.UNAeropuerto.services;
 
 import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.entities.Tipo;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface ITipoService{
 
@@ -17,7 +15,7 @@ public interface ITipoService{
 
     public List<TipoDto> findByActivos(boolean activo);
 
-    public TipoDto update(TipoDto usuario);
+    public TipoDto update(TipoDto tipo);
 
-    public TipoDto create(TipoDto usuario);
+    public TipoDto create(TipoDto tipo);
 }

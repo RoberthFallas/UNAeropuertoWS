@@ -2,14 +2,11 @@ package org.una.UNAeropuerto.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.UNAeropuerto.dto.AreaDto;
+import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.ProvedorDto;
-import org.una.UNAeropuerto.entities.Area;
 import org.una.UNAeropuerto.entities.Provedor;
-import org.una.UNAeropuerto.repositories.IAreaRepository;
 import org.una.UNAeropuerto.repositories.IProvedorRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +17,7 @@ public class ProvedorServiceImplementation implements  IProvedorService {
     IProvedorRepository provedorRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public ProvedorDto getById(long id) {
         Optional<Provedor> result = provedorRepository.findById(id);
         if (result.isPresent()) {
@@ -29,6 +27,7 @@ public class ProvedorServiceImplementation implements  IProvedorService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProvedorDto getByNombre(String nombre) {
         Optional<Provedor> result = provedorRepository.findByNombre(nombre);
         if (result.isPresent()) {
@@ -38,6 +37,7 @@ public class ProvedorServiceImplementation implements  IProvedorService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProvedorDto> findByActivos(boolean activo) {
         Optional<List<Provedor>> result = provedorRepository.findByActivoLike(activo);
         if (result.isPresent()) {
@@ -47,12 +47,22 @@ public class ProvedorServiceImplementation implements  IProvedorService {
     }
 
     @Override
-    public ProvedorDto update(ProvedorDto usuario) {
-        return null;
+    @Transactional
+    public ProvedorDto create(ProvedorDto provedor) {
+        Provedor entityProvedor = MapperUtils.entityFromDto(provedor, Provedor.class);
+        entityProvedor = provedorRepository.save(entityProvedor);
+        return MapperUtils.DtoFromEntity(entityProvedor, ProvedorDto.class);
     }
 
     @Override
-    public ProvedorDto create(ProvedorDto usuario) {
+    @Transactional
+    public ProvedorDto update(ProvedorDto provedor) {
+        Optional<Provedor> result = provedorRepository.findById(provedor.getId());
+        if (result.isPresent()) {
+            Provedor entity = MapperUtils.entityFromDto(provedor, Provedor.class);
+            entity = provedorRepository.save(entity);
+            return MapperUtils.DtoFromEntity(entity, ProvedorDto.class);
+        }
         return null;
     }
 }

@@ -19,27 +19,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.una.UNAeropuerto.dto.AreaDto;
-import org.una.UNAeropuerto.services.IAreaService;
+import org.una.UNAeropuerto.dto.PistaDto;
+import org.una.UNAeropuerto.services.IPistaService;
 
 /**
  *
  * @author Roberth :)
  */
 @RestController
-@RequestMapping("/areas")
-@Api(tags = {"Areas"})
-public class AreaController {
+@RequestMapping("/pistas")
+@Api(tags = {"Pistas"})
+public class PistaController {
 
     @Autowired
-    private IAreaService areaService;
+    private IPistaService pistaService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo área basada en su Id", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene una sola Pista basada en su Id", response = PistaDto.class, tags = "Pistas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            AreaDto result = areaService.getById(id);
+            PistaDto result = pistaService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -49,12 +49,12 @@ public class AreaController {
         }
     }
 
-    @GetMapping("/getByNombre/{nombre}")
+    @GetMapping("getByNombre/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo area basado en su nombre", response = AreaDto.class, tags = "Areas")
-    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
+    @ApiOperation(value = "Obtiene una sola Pista basada en su número de pista", response = PistaDto.class, tags = "Pistas")
+    public ResponseEntity<?> getByNumeroPista(@PathVariable(value = "numPista") String numPista) {
         try {
-            AreaDto result = areaService.getByNombre(nombre);
+            PistaDto result = pistaService.getByNumeroPista(numPista);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -64,12 +64,12 @@ public class AreaController {
         }
     }
 
-    @GetMapping("/findByNomb/{param}")
+    @GetMapping("findByNumeroPista/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de áreas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
-    public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
+    @ApiOperation(value = "Obtiene una lista de Pistas cuyo número coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "numPista") String numPista) {
         try {
-            List<AreaDto> result = areaService.findByNombre(parametro);
+            List<PistaDto> result = pistaService.findByNumeroPista(numPista);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -79,12 +79,12 @@ public class AreaController {
         }
     }
 
-    @GetMapping("/findByDescrip/{param}")
+    @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de áreas cuya descripcion coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
-    public ResponseEntity<?> findByDescripAprox(@PathVariable(value = "param") String parametro) {
+    @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
-            List<AreaDto> result = areaService.findByDescripcion(parametro);
+            List<PistaDto> result = pistaService.findByEstado(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -96,9 +96,9 @@ public class AreaController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody AreaDto area) {
+    public ResponseEntity<?> create(@RequestBody PistaDto pista) {
         try {
-            AreaDto result = areaService.create(area);
+            PistaDto result = pistaService.create(pista);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -107,13 +107,13 @@ public class AreaController {
 
     @PutMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody AreaDto area) {
+    public ResponseEntity<?> update(@RequestBody PistaDto pista) {
         try {
-            AreaDto result = areaService.update(area);
+            PistaDto result = pistaService.update(pista);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el la pista)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
