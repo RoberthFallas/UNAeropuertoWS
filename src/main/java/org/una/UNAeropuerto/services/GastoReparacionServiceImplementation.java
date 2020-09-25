@@ -97,8 +97,8 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
 
     @Override
     @Transactional
-    public GastoReparacionDto create(GastoReparacionDto usuario) {
-        GastoReparacion entityUser = MapperUtils.entityFromDto(usuario, GastoReparacion.class);
+    public GastoReparacionDto create(GastoReparacionDto gastoReparacionDto) {
+        GastoReparacion entityUser = MapperUtils.entityFromDto(gastoReparacionDto, GastoReparacion.class);
         entityUser = gastoReparacionRepository.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, GastoReparacionDto.class);
     }

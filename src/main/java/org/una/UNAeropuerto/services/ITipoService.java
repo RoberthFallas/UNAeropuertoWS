@@ -15,7 +15,7 @@ public interface ITipoService{
 
     public List<TipoDto> findByActivos(boolean activo);
 
-    public TipoDto update(TipoDto usuario);
+    public TipoDto update(TipoDto tipo);
 
-    public TipoDto create(TipoDto usuario);
+    public TipoDto create(TipoDto tipo);
 }

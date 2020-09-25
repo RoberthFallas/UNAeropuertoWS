@@ -57,10 +57,10 @@ public class TipoServiceImplementation implements ITipoService {
 
     @Override
     @Transactional
-    public TipoDto update(TipoDto Tipo) {
-        Optional<Tipo> result = tipoRepository.findById(Tipo.getId());
+    public TipoDto update(TipoDto tipo) {
+        Optional<Tipo> result = tipoRepository.findById(tipo.getId());
         if (result.isPresent()) {
-            Tipo entity = MapperUtils.entityFromDto(Tipo, Tipo.class);
+            Tipo entity = MapperUtils.entityFromDto(tipo, Tipo.class);
             entity = tipoRepository.save(entity);
             return MapperUtils.DtoFromEntity(entity, TipoDto.class);
         }
