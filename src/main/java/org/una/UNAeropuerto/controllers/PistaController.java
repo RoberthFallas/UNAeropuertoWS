@@ -66,7 +66,7 @@ public class PistaController {
 
     @GetMapping("findByNumeroPista/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    @ApiOperation(value = "Obtiene una lista de Pistas cuyo número coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "numPista") String numPista) {
         try {
             List<PistaDto> result = pistaService.findByNumeroPista(numPista);
@@ -81,7 +81,7 @@ public class PistaController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<PistaDto> result = pistaService.findByEstado(estado);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.PistaDto;
 import org.una.UNAeropuerto.entities.Pista;
 import org.una.UNAeropuerto.repositories.IPistaRepository;
@@ -26,6 +27,7 @@ public class PistaServiceImplementation implements IPistaService {
     private IPistaRepository pistaRepo;
 
     @Override
+    @Transactional(readOnly = true)
     public PistaDto getById(long id) {
         Optional<Pista> result = pistaRepo.findById(id);
         if (result.isPresent()) {
@@ -35,6 +37,7 @@ public class PistaServiceImplementation implements IPistaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PistaDto getByNumeroPista(String numeroPista) {
         Optional<Pista> result = pistaRepo.findByNumeroPista(numeroPista);
         if (result.isPresent()) {
@@ -44,6 +47,7 @@ public class PistaServiceImplementation implements IPistaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PistaDto> findByNumeroPista(String numeroPista) {
         Optional<List<Pista>> result = pistaRepo.findByNumeroPistaContaining(numeroPista);
         if (result.isPresent()) {
@@ -53,6 +57,7 @@ public class PistaServiceImplementation implements IPistaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PistaDto> findByEstado(boolean estate) {
         Optional<List<Pista>> result = pistaRepo.findByActivo(estate);
         if (result.isPresent()) {
@@ -62,6 +67,7 @@ public class PistaServiceImplementation implements IPistaService {
     }
 
     @Override
+    @Transactional
     public PistaDto create(PistaDto pista) {
         Pista entityPista = MapperUtils.entityFromDto(pista, Pista.class);
         entityPista = pistaRepo.save(entityPista);
@@ -69,6 +75,7 @@ public class PistaServiceImplementation implements IPistaService {
     }
 
     @Override
+    @Transactional
     public PistaDto update(PistaDto pista) {
         Optional<Pista> result = pistaRepo.findById(pista.getId());
         if (result.isPresent()) {

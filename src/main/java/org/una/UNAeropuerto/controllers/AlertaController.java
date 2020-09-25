@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,7 +66,7 @@ public class AlertaController {
 
     @GetMapping("/findByTitulo/{titulo}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coinsida con el parámetro.", response = AlertaDto.class, tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coinsida parcial o totalmente con el parámetro.", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> findByTitulo(@PathVariable(value = "titulo") String titulo) {
         try {
             List<AlertaDto> result = alertaService.findByTitulo(titulo);
@@ -78,10 +79,10 @@ public class AlertaController {
         }
     }
 
-    @GetMapping("/findByEmisor/{describ}")
+    @GetMapping("/findByEmisor/{emisor}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coinsida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
-    public ResponseEntity<?> findByEmisor(@PathVariable(value = "describ") String emisor) {
+    public ResponseEntity<?> findByEmisor(@PathVariable(value = "emisor") String emisor) {
         try {
             List<AlertaDto> result = alertaService.findByEmisor(emisor);
             if (!result.isEmpty()) {
@@ -119,7 +120,7 @@ public class AlertaController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody AlertaDto alert) {
         try {
