@@ -1,12 +1,8 @@
 package org.una.UNAeropuerto.services;
 
 import org.una.UNAeropuerto.dto.DetalleServicioDto;
-import org.una.UNAeropuerto.dto.DetalleServicioDto;
-import org.una.UNAeropuerto.entities.DetalleServicio;
-import org.una.UNAeropuerto.entities.Tipo;
-
 import java.util.List;
-import java.util.Optional;
+
 
 
 public interface IDetalleServicioService {

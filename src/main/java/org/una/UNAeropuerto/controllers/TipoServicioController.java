@@ -6,25 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.una.UNAeropuerto.dto.GastoReparacionDto;
-import org.una.UNAeropuerto.services.IGastoReparacionService;
+import org.una.UNAeropuerto.dto.TipoServicioDto;
+import org.una.UNAeropuerto.services.ITipoServicioService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/gastos_reparaciones")
-@Api(tags = {"Gastos Reparaciones"})
-public class GastoReparacionController {
-
+@RequestMapping("/tipos_servicios")
+@Api(tags = {"Tipos Servicios"})
+public class TipoServicioController {
     @Autowired
-    private IGastoReparacionService gastoReparacionService;
+    private ITipoServicioService tipoServicioService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su Id", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
+    @ApiOperation(value = "Obtiene un solo Tipo Servicios basado en su Id", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            GastoReparacionDto result = gastoReparacionService.getById(id);
+            TipoServicioDto result = tipoServicioService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -34,13 +33,43 @@ public class GastoReparacionController {
         }
     }
 
-    @GetMapping("getByNumeroContrato/{numeroContrato}")
+    @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su numero de contrato", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
-    public ResponseEntity<?> getByNumeroContrato(@PathVariable(value = "numeroContrato") long numeroContrato) {
+    @ApiOperation(value = "Obtiene un solo Tipo Servicios basada en su nombre", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            GastoReparacionDto result = gastoReparacionService.getByNumeroContrato(numeroContrato);
+            TipoServicioDto result = tipoServicioService.getByNombre(nombre);
             if (result != null) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("findByNomb/{param}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
+        try {
+            List<TipoServicioDto> result = tipoServicioService.findByNombreAproximado(parametro);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("findByDescripcion/{param}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    public ResponseEntity<?> findByNombreDescripcionAprox(@PathVariable(value = "param") String parametro) {
+        try {
+            List<TipoServicioDto> result = tipoServicioService.findByDescripcionAproximado(parametro);
+            if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
@@ -51,40 +80,10 @@ public class GastoReparacionController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            List<GastoReparacionDto> result = gastoReparacionService.findByEstado(estado);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("findByEstadoPago/{estado}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado de pago", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
-    public ResponseEntity<?> findByEstadoPago(@PathVariable(value = "estado") boolean estado) {
-        try {
-            List<GastoReparacionDto> result = gastoReparacionService.findByEstadoPago(estado);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("findByAreaId/{id}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su area según id", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
-    public ResponseEntity<?> findByAreaId(@PathVariable(value = "id") long id) {
-        try {
-            List<GastoReparacionDto> result = gastoReparacionService.findByAreaId(id);
+            List<TipoServicioDto> result = tipoServicioService.findByEstado(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -96,9 +95,9 @@ public class GastoReparacionController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody GastoReparacionDto gastoReparacion) {
+    public ResponseEntity<?> create(@RequestBody TipoServicioDto tipoServicio) {
         try {
-            GastoReparacionDto result = gastoReparacionService.create(gastoReparacion);
+            TipoServicioDto result = tipoServicioService.create(tipoServicio);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -107,16 +106,19 @@ public class GastoReparacionController {
 
     @PutMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody GastoReparacionDto gastoReparacion) {
+    public ResponseEntity<?> update(@RequestBody TipoServicioDto tipoServicio) {
         try {
-            GastoReparacionDto result = gastoReparacionService.update(gastoReparacion);
+            TipoServicioDto result = tipoServicioService.update(tipoServicio);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Tipo Servicios)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    
+    
 
 }

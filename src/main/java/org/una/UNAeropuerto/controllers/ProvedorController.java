@@ -20,7 +20,7 @@ public class ProvedorController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo provedor basado en su Id", response = ProvedorDto.class, tags = "Provedot")
+    @ApiOperation(value = "Obtiene un solo provedor basado en su Id", response = ProvedorDto.class, tags = "Provedores")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             ProvedorDto result = provedorService.getById(id);
@@ -33,9 +33,9 @@ public class ProvedorController {
         }
     }
 
-    @GetMapping("/{nombre}")
+    @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo provedor basado en su nombre", response = ProvedorDto.class, tags = "Provedot")
+    @ApiOperation(value = "Obtiene un solo provedor basado en su nombre", response = ProvedorDto.class, tags = "Provedores")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             ProvedorDto result = provedorService.getByNombre(nombre);
@@ -50,7 +50,7 @@ public class ProvedorController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de provedors basándose en su estado", response = ProvedorDto.class, tags = "Provedot")
+    @ApiOperation(value = "Obtiene una lista de provedors basándose en su estado", response = ProvedorDto.class, tags = "Provedores")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ProvedorDto> result = provedorService.findByActivos(estado);
@@ -74,7 +74,7 @@ public class ProvedorController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody ProvedorDto provedor) {
         try {
