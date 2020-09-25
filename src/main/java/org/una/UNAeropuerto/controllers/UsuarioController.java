@@ -8,9 +8,12 @@ package org.una.UNAeropuerto.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.una.UNAeropuerto.dto.AuthenticationRequest;
+import org.una.UNAeropuerto.dto.AuthenticationResponse;
 import org.una.UNAeropuerto.dto.UsuarioDto;
 import org.una.UNAeropuerto.services.IUsuarioService;
 
@@ -36,6 +41,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('USUARIO_CONSULTAR_TODO')")
     @ApiOperation(value = "Obtiene un solo usuario basado en su Id", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -51,6 +57,7 @@ public class UsuarioController {
 
     @GetMapping("/getByCedula/{ced}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('USUARIO_CONSULTAR_TODO')")
     @ApiOperation(value = "Obtiene un solo usuario basado en su número de cédula", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> getByCedula(@PathVariable(value = "ced") String cedula) {
         try {
@@ -83,7 +90,7 @@ public class UsuarioController {
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre,
-             @PathVariable(value = "apell") String apellidos) {
+            @PathVariable(value = "apell") String apellidos) {
         try {
             List<UsuarioDto> result = userService.findByNombreAndApellidos(nombre, apellidos);
             if (!result.isEmpty()) {
@@ -138,5 +145,7 @@ public class UsuarioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }

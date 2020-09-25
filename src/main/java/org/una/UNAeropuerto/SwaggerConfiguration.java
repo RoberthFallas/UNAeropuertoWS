@@ -32,48 +32,46 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-//    @Bean
-//    public Docket api() {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .securitySchemes(singletonList(new ApiKey("JWT", AUTHORIZATION, HEADER.name())))
-//                .securityContexts(singletonList(
-//                        SecurityContext.builder()
-//                                .securityReferences(
-//                                        singletonList(SecurityReference.builder()
-//                                                .reference("JWT")
-//                                                .scopes(new AuthorizationScope[0])
-//                                                .build()
-//                                        )
-//                                )
-//                                .build())
-//                )
-//                .select()
-//                .apis(
-//                        RequestHandlerSelectors
-//                                .basePackage("org.una.UNAeropuerto.controllers"))
-//                .paths(PathSelectors.regex("/.*"))
-//                .build()
-//                .apiInfo(apiInfo())
-//                .tags(new Tag("Seguridad", "Metodos de Seguridad"),
-//                        new Tag("Usuarios", "Entidad de Usuarios")//,
-//                //new Tag("Autenticacion", "Seguridad al ingresar")
-//                );
-//    }
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .securitySchemes(singletonList(new ApiKey("JWT", AUTHORIZATION, HEADER.name())))
+                .securityContexts(singletonList(
+                        SecurityContext.builder()
+                                .securityReferences(
+                                        singletonList(SecurityReference.builder()
+                                                .reference("JWT")
+                                                .scopes(new AuthorizationScope[0])
+                                                .build()
+                                        )
+                                )
+                                .build())
+                )
                 .select()
                 .apis(
                         RequestHandlerSelectors
                                 .basePackage("org.una.UNAeropuerto.controllers"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.regex("/.*"))
                 .build()
                 .apiInfo(apiInfo())
-                .tags(new Tag("Seguridad", "Metodos de Seguridad"),
-                        new Tag("Usuarios", "Entidad de Usuarios")
+                .tags(new Tag("Autenticacion", "Metodos de Seguridad")
                 );
-
     }
+//    @Bean
+//    public Docket api() {
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .select()
+//                .apis(
+//                        RequestHandlerSelectors
+//                                .basePackage("org.una.UNAeropuerto.controllers"))
+//                .paths(PathSelectors.any())
+//                .build()
+//                .apiInfo(apiInfo())
+//                .tags(new Tag("Seguridad", "Metodos de Seguridad"),
+//                        new Tag("Usuarios", "Entidad de Usuarios")
+//                );
+//
+//    }
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
