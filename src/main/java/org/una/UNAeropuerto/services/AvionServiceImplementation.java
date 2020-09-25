@@ -48,6 +48,7 @@ public class AvionServiceImplementation implements IAvionService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AvionDto> findByAerolineaId(long id) {
         Optional<List<Avion>> result = avionRepository.findByAerolineasId(id);
         if (result.isPresent()) {

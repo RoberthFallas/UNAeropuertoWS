@@ -4,6 +4,7 @@ package org.una.UNAeropuerto.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.GastoReparacionDto;
 import org.una.UNAeropuerto.dto.DetalleServicioDto;
 import org.una.UNAeropuerto.dto.GastoReparacionDto;
@@ -25,7 +26,10 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
 
     @Autowired
     IGastoReparacionRepository gastoReparacionRepository;
+
+
     @Override
+    @Transactional(readOnly = true)
     public GastoReparacionDto getById(long id) {
         Optional<GastoReparacion> result = gastoReparacionRepository.findById(id);
         if (result.isPresent()) {
@@ -37,6 +41,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
 
 
     @Override
+    @Transactional(readOnly = true)
     public GastoReparacionDto getByNumeroContrato(Long numeroContrato) {
         Optional<GastoReparacion> result = gastoReparacionRepository.findByNumeroContrato(numeroContrato);
         if (result.isPresent()) {
@@ -46,6 +51,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByEstado(boolean estado) {
         Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByActivoLike(estado);
         if (result.isPresent()) {
@@ -55,6 +61,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByEstadoPago(boolean estado) {
         Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByEstadoPagoLike(estado);
         if (result.isPresent()) {
@@ -64,6 +71,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByAreaId(long id) {
         Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByAreasId(id);
         if (result.isPresent()) {
@@ -73,6 +81,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByFechaRegistroBetween(Date startDate, Date endDate) {
         Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByFechaRegistroBetween(startDate, endDate);
         if (result.isPresent()) {
@@ -82,6 +91,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
     }
 
     @Override
+    @Transactional
     public GastoReparacionDto update(GastoReparacionDto gastoReparacionDto) {
         Optional<GastoReparacion> result = gastoReparacionRepository.findById(gastoReparacionDto.getId());
         if (result.isPresent()) {
@@ -93,6 +103,7 @@ public class GastoReparacionServiceImplementation implements  IGastoReparacionSe
     }
 
     @Override
+    @Transactional
     public GastoReparacionDto create(GastoReparacionDto usuario) {
         GastoReparacion entityUser = MapperUtils.entityFromDto(usuario, GastoReparacion.class);
         entityUser = gastoReparacionRepository.save(entityUser);
