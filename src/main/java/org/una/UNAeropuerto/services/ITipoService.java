@@ -4,8 +4,7 @@ import org.una.UNAeropuerto.dto.TipoDto;
 
 import java.util.List;
 
-
-public interface ITipoService{
+public interface ITipoService {
 
     public TipoDto getById(long id);
 

@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AvionServiceImplementation implements IAvionService{
-    
+public class AvionServiceImplementation implements IAvionService {
+
     @Autowired
     IAvionRepository avionRepository;
+
     @Override
     @Transactional(readOnly = true)
     public AvionDto getById(long id) {
@@ -55,8 +56,6 @@ public class AvionServiceImplementation implements IAvionService{
         }
         return new ArrayList();
     }
-
-
 
     @Override
     @Transactional

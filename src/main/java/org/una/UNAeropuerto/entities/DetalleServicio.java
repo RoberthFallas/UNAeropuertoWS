@@ -53,5 +53,5 @@ public class DetalleServicio implements Serializable {
     @JoinColumn(name = "gastos_reparaciones_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private GastoReparacion gastosReparacionesId;
- 
+
 }

@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.TipoDto;
 import org.una.UNAeropuerto.services.ITipoService;
-
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/tipos")
@@ -22,6 +22,7 @@ public class TipoController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo tipo basado en su Id", response = TipoDto.class, tags = "Tipos")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             TipoDto result = tipoService.getById(id);
@@ -37,6 +38,7 @@ public class TipoController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoDto.class, tags = "Tipos")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             TipoDto result = tipoService.getByNombre(nombre);
@@ -52,6 +54,7 @@ public class TipoController {
     @GetMapping("findByNomb/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de tipos cuyo nombre coinscida parcial o totalmente con el parámetro.", response = TipoDto.class, tags = "Tipos")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
         try {
             List<TipoDto> result = tipoService.findByNombre(parametro);
@@ -67,6 +70,7 @@ public class TipoController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de tipos basándose en su estado", response = TipoDto.class, tags = "Tipos")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<TipoDto> result = tipoService.findByActivos(estado);
@@ -81,6 +85,7 @@ public class TipoController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> create(@RequestBody TipoDto tipo) {
         try {
             TipoDto result = tipoService.create(tipo);
@@ -92,6 +97,7 @@ public class TipoController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> update(@RequestBody TipoDto tipo) {
         try {
             TipoDto result = tipoService.update(tipo);

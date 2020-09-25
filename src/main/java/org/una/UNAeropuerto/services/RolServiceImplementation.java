@@ -20,7 +20,6 @@ import org.una.UNAeropuerto.utils.MapperUtils;
  *
  * @author Roberth :)
  */
-
 @Service
 public class RolServiceImplementation implements IRolService {
 

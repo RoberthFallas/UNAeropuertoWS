@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,7 @@ public class AerolineaController {
 
     @GetMapping("/{id}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene una sola aerolinea basada en su Id", response = AerolineaDto.class, tags = "Aerolineas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -52,6 +54,7 @@ public class AerolineaController {
     @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola aerolinea basada en su nombre", response = AerolineaDto.class, tags = "Aerolineas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             AerolineaDto result = aeroService.getByNombre(nombre);
@@ -67,6 +70,7 @@ public class AerolineaController {
     @GetMapping("/findByNomb/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aerolineas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AerolineaDto.class, tags = "Aerolineas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String parametro) {
         try {
             List<AerolineaDto> result = aeroService.findByNombre(parametro);
@@ -82,6 +86,7 @@ public class AerolineaController {
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aerolineas cuyo estado coinsida con el parametro.", response = AerolineaDto.class, tags = "Aerolineas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "state") Boolean state) {
         try {
             List<AerolineaDto> result = aeroService.findByEstado(state);
@@ -96,6 +101,7 @@ public class AerolineaController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody AerolineaDto aerolinea) {
         try {
             AerolineaDto result = aeroService.create(aerolinea);
@@ -107,6 +113,7 @@ public class AerolineaController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> update(@RequestBody AerolineaDto aerolinea) {
         try {
             AerolineaDto result = aeroService.update(aerolinea);

@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     @ApiOperation(value = "Obtiene un solo usuario basado en su Id", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -51,6 +53,7 @@ public class UsuarioController {
 
     @GetMapping("/getByCedula/{ced}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     @ApiOperation(value = "Obtiene un solo usuario basado en su número de cédula", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> getByCedula(@PathVariable(value = "ced") String cedula) {
         try {
@@ -67,6 +70,7 @@ public class UsuarioController {
     @GetMapping("/findByCed/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de usuarios cuya cédula coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
         try {
             List<UsuarioDto> result = userService.findByCedulaAproximada(parametro);
@@ -81,9 +85,10 @@ public class UsuarioController {
 
     @GetMapping("/findByNombAndApell/{nomb}/{apell}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
     public ResponseEntity<?> findByNameAndApellidos(@PathVariable(value = "nomb") String nombre,
-             @PathVariable(value = "apell") String apellidos) {
+            @PathVariable(value = "apell") String apellidos) {
         try {
             List<UsuarioDto> result = userService.findByNombreAndApellidos(nombre, apellidos);
             if (!result.isEmpty()) {
@@ -98,6 +103,7 @@ public class UsuarioController {
     @GetMapping("/hideById/{id}")
     @ResponseBody
     @ApiOperation(value = "Oculta del sistema a un usuario, basándose en su Id.", response = UsuarioDto.class, tags = "Usuarios")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> hideById(@PathVariable(value = "id") long id) {
         try {
             UsuarioDto result = userService.ocultarById(id);
@@ -112,6 +118,7 @@ public class UsuarioController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> create(@RequestBody UsuarioDto usuario) {
         try {
             UsuarioDto result = userService.create(usuario);
@@ -125,6 +132,7 @@ public class UsuarioController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> update(@RequestBody UsuarioDto usuario) {
         try {
             UsuarioDto result = userService.update(usuario);

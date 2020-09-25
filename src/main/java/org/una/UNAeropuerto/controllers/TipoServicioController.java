@@ -8,19 +8,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.TipoServicioDto;
 import org.una.UNAeropuerto.services.ITipoServicioService;
-
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/tipos_servicios")
 @Api(tags = {"Tipos Servicios"})
 public class TipoServicioController {
+
     @Autowired
     private ITipoServicioService tipoServicioService;
 
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Tipo Servicios basado en su Id", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             TipoServicioDto result = tipoServicioService.getById(id);
@@ -36,6 +38,7 @@ public class TipoServicioController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Tipo Servicios basada en su nombre", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             TipoServicioDto result = tipoServicioService.getByNombre(nombre);
@@ -47,10 +50,11 @@ public class TipoServicioController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("findByNomb/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
         try {
             List<TipoServicioDto> result = tipoServicioService.findByNombreAproximado(parametro);
@@ -66,6 +70,7 @@ public class TipoServicioController {
     @GetMapping("findByDescripcion/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNombreDescripcionAprox(@PathVariable(value = "param") String parametro) {
         try {
             List<TipoServicioDto> result = tipoServicioService.findByDescripcionAproximado(parametro);
@@ -81,6 +86,7 @@ public class TipoServicioController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<TipoServicioDto> result = tipoServicioService.findByEstado(estado);
@@ -95,6 +101,7 @@ public class TipoServicioController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> create(@RequestBody TipoServicioDto tipoServicio) {
         try {
             TipoServicioDto result = tipoServicioService.create(tipoServicio);
@@ -106,6 +113,7 @@ public class TipoServicioController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> update(@RequestBody TipoServicioDto tipoServicio) {
         try {
             TipoServicioDto result = tipoServicioService.update(tipoServicio);
@@ -117,8 +125,5 @@ public class TipoServicioController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    
-    
 
 }

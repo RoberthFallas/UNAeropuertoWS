@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class DireccionController {
 
     @GetMapping("findByDirecVuelo/{direc}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     @ApiOperation(value = "Obtiene una lista de Direcciones de vuelo basadas en su direccion de curso (SLD)Salida, (LGD)Llegada.", response = DireccionDto.class, tags = "Direcciones")
     public ResponseEntity<?> getById(@PathVariable(value = "direc") String direc) {
         try {
@@ -48,6 +50,7 @@ public class DireccionController {
 
     @GetMapping("findByVueloId/{id}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     @ApiOperation(value = "Obtiene una lista de Direcciones de vuelo basadas en el id del Lugar de al que se relaciona", response = DireccionDto.class, tags = "Direcciones")
     public ResponseEntity<?> getById(@PathVariable(value = "id") Long id) {
         try {

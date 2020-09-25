@@ -26,7 +26,6 @@ public class DireccionServiceImplementation implements IDireccionService {
     @Autowired
     private IDireccionRepository direcRepo;
 
-
     @Override
     @Transactional(readOnly = true)
     public List<DireccionDto> findByDireccionVuelo(String direcVuelo) {

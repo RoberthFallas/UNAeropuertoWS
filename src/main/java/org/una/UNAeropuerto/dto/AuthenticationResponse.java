@@ -5,26 +5,22 @@
  */
 package org.una.UNAeropuerto.dto;
 
-import lombok.AccessLevel;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
  *
- * @author Roberth :)
+ * @author LordLalo
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RolUsuarioDto {
-    private Long id;
-    private Boolean activo;
-  //  @Setter(AccessLevel.NONE)
-    private RolDto rolesId;
-    @Setter(AccessLevel.NONE)
-    private UsuarioDto usuariosId;
+public class AuthenticationResponse {
+   private String jwt; 
+   private UsuarioDto usuario;
+   private  List<RolUsuarioDto> rolUsuario;
 }

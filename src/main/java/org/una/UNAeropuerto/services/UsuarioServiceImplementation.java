@@ -9,11 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.UsuarioDto;
+import org.una.UNAeropuerto.entities.RolUsuario;
 import org.una.UNAeropuerto.entities.Usuario;
+import org.una.UNAeropuerto.jwt.JwtProvider;
 import org.una.UNAeropuerto.repositories.IUsuarioRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 
@@ -22,12 +31,16 @@ import org.una.UNAeropuerto.utils.MapperUtils;
  * @author Roberth :)
  */
 @Service
-public class UsuarioServiceImplementation implements IUsuarioService {
+public class UsuarioServiceImplementation implements IUsuarioService, UserDetailsService {
 
     @Autowired
     private IUsuarioRepository userRepo;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtProvider jwtProvider;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     @Transactional(readOnly = true)
@@ -121,4 +134,22 @@ public class UsuarioServiceImplementation implements IUsuarioService {
         }
         throw new IllegalArgumentException("Contraseña no es válida o se encuntra vacía (no se pude encriptar)");
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Usuario> usuarioBuscado = userRepo.findByCedula(username);
+        if (usuarioBuscado.isPresent()) {
+            Usuario usuario = usuarioBuscado.get();
+            List<GrantedAuthority> roles = new ArrayList<>();
+            for (RolUsuario r : usuario.getRolUsuarioList()) {
+                roles.add(new SimpleGrantedAuthority(r.getRolesId().getNombre()));
+            }
+            UserDetails userDetails = new User(usuario.getCedula(), usuario.getContrasenna(), roles);
+            return userDetails;
+        } else {
+            return null;
+        }
+
+    }
+
 }
