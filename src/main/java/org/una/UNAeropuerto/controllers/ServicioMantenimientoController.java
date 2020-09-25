@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
 import org.una.UNAeropuerto.services.IServicioMantenimientoService;
-
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -40,7 +39,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
-  @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstado(estado);
@@ -116,7 +115,6 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping("findByTiposServiciosId/{id}")
     @ResponseBody

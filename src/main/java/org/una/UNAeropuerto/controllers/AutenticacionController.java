@@ -22,7 +22,6 @@ import org.una.UNAeropuerto.dto.AuthenticationResponse;
 import org.una.UNAeropuerto.dto.UsuarioDto;
 import org.una.UNAeropuerto.services.IAutenticacionService;
 
-
 /**
  *
  * @author LordLalo

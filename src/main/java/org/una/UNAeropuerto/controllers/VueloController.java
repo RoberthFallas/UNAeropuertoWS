@@ -87,7 +87,7 @@ public class VueloController {
     @GetMapping("/findByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de vuelos cuyo nobre coinsida parcial o totalmente con el parámetro.", response = VueloDto.class, tags = "Vuelos")
-  @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             List<VueloDto> result = vueloService.findByNombre(nombre);
@@ -103,7 +103,7 @@ public class VueloController {
     @GetMapping("/findByEntreFechaYHoras/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd HH:mm:ss').Obtiene una lista de vuelos cuyo día y hora coinsida con los parámetro sumistrado.", response = VueloDto.class, tags = "Vuelos")
-   @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEntreFechaYHoras(@PathVariable(value = "start") String start,
             @PathVariable(value = "end") String end) {
         try {
@@ -139,7 +139,7 @@ public class VueloController {
     @GetMapping("/findEntreFechas/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd').Obtiene una lista de vuelos que hallan ocurrido o estén por ocurrir en el lapso suministrado.", response = VueloDto.class, tags = "Vuelos")
-   @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findEntreFechas(@PathVariable(value = "start") String start,
             @PathVariable(value = "end") String end) {
         try {
@@ -157,7 +157,7 @@ public class VueloController {
 
     @PostMapping("/create")
     @ResponseBody
-   @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody VueloDto vuelo) {
         try {
             VueloDto result = vueloService.create(vuelo);

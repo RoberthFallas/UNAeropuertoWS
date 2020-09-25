@@ -27,5 +27,5 @@ public interface IAlertaService {
     public AlertaDto create(AlertaDto alerta);
 
     public AlertaDto update(AlertaDto alerta);
-    
+
 }

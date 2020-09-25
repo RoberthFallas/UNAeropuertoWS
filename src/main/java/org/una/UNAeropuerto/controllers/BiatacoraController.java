@@ -54,7 +54,7 @@ public class BiatacoraController {
     @GetMapping("/getByUserId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Biatacoras")
-  @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> getByUserId(@PathVariable(value = "id") long id) {
         try {
             List<BitacoraDto> result = bitacoraRepo.findByUserId(id);
@@ -106,7 +106,7 @@ public class BiatacoraController {
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Biatacoras")
-   @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "state") boolean state) {
         try {
             List<BitacoraDto> result = bitacoraRepo.findByEstado(state);

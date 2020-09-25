@@ -1,8 +1,8 @@
 package org.una.UNAeropuerto.services;
+
 import org.una.UNAeropuerto.dto.CobroDto;
 
 import java.util.List;
-
 
 public interface ICobroService {
 
@@ -16,7 +16,7 @@ public interface ICobroService {
 
     public List<CobroDto> findByMontoBetween(long montoInicial, long montoFinal);
 
-    public List<CobroDto> findByDetalleCobroAproximado(String  parametro);
+    public List<CobroDto> findByDetalleCobroAproximado(String parametro);
 
     public CobroDto update(CobroDto cobro);
 

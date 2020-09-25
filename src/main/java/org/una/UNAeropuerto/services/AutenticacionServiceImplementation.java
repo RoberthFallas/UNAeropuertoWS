@@ -50,7 +50,7 @@ public class AutenticacionServiceImplementation implements IAutenticacionService
             authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
             //UsuarioDto usuarioDto = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDto.class);
             authenticationResponse.setUsuario(usuario);
-            List<RolUsuarioDto> rolUsuarioDto= MapperUtils.DtoListFromEntityList(usuario.getRolUsuarioList(), RolUsuarioDto.class);
+            List<RolUsuarioDto> rolUsuarioDto = MapperUtils.DtoListFromEntityList(usuario.getRolUsuarioList(), RolUsuarioDto.class);
             authenticationResponse.setRolUsuario(rolUsuarioDto);
             return authenticationResponse;
         } else {

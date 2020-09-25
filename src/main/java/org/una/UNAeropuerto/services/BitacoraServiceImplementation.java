@@ -21,7 +21,6 @@ import org.una.UNAeropuerto.utils.MapperUtils;
  *
  * @author Roberth :)
  */
-
 @Service
 public class BitacoraServiceImplementation implements IBitacoraService {
 

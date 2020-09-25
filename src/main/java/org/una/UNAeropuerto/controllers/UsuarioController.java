@@ -103,7 +103,7 @@ public class UsuarioController {
     @GetMapping("/hideById/{id}")
     @ResponseBody
     @ApiOperation(value = "Oculta del sistema a un usuario, basándose en su Id.", response = UsuarioDto.class, tags = "Usuarios")
-   @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> hideById(@PathVariable(value = "id") long id) {
         try {
             UsuarioDto result = userService.ocultarById(id);

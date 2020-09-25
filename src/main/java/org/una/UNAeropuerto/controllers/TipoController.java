@@ -8,10 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.TipoDto;
 import org.una.UNAeropuerto.services.ITipoService;
-
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 
 @RestController
 @RequestMapping("/tipos")
