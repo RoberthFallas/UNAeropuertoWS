@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.AvionDto;
 import org.una.UNAeropuerto.services.IAvionService;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/aviones")
@@ -21,6 +22,7 @@ public class AvionController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo avion basada en su Id", response = AvionDto.class, tags = "Aviones")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             AvionDto result = avionService.getById(id);
@@ -36,6 +38,7 @@ public class AvionController {
     @GetMapping("getByMatricula/{matricula}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo avion basado en su matricula", response = AvionDto.class, tags = "Aviones")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByMatricula(@PathVariable(value = "matricula") String matricula) {
         try {
             AvionDto result = avionService.getByMatricula(matricula);
@@ -51,6 +54,7 @@ public class AvionController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones basándose en su estado", response = AvionDto.class, tags = "Aviones")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<AvionDto> result = avionService.findByEstado(estado);
@@ -66,6 +70,7 @@ public class AvionController {
     @GetMapping("findByAerolineaId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones basándose en su aerolinea", response = AvionDto.class, tags = "Aviones")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByAerolineaId(@PathVariable(value = "id") long id) {
         try {
             List<AvionDto> result = avionService.findByAerolineaId(id);
@@ -80,6 +85,7 @@ public class AvionController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody AvionDto avion) {
         try {
             AvionDto result = avionService.create(avion);
@@ -91,6 +97,7 @@ public class AvionController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> update(@RequestBody AvionDto avion) {
         try {
             AvionDto result = avionService.update(avion);
@@ -102,6 +109,5 @@ public class AvionController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }
