@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.dto.TipoDto;
 import org.una.UNAeropuerto.services.ITipoService;
 
 import java.util.List;
@@ -36,7 +34,7 @@ public class TipoController {
         }
     }
 
-    @GetMapping("/{nombre}")
+    @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoDto.class, tags = "Tipos")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
@@ -92,7 +90,7 @@ public class TipoController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody TipoDto tipo) {
         try {

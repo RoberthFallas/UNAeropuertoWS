@@ -3,18 +3,14 @@ package org.una.UNAeropuerto.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.una.UNAeropuerto.dto.*;
 import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.entities.*;
-import org.una.UNAeropuerto.entities.Tipo;
 import org.una.UNAeropuerto.entities.Tipo;
 import org.una.UNAeropuerto.repositories.ITipoRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class TipoServiceImplementation implements ITipoService {
     @Autowired
@@ -61,10 +57,10 @@ public class TipoServiceImplementation implements ITipoService {
 
     @Override
     @Transactional
-    public TipoDto update(TipoDto Tipo) {
-        Optional<Tipo> result = tipoRepository.findById(Tipo.getId());
+    public TipoDto update(TipoDto tipo) {
+        Optional<Tipo> result = tipoRepository.findById(tipo.getId());
         if (result.isPresent()) {
-            Tipo entity = MapperUtils.entityFromDto(Tipo, Tipo.class);
+            Tipo entity = MapperUtils.entityFromDto(tipo, Tipo.class);
             entity = tipoRepository.save(entity);
             return MapperUtils.DtoFromEntity(entity, TipoDto.class);
         }

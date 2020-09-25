@@ -6,40 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.una.UNAeropuerto.dto.GastoReparacionDto;
-import org.una.UNAeropuerto.services.IGastoReparacionService;
+import org.una.UNAeropuerto.dto.CobroDto;
+import org.una.UNAeropuerto.services.ICobroService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/gastos_reparaciones")
-@Api(tags = {"Gastos Reparaciones"})
-public class GastoReparacionController {
-
+@RequestMapping("/cobros")
+@Api(tags = {"Cobros"})
+public class Cobros {
     @Autowired
-    private IGastoReparacionService gastoReparacionService;
+    private ICobroService cobroService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su Id", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
+    @ApiOperation(value = "Obtiene un solo cobro basada en su Id", response = CobroDto.class, tags = "Cobros")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            GastoReparacionDto result = gastoReparacionService.getById(id);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("getByNumeroContrato/{numeroContrato}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su numero de contrato", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
-    public ResponseEntity<?> getByNumeroContrato(@PathVariable(value = "numeroContrato") long numeroContrato) {
-        try {
-            GastoReparacionDto result = gastoReparacionService.getByNumeroContrato(numeroContrato);
+            CobroDto result = cobroService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -51,10 +35,10 @@ public class GastoReparacionController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en su estado", response = CobroDto.class, tags = "Cobros")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            List<GastoReparacionDto> result = gastoReparacionService.findByEstado(estado);
+            List<CobroDto> result = cobroService.findByActivos(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -64,12 +48,12 @@ public class GastoReparacionController {
         }
     }
 
-    @GetMapping("findByEstadoPago/{estado}")
+    @GetMapping("findByServiciosMantenimientoId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado de pago", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
-    public ResponseEntity<?> findByEstadoPago(@PathVariable(value = "estado") boolean estado) {
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en su id de servicio mantenimeinto", response = CobroDto.class, tags = "Cobros")
+    public ResponseEntity<?> findByMantenimientoId(@PathVariable(value = "id") long id) {
         try {
-            List<GastoReparacionDto> result = gastoReparacionService.findByEstadoPago(estado);
+            List<CobroDto> result = cobroService.findByServiciosMantenimientoId(id);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -79,12 +63,27 @@ public class GastoReparacionController {
         }
     }
 
-    @GetMapping("findByAreaId/{id}")
+    @GetMapping("findByMontoAproximado/{monto}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su area según id", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
-    public ResponseEntity<?> findByAreaId(@PathVariable(value = "id") long id) {
+    @ApiOperation(value = "Obtiene una lista de cobros basandose en un monto aproximado", response = CobroDto.class, tags = "Cobros")
+    public ResponseEntity<?> findByMontoAproximado(@PathVariable(value = "monto") long monto) {
         try {
-            List<GastoReparacionDto> result = gastoReparacionService.findByAreaId(id);
+            List<CobroDto> result = cobroService.findByMontoAproximado(monto);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("findByDetalleCobroAprox/{detalle}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de cobros basandose en un detalle aproximado", response = CobroDto.class, tags = "Cobros")
+    public ResponseEntity<?> findByDetalleAproximado(@PathVariable(value = "detalle") String detalle) {
+        try {
+            List<CobroDto> result = cobroService.findByDetalleCobroAproximado(detalle);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -96,9 +95,9 @@ public class GastoReparacionController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<?> create(@RequestBody GastoReparacionDto gastoReparacion) {
+    public ResponseEntity<?> create(@RequestBody CobroDto cobro) {
         try {
-            GastoReparacionDto result = gastoReparacionService.create(gastoReparacion);
+            CobroDto result = cobroService.create(cobro);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -107,16 +106,19 @@ public class GastoReparacionController {
 
     @PutMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> update(@RequestBody GastoReparacionDto gastoReparacion) {
+    public ResponseEntity<?> update(@RequestBody CobroDto cobro) {
         try {
-            GastoReparacionDto result = gastoReparacionService.update(gastoReparacion);
+            CobroDto result = cobroService.update(cobro);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el cobro)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    
 
 }

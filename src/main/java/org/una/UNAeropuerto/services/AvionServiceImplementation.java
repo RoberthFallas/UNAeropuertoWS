@@ -7,7 +7,6 @@ import org.una.UNAeropuerto.dto.AvionDto;
 import org.una.UNAeropuerto.entities.Avion;
 import org.una.UNAeropuerto.repositories.IAvionRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +47,7 @@ public class AvionServiceImplementation implements IAvionService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AvionDto> findByAerolineaId(long id) {
         Optional<List<Avion>> result = avionRepository.findByAerolineasId(id);
         if (result.isPresent()) {

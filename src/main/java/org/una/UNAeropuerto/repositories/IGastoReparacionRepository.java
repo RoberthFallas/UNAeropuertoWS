@@ -4,7 +4,7 @@ package org.una.UNAeropuerto.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.una.UNAeropuerto.entities.GastoReparacion;
-import org.una.UNAeropuerto.entities.Rol;
+
 
 import java.util.Date;
 import java.util.List;

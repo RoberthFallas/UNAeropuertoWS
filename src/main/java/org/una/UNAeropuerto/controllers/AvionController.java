@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.AvionDto;
-import org.una.UNAeropuerto.dto.AvionDto;
 import org.una.UNAeropuerto.services.IAvionService;
-
 import java.util.List;
 
 @RestController
@@ -91,7 +89,7 @@ public class AvionController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody AvionDto avion) {
         try {
