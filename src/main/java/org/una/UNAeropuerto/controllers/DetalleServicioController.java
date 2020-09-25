@@ -14,14 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/detalles_servicios")
-@Api(tags = {"Detalles_Servicios"})
+@Api(tags = {"Detalles Servicios"})
 public class DetalleServicioController {
     @Autowired
     private IDetalleServicioService detalleServicioService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo detalle Servicio basado en su Id", response = DetalleServicioDto.class, tags = "Detalles_Servicios")
+    @ApiOperation(value = "Obtiene un solo detalle Servicio basado en su Id", response = DetalleServicioDto.class, tags = "Detalles Servicios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             DetalleServicioDto result = detalleServicioService.getById(id);
@@ -36,7 +36,7 @@ public class DetalleServicioController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de detalles Servicios basándose en su estado", response = DetalleServicioDto.class, tags = "Detalles_Servicios")
+    @ApiOperation(value = "Obtiene una lista de detalles Servicios basándose en su estado", response = DetalleServicioDto.class, tags = "Detalles Servicios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<DetalleServicioDto> result = detalleServicioService.findByActivos(estado);
@@ -50,7 +50,7 @@ public class DetalleServicioController {
     }
     @GetMapping("findByTiposId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de detalles Servicios basándose de acuedo el id del tipo", response = DetalleServicioDto.class, tags = "Detalles_Servicios")
+    @ApiOperation(value = "Obtiene una lista de detalles Servicios basándose de acuedo el id del tipo", response = DetalleServicioDto.class, tags = "Detalles Servicios")
     public ResponseEntity<?> findByTiposId(@PathVariable(value = "id") long id) {
         try {
             List<DetalleServicioDto> result = detalleServicioService.findByTiposId(id);
@@ -74,7 +74,7 @@ public class DetalleServicioController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody DetalleServicioDto detalleServicio) {
         try {

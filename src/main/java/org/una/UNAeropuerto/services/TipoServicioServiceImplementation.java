@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.TipoServicioDto;
-import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.dto.TipoServicioDto;
-import org.una.UNAeropuerto.entities.TipoServicio;
-import org.una.UNAeropuerto.entities.Tipo;
 import org.una.UNAeropuerto.entities.TipoServicio;
 import org.una.UNAeropuerto.repositories.ITipoServicioRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

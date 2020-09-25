@@ -7,23 +7,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.TipoServicioDto;
-import org.una.UNAeropuerto.dto.TipoServicioDto;
-import org.una.UNAeropuerto.dto.TipoServicioDto;
-import org.una.UNAeropuerto.dto.TipoServicioDto;
 import org.una.UNAeropuerto.services.ITipoServicioService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/tipos_servicios")
-@Api(tags = {"Tipos_Servicios"})
+@Api(tags = {"Tipos Servicios"})
 public class TipoServicioController {
     @Autowired
     private ITipoServicioService tipoServicioService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Tipo Servicio basado en su Id", response = TipoServicioDto.class, tags = "Tipos_Servicios")
+    @ApiOperation(value = "Obtiene un solo Tipo Servicios basado en su Id", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             TipoServicioDto result = tipoServicioService.getById(id);
@@ -38,7 +35,7 @@ public class TipoServicioController {
 
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Tipo Servicio basada en su nombre", response = TipoServicioDto.class, tags = "Tipos_Servicios")
+    @ApiOperation(value = "Obtiene un solo Tipo Servicios basada en su nombre", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             TipoServicioDto result = tipoServicioService.getByNombre(nombre);
@@ -53,7 +50,7 @@ public class TipoServicioController {
     
     @GetMapping("findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos_Servicios")
+    @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
         try {
             List<TipoServicioDto> result = tipoServicioService.findByNombreAproximado(parametro);
@@ -68,7 +65,7 @@ public class TipoServicioController {
 
     @GetMapping("findByDescripcion/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos_Servicios")
+    @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> findByNombreDescripcionAprox(@PathVariable(value = "param") String parametro) {
         try {
             List<TipoServicioDto> result = tipoServicioService.findByDescripcionAproximado(parametro);
@@ -83,7 +80,7 @@ public class TipoServicioController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos_Servicios")
+    @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos Servicios")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<TipoServicioDto> result = tipoServicioService.findByEstado(estado);
@@ -115,7 +112,7 @@ public class TipoServicioController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Tipo Servicio)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Tipo Servicios)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -1,7 +1,6 @@
 package org.una.UNAeropuerto.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.una.UNAeropuerto.entities.Rol;
 import org.una.UNAeropuerto.entities.TipoServicio;
 
 import java.util.List;

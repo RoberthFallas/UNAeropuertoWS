@@ -3,18 +3,14 @@ package org.una.UNAeropuerto.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.una.UNAeropuerto.dto.*;
 import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.dto.TipoDto;
-import org.una.UNAeropuerto.entities.*;
-import org.una.UNAeropuerto.entities.Tipo;
 import org.una.UNAeropuerto.entities.Tipo;
 import org.una.UNAeropuerto.repositories.ITipoRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class TipoServiceImplementation implements ITipoService {
     @Autowired

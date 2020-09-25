@@ -1,11 +1,7 @@
 package org.una.UNAeropuerto.services;
-
-import org.una.UNAeropuerto.dto.AreaDto;
 import org.una.UNAeropuerto.dto.AvionDto;
-import org.una.UNAeropuerto.entities.Avion;
-
 import java.util.List;
-import java.util.Optional;
+
 
 public interface IAvionService {
 

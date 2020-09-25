@@ -1,10 +1,8 @@
 package org.una.UNAeropuerto.services;
+
 import org.una.UNAeropuerto.dto.TipoServicioDto;
-
-
-
 import java.util.List;
-import java.util.Optional;
+
 
 public interface ITipoServicioService {
 

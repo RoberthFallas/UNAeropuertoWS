@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.CobroDto;
-import org.una.UNAeropuerto.dto.CobroDto;
-import org.una.UNAeropuerto.entities.Cobro;
 import org.una.UNAeropuerto.entities.Cobro;
 import org.una.UNAeropuerto.repositories.ICobroRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class CobroServiceImplementation implements ICobroService {
 

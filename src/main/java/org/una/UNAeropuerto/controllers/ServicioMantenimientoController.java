@@ -7,15 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
-import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
-import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
 import org.una.UNAeropuerto.services.IServicioMantenimientoService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/servicios_mantenimientos")
-@Api(tags = {"Servicios_Mantenimientos"})
+@Api(tags = {"Servicios Mantenimientos"})
 
 public class ServicioMantenimientoController {
 
@@ -24,7 +22,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo servicios Mantenimientos basado en su Id", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene un solo Servicios Mantenimientos basado en su Id", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             ServicioMantenimientoDto result = servicioMantenimientoService.getById(id);
@@ -39,7 +37,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstado(estado);
@@ -54,7 +52,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoPago/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de pago", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de pago", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> findByEstadoPago(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstadoPago(estado);
@@ -69,7 +67,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoFinalizacion/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de de finalizacion", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de de finalizacion", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> findByEstadoFinalizacion(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstadoFinalizacion(estado);
@@ -84,7 +82,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoAvionesId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> findByAvionesId(@PathVariable(value = "id") long id) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByAvionesId(id);
@@ -99,7 +97,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoHangaresId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del hangar", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del hangar", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> findByHangarId(@PathVariable(value = "id") long id) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByHangaresId(id);
@@ -115,7 +113,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByTiposServiciosId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del tipo de servicio", response = ServicioMantenimientoDto.class, tags = "Servicios_Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del tipo de servicio", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
     public ResponseEntity<?> findByTipoServicosId(@PathVariable(value = "id") long id) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByTiposServiciosId(id);

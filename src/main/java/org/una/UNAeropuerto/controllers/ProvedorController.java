@@ -74,7 +74,7 @@ public class ProvedorController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody ProvedorDto provedor) {
         try {

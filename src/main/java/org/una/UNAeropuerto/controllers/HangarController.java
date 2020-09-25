@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.HangarDto;
-import org.una.UNAeropuerto.dto.HangarDto;
 import org.una.UNAeropuerto.services.IHangarService;
 
 import java.util.List;

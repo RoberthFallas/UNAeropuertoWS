@@ -1,12 +1,9 @@
 package org.una.UNAeropuerto.services;
 
 import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
-import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
-import org.una.UNAeropuerto.entities.ServicioMantenimiento;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 public interface IServicioMantenimientoService {
 

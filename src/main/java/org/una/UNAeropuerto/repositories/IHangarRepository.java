@@ -1,8 +1,6 @@
 package org.una.UNAeropuerto.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.una.UNAeropuerto.entities.Area;
-import org.una.UNAeropuerto.entities.Cobro;
 import org.una.UNAeropuerto.entities.Hangar;
 
 import java.util.List;

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import org.una.UNAeropuerto.dto.GastoReparacionDto;
 import org.una.UNAeropuerto.services.IGastoReparacionService;
 
@@ -14,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/gastos_reparaciones")
-@Api(tags = {"Gastos_Reparaciones"})
+@Api(tags = {"Gastos Reparaciones"})
 public class GastoReparacionController {
 
     @Autowired
@@ -22,7 +21,7 @@ public class GastoReparacionController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su Id", response = GastoReparacionDto.class, tags = "Gastos_Reparaciones")
+    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su Id", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             GastoReparacionDto result = gastoReparacionService.getById(id);
@@ -37,7 +36,7 @@ public class GastoReparacionController {
 
     @GetMapping("getByNumeroContrato/{numeroContrato}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su numero de contrato", response = GastoReparacionDto.class, tags =  "Gastos_Reparaciones")
+    @ApiOperation(value = "Obtiene un solo gasto reparacion basado en su numero de contrato", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
     public ResponseEntity<?> getByNumeroContrato(@PathVariable(value = "numeroContrato") long numeroContrato) {
         try {
             GastoReparacionDto result = gastoReparacionService.getByNumeroContrato(numeroContrato);
@@ -52,7 +51,7 @@ public class GastoReparacionController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado", response = GastoReparacionDto.class, tags =  "Gastos_Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByEstado(estado);
@@ -67,7 +66,7 @@ public class GastoReparacionController {
 
     @GetMapping("findByEstadoPago/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado de pago", response = GastoReparacionDto.class, tags =  "Gastos_Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su estado de pago", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
     public ResponseEntity<?> findByEstadoPago(@PathVariable(value = "estado") boolean estado) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByEstadoPago(estado);
@@ -82,7 +81,7 @@ public class GastoReparacionController {
 
     @GetMapping("findByAreaId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su area según id", response = GastoReparacionDto.class, tags =  "Gastos_Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de Gastos Reparaciones basándose en su area según id", response = GastoReparacionDto.class, tags =  "Gastos Reparaciones")
     public ResponseEntity<?> findByAreaId(@PathVariable(value = "id") long id) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByAreaId(id);
@@ -106,7 +105,7 @@ public class GastoReparacionController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<?> update(@RequestBody GastoReparacionDto gastoReparacion) {
         try {
