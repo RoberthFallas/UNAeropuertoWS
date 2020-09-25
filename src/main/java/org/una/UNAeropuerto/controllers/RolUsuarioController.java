@@ -28,7 +28,7 @@ import org.una.UNAeropuerto.services.IRolUsuarioService;
  */
 @RestController
 @RequestMapping("/rolesUsuarios")
-@Api(tags = {"Roles_Usuarios"})
+@Api(tags = {"Roles Usuarios"})
 public class RolUsuarioController {
 
     @Autowired
