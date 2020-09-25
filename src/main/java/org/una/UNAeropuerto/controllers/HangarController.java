@@ -10,6 +10,8 @@ import org.una.UNAeropuerto.dto.HangarDto;
 import org.una.UNAeropuerto.services.IHangarService;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 @RestController
 @RequestMapping("/hangares")
 @Api(tags = {"Hangares"})
@@ -21,6 +23,7 @@ public class HangarController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo hangar basado en su Id", response = HangarDto.class, tags = "Hangares")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             HangarDto result = hangarService.getById(id);
@@ -36,12 +39,13 @@ public class HangarController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de hangares basándose en su estado", response = HangarDto.class, tags = "Hangares")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<HangarDto> result = hangarService.findByEstado(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
-                
+
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
@@ -67,6 +71,7 @@ public class HangarController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> create(@RequestBody HangarDto hangar) {
         try {
             HangarDto result = hangarService.create(hangar);
@@ -78,6 +83,7 @@ public class HangarController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> update(@RequestBody HangarDto hangar) {
         try {
             HangarDto result = hangarService.update(hangar);

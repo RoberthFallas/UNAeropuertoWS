@@ -1,6 +1,5 @@
 package org.una.UNAeropuerto.controllers;
 
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +10,20 @@ import org.una.UNAeropuerto.dto.DetalleServicioDto;
 import org.una.UNAeropuerto.services.IDetalleServicioService;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/detalles_servicios")
 @Api(tags = {"Detalles Servicios"})
 public class DetalleServicioController {
+
     @Autowired
     private IDetalleServicioService detalleServicioService;
 
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo detalle Servicio basado en su Id", response = DetalleServicioDto.class, tags = "Detalles Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             DetalleServicioDto result = detalleServicioService.getById(id);
@@ -37,6 +39,7 @@ public class DetalleServicioController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de detalles Servicios basándose en su estado", response = DetalleServicioDto.class, tags = "Detalles Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<DetalleServicioDto> result = detalleServicioService.findByActivos(estado);
@@ -48,9 +51,11 @@ public class DetalleServicioController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("findByTiposId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de detalles Servicios basándose de acuedo el id del tipo", response = DetalleServicioDto.class, tags = "Detalles Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByTiposId(@PathVariable(value = "id") long id) {
         try {
             List<DetalleServicioDto> result = detalleServicioService.findByTiposId(id);
@@ -65,6 +70,7 @@ public class DetalleServicioController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> create(@RequestBody DetalleServicioDto detalleServicio) {
         try {
             DetalleServicioDto result = detalleServicioService.create(detalleServicio);
@@ -76,6 +82,7 @@ public class DetalleServicioController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> update(@RequestBody DetalleServicioDto detalleServicio) {
         try {
             DetalleServicioDto result = detalleServicioService.update(detalleServicio);

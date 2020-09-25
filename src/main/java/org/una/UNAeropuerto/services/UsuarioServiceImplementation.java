@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.AuthenticationRequest;
 import org.una.UNAeropuerto.dto.AuthenticationResponse;
 import org.una.UNAeropuerto.dto.UsuarioDto;
+import org.una.UNAeropuerto.entities.RolUsuario;
 import org.una.UNAeropuerto.entities.Usuario;
 import org.una.UNAeropuerto.jwt.JwtProvider;
 import org.una.UNAeropuerto.repositories.IUsuarioRepository;
@@ -145,7 +146,9 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (usuarioBuscado.isPresent()) {
             Usuario usuario = usuarioBuscado.get();
             List<GrantedAuthority> roles = new ArrayList<>();
-            roles.add(new SimpleGrantedAuthority("ADMIN"));
+            for (RolUsuario r : usuario.getRolUsuarioList()) {
+                roles.add(new SimpleGrantedAuthority(r.getRolesId().getNombre()));
+            }
             UserDetails userDetails = new User(usuario.getCedula(), usuario.getContrasenna(), roles);
             return userDetails;
         } else {
@@ -153,5 +156,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         }
 
     }
+
+
 
 }

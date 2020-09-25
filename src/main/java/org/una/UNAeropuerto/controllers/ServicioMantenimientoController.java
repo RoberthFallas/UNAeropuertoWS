@@ -10,6 +10,7 @@ import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
 import org.una.UNAeropuerto.services.IServicioMantenimientoService;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/servicios_mantenimientos")
@@ -23,6 +24,7 @@ public class ServicioMantenimientoController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Servicios Mantenimientos basado en su Id", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             ServicioMantenimientoDto result = servicioMantenimientoService.getById(id);
@@ -38,6 +40,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+  @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstado(estado);
@@ -53,6 +56,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByEstadoPago/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de pago", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstadoPago(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstadoPago(estado);
@@ -68,6 +72,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByEstadoFinalizacion/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de de finalizacion", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstadoFinalizacion(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByEstadoFinalizacion(estado);
@@ -83,6 +88,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByEstadoAvionesId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByAvionesId(@PathVariable(value = "id") long id) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByAvionesId(id);
@@ -98,6 +104,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByEstadoHangaresId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del hangar", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByHangarId(@PathVariable(value = "id") long id) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByHangaresId(id);
@@ -114,6 +121,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findByTiposServiciosId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del tipo de servicio", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByTipoServicosId(@PathVariable(value = "id") long id) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByTiposServiciosId(id);
@@ -128,6 +136,7 @@ public class ServicioMantenimientoController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> create(@RequestBody ServicioMantenimientoDto servicioMantenimiento) {
         try {
             ServicioMantenimientoDto result = servicioMantenimientoService.create(servicioMantenimiento);
@@ -139,6 +148,7 @@ public class ServicioMantenimientoController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> update(@RequestBody ServicioMantenimientoDto servicioMantenimiento) {
         try {
             ServicioMantenimientoDto result = servicioMantenimientoService.update(servicioMantenimiento);

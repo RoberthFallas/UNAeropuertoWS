@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -80,7 +81,7 @@ public class Usuario implements Serializable {
     private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
     private List<Bitacora> bitacoraList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId", fetch = FetchType.EAGER)
     private List<RolUsuario> rolUsuarioList;
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

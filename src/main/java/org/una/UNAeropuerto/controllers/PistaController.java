@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class PistaController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola Pista basada en su Id", response = PistaDto.class, tags = "Pistas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             PistaDto result = pistaService.getById(id);
@@ -52,6 +54,7 @@ public class PistaController {
     @GetMapping("getByNombre/{numPista}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola Pista basada en su número de pista", response = PistaDto.class, tags = "Pistas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNumeroPista(@PathVariable(value = "numPista") String numPista) {
         try {
             PistaDto result = pistaService.getByNumeroPista(numPista);
@@ -67,6 +70,7 @@ public class PistaController {
     @GetMapping("findByNumeroPista/{numPista}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Pistas cuyo número coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "numPista") String numPista) {
         try {
             List<PistaDto> result = pistaService.findByNumeroPista(numPista);
@@ -82,6 +86,7 @@ public class PistaController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<PistaDto> result = pistaService.findByEstado(estado);
@@ -96,6 +101,7 @@ public class PistaController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody PistaDto pista) {
         try {
             PistaDto result = pistaService.create(pista);
@@ -107,6 +113,7 @@ public class PistaController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> update(@RequestBody PistaDto pista) {
         try {
             PistaDto result = pistaService.update(pista);

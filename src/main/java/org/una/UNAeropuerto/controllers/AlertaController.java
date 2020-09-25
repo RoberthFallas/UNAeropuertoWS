@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class AlertaController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola alerta basada en su Id", response = AlertaDto.class, tags = "Alertas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             AlertaDto result = alertaService.getById(id);
@@ -51,6 +53,7 @@ public class AlertaController {
 
     @GetMapping("/findByTipo/{tipo}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene una lista de alertas basadas en su tipo.", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "tipo") Byte tipo) {
         try {
@@ -66,6 +69,7 @@ public class AlertaController {
 
     @GetMapping("/findByTitulo/{titulo}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene una lista de alertas cuyo título coinsida parcial o totalmente con el parámetro.", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> findByTitulo(@PathVariable(value = "titulo") String titulo) {
         try {
@@ -82,6 +86,7 @@ public class AlertaController {
     @GetMapping("/findByEmisor/{emisor}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coinsida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEmisor(@PathVariable(value = "emisor") String emisor) {
         try {
             List<AlertaDto> result = alertaService.findByEmisor(emisor);
@@ -111,6 +116,7 @@ public class AlertaController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody AlertaDto alert) {
         try {
             AlertaDto result = alertaService.create(alert);
@@ -122,6 +128,7 @@ public class AlertaController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> update(@RequestBody AlertaDto alert) {
         try {
             AlertaDto result = alertaService.update(alert);
