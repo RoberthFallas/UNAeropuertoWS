@@ -43,9 +43,7 @@ public class AutenticacionServiceImplementation implements IAutenticacionService
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getCedula(), authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-        //   Optional<Usuario> usuario = findByCedula(authenticationRequest.getCedula());
         UsuarioDto usuario = usuarioServiceImplementation.getByCedula(authenticationRequest.getCedula());
-//        if (usuario.isPresent()) {
         if (usuario != null) {
             authenticationResponse.setJwt(jwtProvider.generateToken(authenticationRequest));
             //UsuarioDto usuarioDto = MapperUtils.DtoFromEntity(usuario.get(), UsuarioDto.class);
