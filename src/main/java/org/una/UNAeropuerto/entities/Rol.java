@@ -45,10 +45,6 @@ public class Rol implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @Size(min = 1, max = 100)
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolesId")

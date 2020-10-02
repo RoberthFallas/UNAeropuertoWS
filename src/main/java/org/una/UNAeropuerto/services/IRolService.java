@@ -20,8 +20,6 @@ public interface IRolService {
 
     public List<RolDto> findByNombre(String nombre);
 
-    public List<RolDto> findByDescripcion(String descripcion);
-
     public List<RolDto> findByestado(boolean esatdo);
 
     public RolDto create(RolDto rol);
