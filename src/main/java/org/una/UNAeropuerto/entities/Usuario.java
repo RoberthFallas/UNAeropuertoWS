@@ -84,7 +84,7 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId", fetch = FetchType.EAGER)
     private List<RolUsuario> rolUsuarioList;
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Area areasId;
 
     public void refreshContrasenna(String newPassword) {

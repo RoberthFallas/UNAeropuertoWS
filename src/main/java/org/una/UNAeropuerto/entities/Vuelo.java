@@ -63,10 +63,10 @@ public class Vuelo implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vuelosId")
     private List<Direccion> direccionList;
     @JoinColumn(name = "aviones_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Avion avionesId;
     @JoinColumn(name = "pistas_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Pista pistasId;
     
 }

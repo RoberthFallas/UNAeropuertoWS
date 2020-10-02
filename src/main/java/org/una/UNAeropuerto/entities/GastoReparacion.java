@@ -69,7 +69,7 @@ public class GastoReparacion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gastosReparacionesId")
     private List<DetalleServicio> detalleServicioList;
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Area areasId;
 
 }

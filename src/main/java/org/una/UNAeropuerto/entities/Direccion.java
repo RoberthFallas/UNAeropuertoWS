@@ -44,10 +44,10 @@ public class Direccion implements Serializable {
     @Column(name = "direccion_vuelo")
     private String direccionVuelo;
     @JoinColumn(name = "vuelos_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Vuelo vuelosId;
     @JoinColumn(name = "lugares_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Lugar lugaresId;
 
 }

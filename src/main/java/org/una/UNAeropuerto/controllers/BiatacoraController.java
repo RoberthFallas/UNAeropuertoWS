@@ -102,38 +102,7 @@ public class BiatacoraController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/findByEstado/{state}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Biatacoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "state") boolean state) {
-        try {
-            List<BitacoraDto> result = bitacoraRepo.findByEstado(state);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/changeStateById/{id}/{state}")
-    @ResponseBody
-    @ApiOperation(value = "Cambia el estado de la bitácora con el Id indicado.", response = BitacoraDto.class, tags = "Biatacoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
-    public ResponseEntity<?> changeStateById(@PathVariable(value = "id") long id, @PathVariable(value = "state") boolean state) {
-        try {
-            BitacoraDto result = bitacoraRepo.changeStateById(id, state);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    
 
     @PostMapping("/create")
     @ResponseBody
