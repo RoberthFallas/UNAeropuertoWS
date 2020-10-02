@@ -50,9 +50,6 @@ public class Bitacora implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "tipo_cambio")
     private String tipoCambio;
-    @Basic(optional = false)
-    @Column(name = "activa")
-    private Boolean activa;
     @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Usuario usuariosId;
