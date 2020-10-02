@@ -21,7 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TipoDto {
+public class TipoReparacionDto {
 
     private Long id;
     private String nombre;

@@ -27,12 +27,12 @@ import lombok.ToString;
  * @author Roberth :)
  */
 @Entity
-@Table(name = "tipos")
+@Table(name = "tipos_reparaciones")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Tipo implements Serializable {
+public class TipoReparacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

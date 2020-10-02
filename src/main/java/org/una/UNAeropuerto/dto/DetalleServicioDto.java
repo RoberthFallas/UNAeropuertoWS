@@ -26,7 +26,7 @@ public class DetalleServicioDto {
     private Float monto;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
-    private TipoDto tiposId;
+    private TipoReparacionDto tiposId;
     @Setter(AccessLevel.NONE)
     private ProvedorDto provedoresId;
     @Setter(AccessLevel.NONE)

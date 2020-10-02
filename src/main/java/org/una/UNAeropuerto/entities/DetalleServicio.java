@@ -46,7 +46,7 @@ public class DetalleServicio implements Serializable {
     private Boolean activo;
     @JoinColumn(name = "tipos_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
-    private Tipo tiposId;
+    private TipoReparacion tiposId;
     @JoinColumn(name = "provedores_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Provedor provedoresId;
