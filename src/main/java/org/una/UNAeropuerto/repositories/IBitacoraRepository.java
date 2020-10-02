@@ -23,8 +23,6 @@ public interface IBitacoraRepository extends JpaRepository<Bitacora, Long> {
 
     public Optional<List<Bitacora>> findByusuariosIdId(long id);
 
-    public Optional<List<Bitacora>> findByActivaLike(boolean activa);
-
     @Query("select b from Bitacora b where DATE(b.fechaModificacion) like :fechaModificacion")
     public Optional<List<Bitacora>> findByFechaModificacion(@Param("fechaModificacion") Date fechaModificacion);
 

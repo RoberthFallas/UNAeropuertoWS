@@ -54,7 +54,7 @@ public class Bitacora implements Serializable {
     @Column(name = "activa")
     private Boolean activa;
     @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Usuario usuariosId;
 
 }
