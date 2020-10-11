@@ -60,8 +60,6 @@ public class Vuelo implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private Byte estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vuelosId")
-    private List<Direccion> direccionList;
     @JoinColumn(name = "aviones_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Avion avionesId;
