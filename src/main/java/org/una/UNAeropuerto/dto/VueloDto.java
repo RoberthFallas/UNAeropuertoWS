@@ -30,8 +30,6 @@ public class VueloDto {
     private Date horaLlegada;
     private Byte estado;
     @Setter(AccessLevel.NONE)
-    private List<DireccionDto> direccionList;
-    @Setter(AccessLevel.NONE)
     private AvionDto avionesId;
     @Setter(AccessLevel.NONE)
     private PistaDto pistasId;

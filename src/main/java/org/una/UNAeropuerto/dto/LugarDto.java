@@ -26,6 +26,4 @@ public class LugarDto {
     private Long id;
     private String nombre;
     private Boolean activo;
-    @Setter(AccessLevel.NONE)
-    private List<DireccionDto> direccionList;
 }
