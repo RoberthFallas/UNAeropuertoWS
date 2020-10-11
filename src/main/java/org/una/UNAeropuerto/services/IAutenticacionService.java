@@ -8,12 +8,11 @@ package org.una.UNAeropuerto.services;
 import org.una.UNAeropuerto.dto.AuthenticationRequest;
 import org.una.UNAeropuerto.dto.AuthenticationResponse;
 
-
-
 /**
  *
  * @author LordLalo
  */
 public interface IAutenticacionService {
-     public AuthenticationResponse login(AuthenticationRequest authenticationRequest);
+
+    public AuthenticationResponse login(AuthenticationRequest authenticationRequest);
 }

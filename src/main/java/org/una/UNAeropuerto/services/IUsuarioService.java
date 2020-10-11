@@ -6,9 +6,7 @@
 package org.una.UNAeropuerto.services;
 
 import java.util.List;
-import org.una.UNAeropuerto.dto.AuthenticationRequest;
 import org.una.UNAeropuerto.dto.UsuarioDto;
-import org.una.UNAeropuerto.entities.Usuario;
 
 /**
  *
@@ -29,6 +27,5 @@ public interface IUsuarioService {
     public UsuarioDto create(UsuarioDto usuario);
 
     public UsuarioDto ocultarById(long id);
-    // public Optional<ClienteDTO> findByCedula(String cedula);
 
 }

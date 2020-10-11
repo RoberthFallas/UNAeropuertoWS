@@ -18,13 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-
-
 /**
  *
  * @author LordLalo
  */
-public class CustomAccessDeniedHandler implements AccessDeniedHandler  {
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException arg2)
@@ -43,6 +41,4 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler  {
 
     }
 
-    
-    
 }

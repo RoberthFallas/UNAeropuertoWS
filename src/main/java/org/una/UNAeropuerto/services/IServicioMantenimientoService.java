@@ -4,9 +4,7 @@ import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
 import java.util.Date;
 import java.util.List;
 
-
 public interface IServicioMantenimientoService {
-
 
     public ServicioMantenimientoDto getByNumeroFactura(long numeroFactura);
 

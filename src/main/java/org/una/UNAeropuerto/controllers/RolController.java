@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class RolController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             RolDto result = rolService.getById(id);
@@ -52,6 +54,7 @@ public class RolController {
     @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Rol basado en su nombre", response = RolDto.class, tags = "Roles")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             RolDto result = rolService.getByNombre(nombre);
@@ -64,24 +67,10 @@ public class RolController {
         }
     }
 
-    @GetMapping("/findByDescrip/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuya descripción coincida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
-    public ResponseEntity<?> findByDescripcion(@PathVariable(value = "param") String param) {
-        try {
-            List<RolDto> result = rolService.findByDescripcion(param);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/findByNombre/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String param) {
         try {
             List<RolDto> result = rolService.findByNombre(param);
@@ -97,6 +86,7 @@ public class RolController {
     @GetMapping("/findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de roles basándose en su estado", response = RolDto.class, tags = "Roles")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<RolDto> result = rolService.findByestado(estado);
@@ -111,6 +101,7 @@ public class RolController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> create(@RequestBody RolDto rol) {
         try {
             RolDto result = rolService.create(rol);
@@ -122,6 +113,7 @@ public class RolController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> update(@RequestBody RolDto rol) {
         try {
             RolDto result = rolService.update(rol);

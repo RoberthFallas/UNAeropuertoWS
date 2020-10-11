@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class RolUsuarioController {
     @GetMapping("/findByUserId/{id}")
     @ResponseBody
     @ApiOperation(value = "Retorna lista de Roles_Usuario tomando como parámetro el Id del usuario al que pertenecen", response = UsuarioDto.class, tags = "Usuarios")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") long id) {
         try {
             List<RolUsuarioDto> result = rolUserService.findByUsuarioId(id);
@@ -51,6 +53,7 @@ public class RolUsuarioController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> create(@RequestBody RolUsuarioDto rolUsuario) {
         try {
             RolUsuarioDto result = rolUserService.create(rolUsuario);
@@ -65,6 +68,7 @@ public class RolUsuarioController {
     @GetMapping("/changeStateById/{id}/{state}")
     @ResponseBody
     @ApiOperation(value = "Cambia estado (Activo inactivo) de RolUsuaario especificado en id", response = UsuarioDto.class, tags = "Usuarios")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> changeStateById(@PathVariable(value = "id") long id,
             @PathVariable(value = "state") boolean state) {
         try {

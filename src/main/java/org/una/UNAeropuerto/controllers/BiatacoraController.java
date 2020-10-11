@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class BiatacoraController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un sola bitácora basada en su Id", response = BitacoraDto.class, tags = "Biatacoras")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             BitacoraDto result = bitacoraRepo.getById(id);
@@ -52,6 +54,7 @@ public class BiatacoraController {
     @GetMapping("/getByUserId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Biatacoras")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> getByUserId(@PathVariable(value = "id") long id) {
         try {
             List<BitacoraDto> result = bitacoraRepo.findByUserId(id);
@@ -67,6 +70,7 @@ public class BiatacoraController {
     @GetMapping("/findByFecha/{fecha}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Biatacoras")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> findByFecha(@PathVariable(value = "fecha") String fecha) {
         try {
             Date fFecha = java.sql.Date.valueOf(fecha);
@@ -83,6 +87,7 @@ public class BiatacoraController {
     @GetMapping("/findBetweenFechas/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras que hallan sido creadas entre las fechas especificadas.", response = BitacoraDto.class, tags = "Biatacoras")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> findBetweenFechas(@PathVariable(value = "start") String start,
             @PathVariable(value = "end") String end) {
         try {
@@ -97,39 +102,11 @@ public class BiatacoraController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/findByEstado/{state}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Biatacoras")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "state") boolean state) {
-        try {
-            List<BitacoraDto> result = bitacoraRepo.findByEstado(state);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/changeStateById/{id}/{state}")
-    @ResponseBody
-    @ApiOperation(value = "Cambia el estado de la bitácora con el Id indicado.", response = BitacoraDto.class, tags = "Biatacoras")
-    public ResponseEntity<?> changeStateById(@PathVariable(value = "id") long id, @PathVariable(value = "state") boolean state) {
-        try {
-            BitacoraDto result = bitacoraRepo.changeStateById(id, state);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> create(@RequestBody BitacoraDto bitacora) {
         try {
             BitacoraDto result = bitacoraRepo.create(bitacora);

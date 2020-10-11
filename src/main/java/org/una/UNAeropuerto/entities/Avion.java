@@ -52,7 +52,7 @@ public class Avion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avionesId")
     private List<ServicioMantenimiento> servicioMantenimientoList;
     @JoinColumn(name = "aerolineas_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Aerolinea aerolineasId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "avionesId")
     private List<Vuelo> vueloList;

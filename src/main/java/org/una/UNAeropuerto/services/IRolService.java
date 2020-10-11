@@ -10,7 +10,7 @@ import org.una.UNAeropuerto.dto.RolDto;
 
 /**
  *
- * @author rober
+ * @author Roberth :)
  */
 public interface IRolService {
 
@@ -19,8 +19,6 @@ public interface IRolService {
     public RolDto getByNombre(String nombre);
 
     public List<RolDto> findByNombre(String nombre);
-
-    public List<RolDto> findByDescripcion(String descripcion);
 
     public List<RolDto> findByestado(boolean esatdo);
 

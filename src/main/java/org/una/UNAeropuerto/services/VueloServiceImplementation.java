@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.VueloDto;
-import org.una.UNAeropuerto.entities.Direccion;
 import org.una.UNAeropuerto.entities.Vuelo;
-import org.una.UNAeropuerto.repositories.IDireccionRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 import org.una.UNAeropuerto.repositories.IVueloRepository;
 
@@ -28,8 +26,6 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Autowired
     private IVueloRepository vueloRepo;
-    @Autowired
-    private IDireccionRepository direcRepo;
 
     @Override
     @Transactional(readOnly = true)
@@ -105,11 +101,7 @@ public class VueloServiceImplementation implements IVueloService {
     @Transactional
     public VueloDto create(VueloDto vuelo) {
         Vuelo entityVuelo = MapperUtils.entityFromDto(vuelo, Vuelo.class);
-        Direccion direc = MapperUtils.entityFromDto(vuelo.getDireccionList().get(0), Direccion.class);
-        entityVuelo.getDireccionList().clear();
         entityVuelo = vueloRepo.save(entityVuelo);
-        direc.setVuelosId(entityVuelo);
-        direcRepo.save(direc);
         return MapperUtils.DtoFromEntity(entityVuelo, VueloDto.class);
     }
 

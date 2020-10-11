@@ -3,7 +3,6 @@ package org.una.UNAeropuerto.services;
 import org.una.UNAeropuerto.dto.TipoServicioDto;
 import java.util.List;
 
-
 public interface ITipoServicioService {
 
     public TipoServicioDto getByNombre(String nombre);
