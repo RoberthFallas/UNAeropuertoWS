@@ -48,6 +48,6 @@ public class TipoReparacion implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiposId")
-    private List<DetalleServicio> detalleServicioList;
+    private List<GastoReparacion> gastoReparList;
 
 }

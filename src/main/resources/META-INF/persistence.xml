@@ -20,7 +20,6 @@
     <class>org.una.UNAeropuerto.entities.ServicioMantenimiento</class>
     <class>org.una.UNAeropuerto.entities.Vuelo</class>
     <class>org.una.UNAeropuerto.entities.Lugar</class>
-    <class>org.una.UNAeropuerto.entities.DetalleServicio</class>
     <class>org.una.UNAeropuerto.entities.TipoReparacion</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://107.180.0.205:3306/BD_PF_Grupo3?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
