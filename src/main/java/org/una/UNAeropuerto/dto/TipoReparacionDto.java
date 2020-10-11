@@ -27,5 +27,5 @@ public class TipoReparacionDto {
     private String nombre;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
-    private List<DetalleServicioDto> detalleServicioList;
+    private List<GastoReparacionDto> gastoReparList;
 }
