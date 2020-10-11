@@ -47,5 +47,9 @@ public class Lugar implements Serializable {
     @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugarSalida")
+    private List<Vuelo> vuelosSalidaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugarLlegada")
+    private List<Vuelo> vuelosLlegadaList;
 
 }

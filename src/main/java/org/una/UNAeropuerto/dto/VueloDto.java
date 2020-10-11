@@ -6,7 +6,6 @@
 package org.una.UNAeropuerto.dto;
 
 import java.util.Date;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,4 +32,8 @@ public class VueloDto {
     private AvionDto avionesId;
     @Setter(AccessLevel.NONE)
     private PistaDto pistasId;
+    @Setter(AccessLevel.NONE)
+    private LugarDto lugarSalida;
+    @Setter(AccessLevel.NONE)
+    private LugarDto lugarLlegada;
 }
