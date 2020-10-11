@@ -66,10 +66,14 @@ public class GastoReparacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gastosReparacionesId")
-    private List<DetalleServicio> detalleServicioList;
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Area areasId;
+    @JoinColumn(name = "tipos_id", referencedColumnName = "id")
+    @ManyToOne(/*optional = false*/)
+    private TipoReparacion tiposId;
+    @JoinColumn(name = "provedores_id", referencedColumnName = "id")
+    @ManyToOne(/*optional = false*/)
+    private Provedor provedoresId;
 
 }
