@@ -58,16 +58,6 @@ public class RolServiceImplementation implements IRolService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<RolDto> findByDescripcion(String descripcion) {
-        Optional<List<Rol>> result = rolRepo.findByDescripcionContaining(descripcion);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), RolDto.class);
-        }
-        return new ArrayList();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<RolDto> findByestado(boolean esatdo) {
         Optional<List<Rol>> result = rolRepo.findByActivoLike(esatdo);
         if (result.isPresent()) {

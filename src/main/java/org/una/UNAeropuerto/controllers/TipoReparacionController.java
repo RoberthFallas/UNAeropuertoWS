@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.una.UNAeropuerto.dto.TipoDto;
+import org.una.UNAeropuerto.dto.TipoReparacionDto;
 import org.una.UNAeropuerto.services.ITipoService;
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
-@RequestMapping("/tipos")
-@Api(tags = {"Tipos"})
-public class TipoController {
+@RequestMapping("/tiposReparaciones")
+@Api(tags = {"Tipos Reparaciones"})
+public class TipoReparacionController {
 
     @Autowired
     private ITipoService tipoService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo tipo basado en su Id", response = TipoDto.class, tags = "Tipos")
+    @ApiOperation(value = "Obtiene un solo tipo basado en su Id", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            TipoDto result = tipoService.getById(id);
+            TipoReparacionDto result = tipoService.getById(id);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -37,11 +37,11 @@ public class TipoController {
 
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoDto.class, tags = "Tipos")
+    @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            TipoDto result = tipoService.getByNombre(nombre);
+            TipoReparacionDto result = tipoService.getByNombre(nombre);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -53,11 +53,11 @@ public class TipoController {
 
     @GetMapping("findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de tipos cuyo nombre coinscida parcial o totalmente con el parámetro.", response = TipoDto.class, tags = "Tipos")
+    @ApiOperation(value = "Obtiene una lista de tipos cuyo nombre coinscida parcial o totalmente con el parámetro.", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
         try {
-            List<TipoDto> result = tipoService.findByNombre(parametro);
+            List<TipoReparacionDto> result = tipoService.findByNombre(parametro);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -69,11 +69,11 @@ public class TipoController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de tipos basándose en su estado", response = TipoDto.class, tags = "Tipos")
+    @ApiOperation(value = "Obtiene una lista de tipos basándose en su estado", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            List<TipoDto> result = tipoService.findByActivos(estado);
+            List<TipoReparacionDto> result = tipoService.findByActivos(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -86,9 +86,9 @@ public class TipoController {
     @PostMapping("/create")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
-    public ResponseEntity<?> create(@RequestBody TipoDto tipo) {
+    public ResponseEntity<?> create(@RequestBody TipoReparacionDto tipo) {
         try {
-            TipoDto result = tipoService.create(tipo);
+            TipoReparacionDto result = tipoService.create(tipo);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -98,9 +98,9 @@ public class TipoController {
     @PutMapping("/update")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
-    public ResponseEntity<?> update(@RequestBody TipoDto tipo) {
+    public ResponseEntity<?> update(@RequestBody TipoReparacionDto tipo) {
         try {
-            TipoDto result = tipoService.update(tipo);
+            TipoReparacionDto result = tipoService.update(tipo);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }

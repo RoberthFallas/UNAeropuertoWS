@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +22,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class RolUsuarioDto {
+
     private Long id;
+    private Date fechaRegistro;
+    private Date fechaModificacion;
     private Boolean activo;
-  //  @Setter(AccessLevel.NONE)
+    //  @Setter(AccessLevel.NONE)
     private RolDto rolesId;
     @Setter(AccessLevel.NONE)
     private UsuarioDto usuariosId;

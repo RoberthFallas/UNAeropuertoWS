@@ -21,7 +21,6 @@ public class RolDto {
 
     private Long id;
     private String nombre;
-    private String descripcion;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
     private List<RolUsuarioDto> rolUsuarioList;
