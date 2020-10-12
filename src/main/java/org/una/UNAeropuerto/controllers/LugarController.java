@@ -69,7 +69,7 @@ public class LugarController {
 
     @GetMapping("findByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
+    @ApiOperation(value = "Obtiene una lista de lugares cuyo nombre coincida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -85,7 +85,7 @@ public class LugarController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares basándose en su estado", response = LugarDto.class, tags = "Lugares")
+    @ApiOperation(value = "Obtiene una lista de lugares basándose en su estado", response = LugarDto.class, tags = "Lugares")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
@@ -120,7 +120,7 @@ public class LugarController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el lugar)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el lugar)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

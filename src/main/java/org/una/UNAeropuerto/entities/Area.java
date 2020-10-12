@@ -62,8 +62,6 @@ public class Area implements Serializable {
     @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
-    private List<Alerta> alertaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areasId")
     private List<Usuario> usuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areasId")

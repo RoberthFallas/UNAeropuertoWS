@@ -37,7 +37,7 @@ public class RolController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene un solo rol basado en su Id", response = RolDto.class, tags = "Roles")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -53,7 +53,7 @@ public class RolController {
 
     @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su nombre", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene un solo rol basado en su nombre", response = RolDto.class, tags = "Roles")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -69,7 +69,7 @@ public class RolController {
 
     @GetMapping("/findByNombre/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coincida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String param) {
         try {
@@ -120,7 +120,7 @@ public class RolController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el rol)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el rol)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -31,8 +31,6 @@ public class AreaDto {
     private Date fechaModificacion;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
-    private List<AlertaDto> alertaList;
-    @Setter(AccessLevel.NONE)
     private List<UsuarioDto> usuarioList;
     @Setter(AccessLevel.NONE)
     private List<GastoReparacionDto> gastoReparacionList;

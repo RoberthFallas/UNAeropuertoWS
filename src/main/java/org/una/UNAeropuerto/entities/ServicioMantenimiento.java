@@ -63,9 +63,6 @@ public class ServicioMantenimiento implements Serializable {
     @JoinColumn(name = "aviones_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Avion avionesId;
-    @JoinColumn(name = "hangares_id", referencedColumnName = "id")
-    @ManyToOne
-    private Hangar hangaresId;
     @JoinColumn(name = "tipos_servicios_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private TipoServicio tiposServiciosId;

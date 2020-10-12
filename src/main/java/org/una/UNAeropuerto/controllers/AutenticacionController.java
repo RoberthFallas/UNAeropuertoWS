@@ -30,7 +30,7 @@ import org.una.UNAeropuerto.services.IAutenticacionService;
  */
 @RestController
 @RequestMapping("/autenticacion")
-@Api(tags = {"Autenticacion"})
+@Api(tags = {"Autenticación"})
 public class AutenticacionController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class AutenticacionController {
 
     @PostMapping("/login")
     @ResponseBody
-    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDto.class, tags = "Autenticacion")
+    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDto.class, tags = "Autenticación")
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -52,7 +52,7 @@ public class AutenticacionController {
                 authenticationResponse = token;
                 return new ResponseEntity(authenticationResponse, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Credenciales invalidos", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Credenciales inválidos", HttpStatus.UNAUTHORIZED);
             }
         } catch (InternalAuthenticationServiceException | BadCredentialsException AutEx) {
             return new ResponseEntity<>(AutEx, HttpStatus.NO_CONTENT);

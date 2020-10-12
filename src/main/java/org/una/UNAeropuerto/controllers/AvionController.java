@@ -21,7 +21,7 @@ public class AvionController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo avion basada en su Id", response = AvionDto.class, tags = "Aviones")
+    @ApiOperation(value = "Obtiene un solo avión basado en su Id", response = AvionDto.class, tags = "Aviones")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -37,7 +37,7 @@ public class AvionController {
 
     @GetMapping("getByMatricula/{matricula}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo avion basado en su matricula", response = AvionDto.class, tags = "Aviones")
+    @ApiOperation(value = "Obtiene un solo avión basado en su matrícula", response = AvionDto.class, tags = "Aviones")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByMatricula(@PathVariable(value = "matricula") String matricula) {
         try {
@@ -69,7 +69,7 @@ public class AvionController {
 
     @GetMapping("findByAerolineaId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de aviones basándose en su aerolinea", response = AvionDto.class, tags = "Aviones")
+    @ApiOperation(value = "Obtiene una lista de aviones basándose en su aerolínea", response = AvionDto.class, tags = "Aviones")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByAerolineaId(@PathVariable(value = "id") long id) {
         try {
@@ -104,7 +104,7 @@ public class AvionController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el avion)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el avión)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

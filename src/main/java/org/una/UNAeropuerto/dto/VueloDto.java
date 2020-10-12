@@ -36,4 +36,6 @@ public class VueloDto {
     private LugarDto lugarSalida;
     @Setter(AccessLevel.NONE)
     private LugarDto lugarLlegada;
+    @Setter(AccessLevel.NONE)
+    private AlertaDto alerta;
 }

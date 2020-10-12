@@ -70,7 +70,7 @@ public class AlertaController {
     @GetMapping("/findByTitulo/{titulo}")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
-    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coinsida parcial o totalmente con el parámetro.", response = AlertaDto.class, tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coincida parcial o totalmente con el parámetro.", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> findByTitulo(@PathVariable(value = "titulo") String titulo) {
         try {
             List<AlertaDto> result = alertaService.findByTitulo(titulo);
@@ -85,26 +85,11 @@ public class AlertaController {
 
     @GetMapping("/findByEmisor/{emisor}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coinsida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coincida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEmisor(@PathVariable(value = "emisor") String emisor) {
         try {
             List<AlertaDto> result = alertaService.findByEmisor(emisor);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/findByArea/{id}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas que pertenezcan al área especificada", response = AlertaDto.class, tags = "Alertas")
-    public ResponseEntity<?> findByEmisor(@PathVariable(value = "id") Long id) {
-        try {
-            List<AlertaDto> result = alertaService.findByAreaIdId(id);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -135,7 +120,7 @@ public class AlertaController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el alerta)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró la alerta)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

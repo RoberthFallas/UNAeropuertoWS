@@ -88,15 +88,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
         return new ArrayList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ServicioMantenimientoDto> findByHangaresId(long id) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByHangaresId(id);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
-        }
-        return new ArrayList();
-    }
+
 
     @Override
     @Transactional(readOnly = true)

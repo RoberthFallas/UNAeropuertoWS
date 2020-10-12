@@ -37,7 +37,7 @@ public class PistaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una sola Pista basada en su Id", response = PistaDto.class, tags = "Pistas")
+    @ApiOperation(value = "Obtiene una sola pista basada en su Id", response = PistaDto.class, tags = "Pistas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -53,7 +53,7 @@ public class PistaController {
 
     @GetMapping("getByNombre/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una sola Pista basada en su número de pista", response = PistaDto.class, tags = "Pistas")
+    @ApiOperation(value = "Obtiene una sola pista basada en su número de pista", response = PistaDto.class, tags = "Pistas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNumeroPista(@PathVariable(value = "numPista") String numPista) {
         try {
@@ -69,7 +69,7 @@ public class PistaController {
 
     @GetMapping("findByNumeroPista/{numPista}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Pistas cuyo número coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    @ApiOperation(value = "Obtiene una lista de pistas cuyo número coincida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "numPista") String numPista) {
         try {
@@ -85,7 +85,7 @@ public class PistaController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coinsida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
+    @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coincida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
@@ -120,7 +120,7 @@ public class PistaController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el la pista)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró la pista)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

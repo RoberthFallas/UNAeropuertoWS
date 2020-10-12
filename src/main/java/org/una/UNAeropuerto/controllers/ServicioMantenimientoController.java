@@ -100,21 +100,7 @@ public class ServicioMantenimientoController {
         }
     }
 
-    @GetMapping("findByEstadoHangaresId/{id}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del hangar", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> findByHangarId(@PathVariable(value = "id") long id) {
-        try {
-            List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByHangaresId(id);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
 
     @GetMapping("findByTiposServiciosId/{id}")
     @ResponseBody

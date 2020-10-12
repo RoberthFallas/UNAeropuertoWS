@@ -12,7 +12,7 @@ import org.una.UNAeropuerto.services.IParamSistemaService;
 
 @RestController
 @RequestMapping("/param_sistema")
-@Api(tags = {"Param Sistema"})
+@Api(tags = {"Parámetros Sistema"})
 public class ParamSistemaController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class ParamSistemaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo param sistema basado en su Id", response = ParamSistemaDto.class, tags = "Param Sistema")
+    @ApiOperation(value = "Obtiene un solo parámetro sistema basado en su Id", response = ParamSistemaDto.class, tags = "Parámetros Sistema")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -55,7 +55,7 @@ public class ParamSistemaController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Param Sistema)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el parámetro sistema)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
