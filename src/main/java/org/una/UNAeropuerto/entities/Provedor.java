@@ -48,6 +48,6 @@ public class Provedor implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "provedoresId")
-    private List<DetalleServicio> detalleServicioList;
+    private List<GastoReparacion> gastoReparListList;
 
 }

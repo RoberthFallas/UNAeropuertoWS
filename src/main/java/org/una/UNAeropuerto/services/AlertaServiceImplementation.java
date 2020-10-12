@@ -67,16 +67,6 @@ public class AlertaServiceImplementation implements IAlertaService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<AlertaDto> findByAreaIdId(long id) {
-        Optional<List<Alerta>> result = alertRepo.findByAreaIdId(id);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), AlertaDto.class);
-        }
-        return new ArrayList();
-    }
-
-    @Override
     @Transactional
     public AlertaDto create(AlertaDto alerta) {
         Alerta entityAlert = MapperUtils.entityFromDto(alerta, Alerta.class);

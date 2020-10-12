@@ -27,5 +27,7 @@ public class LugarDto {
     private String nombre;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
-    private List<DireccionDto> direccionList;
+    private List<VueloDto> vuelosSalidaList;
+    @Setter(AccessLevel.NONE)
+    private List<VueloDto> vuelosLlegadaList;
 }

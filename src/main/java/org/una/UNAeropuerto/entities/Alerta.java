@@ -6,15 +6,8 @@
 package org.una.UNAeropuerto.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -57,8 +50,7 @@ public class Alerta implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "activa")
     private Boolean activa;
-    @JoinColumn(name = "area_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Area areaId;
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "alertasId")
+    private List<Vuelo> vuelosList;
 
 }

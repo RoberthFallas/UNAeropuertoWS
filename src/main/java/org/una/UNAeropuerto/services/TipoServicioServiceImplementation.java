@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TipoServicioServiceImplementation implements  ITipoServicioService {
+public class TipoServicioServiceImplementation implements ITipoServicioService {
 
     @Autowired
     ITipoServicioRepository tipoServicioRepository;
+
     @Override
     @Transactional(readOnly = true)
     public TipoServicioDto getByNombre(String nombre) {

@@ -26,7 +26,6 @@ public class BitacoraDto {
     private Long id;
     private Date fechaModificacion;
     private String tipoCambio;
-    private Boolean activa;
     @Setter(AccessLevel.NONE)
     private UsuarioDto usuariosId;
     

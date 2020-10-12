@@ -32,8 +32,7 @@ public class ServicioMantenimientoDto {
     private Boolean activo;
     @Setter(AccessLevel.NONE)
     private AvionDto avionesId;
-    @Setter(AccessLevel.NONE)
-    private HangarDto hangaresId;
+
     @Setter(AccessLevel.NONE)
     private TipoServicioDto tiposServiciosId;
     @Setter(AccessLevel.NONE)

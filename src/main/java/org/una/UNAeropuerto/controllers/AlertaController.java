@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class AlertaController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola alerta basada en su Id", response = AlertaDto.class, tags = "Alertas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             AlertaDto result = alertaService.getById(id);
@@ -51,6 +53,7 @@ public class AlertaController {
 
     @GetMapping("/findByTipo/{tipo}")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene una lista de alertas basadas en su tipo.", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "tipo") Byte tipo) {
         try {
@@ -66,7 +69,8 @@ public class AlertaController {
 
     @GetMapping("/findByTitulo/{titulo}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coinsida parcial o totalmente con el parámetro.", response = AlertaDto.class, tags = "Alertas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo título coincida parcial o totalmente con el parámetro.", response = AlertaDto.class, tags = "Alertas")
     public ResponseEntity<?> findByTitulo(@PathVariable(value = "titulo") String titulo) {
         try {
             List<AlertaDto> result = alertaService.findByTitulo(titulo);
@@ -81,7 +85,8 @@ public class AlertaController {
 
     @GetMapping("/findByEmisor/{emisor}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coinsida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
+    @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coincida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEmisor(@PathVariable(value = "emisor") String emisor) {
         try {
             List<AlertaDto> result = alertaService.findByEmisor(emisor);
@@ -94,23 +99,9 @@ public class AlertaController {
         }
     }
 
-    @GetMapping("/findByArea/{id}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas que pertenezcan al área especificada", response = AlertaDto.class, tags = "Alertas")
-    public ResponseEntity<?> findByEmisor(@PathVariable(value = "id") Long id) {
-        try {
-            List<AlertaDto> result = alertaService.findByAreaIdId(id);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody AlertaDto alert) {
         try {
             AlertaDto result = alertaService.create(alert);
@@ -122,13 +113,14 @@ public class AlertaController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> update(@RequestBody AlertaDto alert) {
         try {
             AlertaDto result = alertaService.update(alert);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el alerta)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró la alerta)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

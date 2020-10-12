@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ServicioMantenimientoServiceServiceImplementation implements IServicioMantenimientoService {
 
     @Autowired
     IServicioMantenimientoRepository servicioMantenimientoRepository;
-    
+
     @Override
     @Transactional(readOnly = true)
     public ServicioMantenimientoDto getByNumeroFactura(long numeroFactura) {
@@ -40,7 +41,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
     @Override
     @Transactional(readOnly = true)
     public List<ServicioMantenimientoDto> findByFechaServicioBetween(Date startDate, Date endDate) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByFechaServicioBetween(startDate,endDate);
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByFechaServicioBetween(startDate, endDate);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }
@@ -87,15 +88,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
         return new ArrayList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ServicioMantenimientoDto> findByHangaresId(long id) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByHangaresId(id);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
-        }
-        return new ArrayList();
-    }
+
 
     @Override
     @Transactional(readOnly = true)

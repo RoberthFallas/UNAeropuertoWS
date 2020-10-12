@@ -60,7 +60,7 @@ public class CobroServiceImplementation implements ICobroService {
     @Override
     @Transactional(readOnly = true)
     public List<CobroDto> findByMontoBetween(long montoInicial, long montoFinal) {
-        Optional<List<Cobro>> result = cobroRepository.findByMontoBetween(montoInicial,montoFinal);
+        Optional<List<Cobro>> result = cobroRepository.findByMontoBetween(montoInicial, montoFinal);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), CobroDto.class);
         }

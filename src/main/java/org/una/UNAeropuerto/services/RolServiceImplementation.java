@@ -20,7 +20,6 @@ import org.una.UNAeropuerto.utils.MapperUtils;
  *
  * @author Roberth :)
  */
-
 @Service
 public class RolServiceImplementation implements IRolService {
 
@@ -51,16 +50,6 @@ public class RolServiceImplementation implements IRolService {
     @Transactional(readOnly = true)
     public List<RolDto> findByNombre(String nombre) {
         Optional<List<Rol>> result = rolRepo.findByNombreContaining(nombre);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), RolDto.class);
-        }
-        return new ArrayList();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<RolDto> findByDescripcion(String descripcion) {
-        Optional<List<Rol>> result = rolRepo.findByDescripcionContaining(descripcion);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), RolDto.class);
         }

@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class LugarController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Lugar basado en su Id", response = LugarDto.class, tags = "Lugares")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             LugarDto result = lugarService.getById(id);
@@ -52,6 +54,7 @@ public class LugarController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Lugar basado en su nombre", response = LugarDto.class, tags = "Lugares")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             LugarDto result = lugarService.getByNombre(nombre);
@@ -66,7 +69,8 @@ public class LugarController {
 
     @GetMapping("findByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares cuyo nombre coinsida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
+    @ApiOperation(value = "Obtiene una lista de lugares cuyo nombre coincida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "nombre") String nombre) {
         try {
             List<LugarDto> result = lugarService.findByNombre(nombre);
@@ -81,7 +85,8 @@ public class LugarController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Lugares basándose en su estado", response = LugarDto.class, tags = "Lugares")
+    @ApiOperation(value = "Obtiene una lista de lugares basándose en su estado", response = LugarDto.class, tags = "Lugares")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<LugarDto> result = lugarService.findByEstado(estado);
@@ -96,6 +101,7 @@ public class LugarController {
 
     @PostMapping("/create")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> create(@RequestBody LugarDto lugar) {
         try {
             LugarDto result = lugarService.create(lugar);
@@ -107,13 +113,14 @@ public class LugarController {
 
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> update(@RequestBody LugarDto provedor) {
         try {
             LugarDto result = lugarService.update(provedor);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el lugar)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el lugar)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

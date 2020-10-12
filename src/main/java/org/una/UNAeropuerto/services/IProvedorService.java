@@ -1,8 +1,7 @@
 package org.una.UNAeropuerto.services;
-import org.una.UNAeropuerto.dto.ProvedorDto;
+
 import org.una.UNAeropuerto.dto.ProvedorDto;
 import java.util.List;
-
 
 public interface IProvedorService {
 

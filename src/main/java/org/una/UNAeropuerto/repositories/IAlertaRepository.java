@@ -24,6 +24,6 @@ public interface IAlertaRepository extends JpaRepository<Alerta, Long> {
 
     public Optional<List<Alerta>> findByEmisorContaining(String id);
 
-    public Optional<List<Alerta>> findByAreaIdId(long id);
+
 
 }
