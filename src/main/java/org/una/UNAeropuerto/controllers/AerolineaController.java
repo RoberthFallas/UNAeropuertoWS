@@ -85,7 +85,7 @@ public class AerolineaController {
 
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de aerolíneas cuyo estado coincida con el parámetro.", response = AerolineaDto.class, tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de aerolíneas cuyo estado coincida con el parámetro.", response = AerolineaDto.class, tags = "Aerolíneas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "state") Boolean state) {
         try {

@@ -29,7 +29,6 @@ public class AlertaDto {
     private Byte tipo;
     private String titulo;
     private String cuerpo;
-    private String emisor;
     private Boolean activa;
     @Setter(AccessLevel.NONE)
     private List<VueloDto> vueloList;

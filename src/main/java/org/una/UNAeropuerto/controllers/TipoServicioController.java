@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/tipos_servicios")
-@Api(tags = {"Tipos Servicios"})
+@Api(tags = {"Tipos de Servicios"})
 public class TipoServicioController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class TipoServicioController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Tipo Servicios basado en su Id", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene un solo Tipo Servicios basado en su Id", response = TipoServicioDto.class, tags = "Tipos de Servicios")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -37,7 +37,7 @@ public class TipoServicioController {
 
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Tipo Servicios basada en su nombre", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene un solo Tipo Servicios basada en su nombre", response = TipoServicioDto.class, tags = "Tipos de Servicios")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -53,7 +53,7 @@ public class TipoServicioController {
 
     @GetMapping("findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos de Servicios")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
         try {
@@ -69,7 +69,7 @@ public class TipoServicioController {
 
     @GetMapping("findByDescripcion/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos de Servicios")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNombreDescripcionAprox(@PathVariable(value = "param") String parametro) {
         try {
@@ -85,7 +85,7 @@ public class TipoServicioController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos Servicios")
+    @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos de Servicios")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {

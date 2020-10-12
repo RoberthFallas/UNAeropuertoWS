@@ -83,22 +83,6 @@ public class AlertaController {
         }
     }
 
-    @GetMapping("/findByEmisor/{emisor}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de alertas cuyo emisor coincida con el parámetro de búsqueda.", response = AlertaDto.class, tags = "Alertas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
-    public ResponseEntity<?> findByEmisor(@PathVariable(value = "emisor") String emisor) {
-        try {
-            List<AlertaDto> result = alertaService.findByEmisor(emisor);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PostMapping("/create")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")

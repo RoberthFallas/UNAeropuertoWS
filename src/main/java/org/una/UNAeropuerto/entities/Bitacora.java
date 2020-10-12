@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,5 +55,15 @@ public class Bitacora implements Serializable {
     @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Usuario usuariosId;
+
+    @PrePersist
+    public void prePersist() {
+        fechaModificacion = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        fechaModificacion = new Date();
+    }
 
 }
