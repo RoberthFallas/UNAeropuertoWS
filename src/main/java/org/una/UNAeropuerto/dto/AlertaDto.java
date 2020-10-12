@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  *
  * @author Roberth :)
@@ -30,5 +32,5 @@ public class AlertaDto {
     private String emisor;
     private Boolean activa;
     @Setter(AccessLevel.NONE)
-    private AreaDto areaId;
+    private List<VueloDto> vueloList;
 }

@@ -22,7 +22,6 @@ public interface IServicioMantenimientoRepository extends JpaRepository<Servicio
 
     public Optional<List<ServicioMantenimiento>> findByAvionesId(long id);
 
-    public Optional<List<ServicioMantenimiento>> findByHangaresId(long id);
 
     public Optional<List<ServicioMantenimiento>> findByTiposServiciosId(long id);
 
