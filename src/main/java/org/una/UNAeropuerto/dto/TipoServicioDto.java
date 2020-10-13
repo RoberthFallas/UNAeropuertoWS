@@ -26,7 +26,7 @@ public class TipoServicioDto {
     private Long id;
     private String nombre;
     private String descripcion;
-    private Boolean avtivo;
+    private Boolean activo;
     @Setter(AccessLevel.NONE)
     private List<ServicioMantenimientoDto> servicioMantenimientoList;
 }

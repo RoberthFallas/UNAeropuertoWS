@@ -59,7 +59,7 @@ public class TipoServicioServiceImplementation implements ITipoServicioService {
     @Override
     @Transactional(readOnly = true)
     public List<TipoServicioDto> findByEstado(boolean estado) {
-        Optional<List<TipoServicio>> result = tipoServicioRepository.findByAvtivoLike(estado);
+        Optional<List<TipoServicio>> result = tipoServicioRepository.findByActivoLike(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDto.class);
         }

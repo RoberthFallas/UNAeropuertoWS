@@ -33,8 +33,6 @@ public class GastoReparacionDto {
     private String observaciones;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
-    private List<DetalleServicioDto> detalleServicioList;
-    @Setter(AccessLevel.NONE)
     private AreaDto areasId;
     @Setter(AccessLevel.NONE)
     private TipoReparacionDto tiposId;
