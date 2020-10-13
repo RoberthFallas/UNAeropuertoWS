@@ -453,18 +453,18 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- Informacion base UNAeropuerto.
 
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (1, 'ADMINISTRADOR', 'ADMINISTRADOR DEL SISTEMA', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (2, 'GESTOR_CONTROL_VUELOS', 'GESTIONA LOS VUELOS', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (3, 'GESTOR_SERVICIOS_AERONAVES', 'GESTIONA EL MANTENIMIENTO', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (4, 'GESTOR_MANTENIMIENTO_AEROPUERTO', 'GESTIONA EL MANTEMIMIETNO DEL AEROPUERTO', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (5, 'GERENTE_CONTROL_VUELO', 'GERENCIA DE CONTROL DE VUELOS', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (6, 'GERENTE_SERVICIOS_AERONAVES', 'GERENCIA DE MANTENIMENTO DE VUELOS', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (7, 'GERENTE_MANTENIMIENTO_AEROPUERTO', 'GERENCIA DE MANTENIMIENTO DE VUELOS', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (8, 'AUDITOR_MANTENIENTO_AEROPUERTO', 'AUDITOR DEL MANTENIMIENTO DEL AEROPUERTO', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (9, 'AUDITOR_SERVICIOS_AERONAVES', 'AUDITOR DEL SERVICIO DE AERONAVES', 1);
-INSERT INTO `roles`(`id`, `nombre`, `descripcion`, `activo`) VALUES (10, 'AUDITOR_MANTENIMIENTO_AEROPUERTO', 'AUDITOR DEL SERVICIO DE AERONAVES', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (1, 'ADMINISTRADOR', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (2, 'GESTOR_CONTROL_VUELOS', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (3, 'GESTOR_SERVICIOS_AERONAVES',1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (4, 'GESTOR_MANTENIMIENTO_AEROPUERTO', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (5, 'GERENTE_CONTROL_VUELO', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`)  VALUES (6, 'GERENTE_SERVICIOS_AERONAVES', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (7, 'GERENTE_MANTENIMIENTO_AEROPUERTO', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (8, 'AUDITOR_MANTENIENTO_AEROPUERTO', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (9, 'AUDITOR_SERVICIOS_AERONAVES', 1);
+INSERT INTO `roles`(`id`, `nombre`, `activo`) VALUES (10, 'AUDITOR_MANTENIMIENTO_AEROPUERTO', 1);
 
-INSERT INTO `areas` VALUES (1, 'Adminitracion', 'Administración de aeropuerto', 1);
+INSERT INTO `areas`(`id`, `activo`, `descripcion`, `fecha_modificacion`, `fecha_registro`, `nombre`) VALUES (1, '1', 'Administración de aeropuerto', '2020-10-13 10:30:20', '2020-10-13 10:30:23', 'Adminitracion');
 INSERT INTO `usuarios`(`id`, `areas_id`, `cedula`, `nombre`, `apellidos`, `contrasenna`, `fecha_nacimiento`, `fecha_ingreso`, `fecha_modificacion`, `activo`) VALUES (1, 1, 'admin1', 'Gerardo', 'Araya', '$2a$10$co1Q1kPr/qPizqIcavnCROtAjnr09sGKa1Gw7Hvhmw9QP7isXPqnG', '2020-09-24', '2020-09-24', '2020-09-24', 1);
 
 INSERT INTO `roles_usuarios`(`id`, `usuarios_id`, `roles_id`, `activo`) VALUES (1, 1, 1, 1);

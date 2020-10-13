@@ -14,5 +14,5 @@ public interface ITipoServicioRepository extends JpaRepository<TipoServicio, Lon
 
     public Optional<List<TipoServicio>> findByDescripcionContaining(String descripcion);
 
-    public Optional<List<TipoServicio>> findByAvtivoLike(boolean estado);
+    public Optional<List<TipoServicio>> findByActivoLike(boolean estado);
 }

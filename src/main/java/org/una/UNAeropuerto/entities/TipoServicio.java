@@ -49,8 +49,8 @@ public class TipoServicio implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "avtivo")
-    private Boolean ativo;
+    @Column(name = "activo")
+    private Boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiposServiciosId")
     private List<ServicioMantenimiento> servicioMantenimientoList;
 
