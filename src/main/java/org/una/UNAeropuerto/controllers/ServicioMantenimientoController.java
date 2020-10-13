@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/servicios_mantenimientos")
-@Api(tags = {"Servicios Mantenimientos"})
+@Api(tags = {"Servicios de Mantenimiento"})
 
 public class ServicioMantenimientoController {
 
@@ -22,7 +22,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Servicios Mantenimientos basado en su Id", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @ApiOperation(value = "Obtiene un solo Servicios Mantenimientos basado en su Id", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -38,7 +38,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
@@ -54,7 +54,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoPago/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de pago", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de pago", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstadoPago(@PathVariable(value = "estado") boolean estado) {
         try {
@@ -70,7 +70,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoFinalizacion/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de de finalizacion", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado de de finalizacion", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstadoFinalizacion(@PathVariable(value = "estado") boolean estado) {
         try {
@@ -86,7 +86,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByEstadoAvionesId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByAvionesId(@PathVariable(value = "id") long id) {
         try {
@@ -104,7 +104,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByTiposServiciosId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del tipo de servicio", response = ServicioMantenimientoDto.class, tags = "Servicios Mantenimientos")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del tipo de servicio", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByTipoServicosId(@PathVariable(value = "id") long id) {
         try {

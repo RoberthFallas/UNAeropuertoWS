@@ -43,9 +43,7 @@ public class Alerta implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "cuerpo")
     private String cuerpo;
-    @Size(max = 40)
-    @Column(name = "emisor")
-    private String emisor;
+    
     @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Column(name = "activa")

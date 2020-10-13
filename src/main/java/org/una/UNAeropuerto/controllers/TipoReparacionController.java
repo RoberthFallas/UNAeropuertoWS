@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/tiposReparaciones")
-@Api(tags = {"Tipos Reparaciones"})
+@Api(tags = {"Tipos de Reparaciones"})
 public class TipoReparacionController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class TipoReparacionController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo tipo basado en su Id", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
+    @ApiOperation(value = "Obtiene un solo tipo basado en su Id", response = TipoReparacionDto.class, tags = "Tipos de Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -37,7 +37,7 @@ public class TipoReparacionController {
 
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
+    @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoReparacionDto.class, tags = "Tipos de Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -53,7 +53,7 @@ public class TipoReparacionController {
 
     @GetMapping("findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de tipos cuyo nombre coinscida parcial o totalmente con el parámetro.", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de tipos cuyo nombre coinscida parcial o totalmente con el parámetro.", response = TipoReparacionDto.class, tags = "Tipos de Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
         try {
@@ -69,7 +69,7 @@ public class TipoReparacionController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de tipos basándose en su estado", response = TipoReparacionDto.class, tags = "Tipos Reparaciones")
+    @ApiOperation(value = "Obtiene una lista de tipos basándose en su estado", response = TipoReparacionDto.class, tags = "Tipos de Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {

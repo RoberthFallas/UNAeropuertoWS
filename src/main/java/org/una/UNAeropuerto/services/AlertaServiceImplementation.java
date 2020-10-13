@@ -56,15 +56,7 @@ public class AlertaServiceImplementation implements IAlertaService {
         return new ArrayList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<AlertaDto> findByEmisor(String nombre) {
-        Optional<List<Alerta>> result = alertRepo.findByEmisorContaining(nombre);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), AlertaDto.class);
-        }
-        return new ArrayList();
-    }
+  
 
     @Override
     @Transactional
