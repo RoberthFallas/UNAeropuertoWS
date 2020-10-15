@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,11 +23,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class BitacoraDto {
-    
+
     private Long id;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date fechaModificacion;
     private String tipoCambio;
     @Setter(AccessLevel.NONE)
     private UsuarioDto usuariosId;
-    
+
 }

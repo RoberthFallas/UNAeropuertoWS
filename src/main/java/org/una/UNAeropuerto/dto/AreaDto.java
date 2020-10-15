@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import java.util.List;
 import lombok.AccessLevel;
@@ -27,12 +28,14 @@ public class AreaDto {
     private Long id;
     private String nombre;
     private String descripcion;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date fechaRegistro;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date fechaModificacion;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
     private List<UsuarioDto> usuarioList;
     @Setter(AccessLevel.NONE)
     private List<GastoReparacionDto> gastoReparacionList;
-    
+
 }

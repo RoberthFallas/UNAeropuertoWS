@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import java.util.List;
 import lombok.AccessLevel;
@@ -25,6 +26,7 @@ import lombok.ToString;
 public class ServicioMantenimientoDto {
 
     private Long id;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date fechaServicio;
     private Long numeroFactura;
     private Boolean estadoPago;

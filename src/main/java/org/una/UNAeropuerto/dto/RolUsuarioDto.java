@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,9 @@ import lombok.ToString;
 public class RolUsuarioDto {
 
     private Long id;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date fechaRegistro;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date fechaModificacion;
     private Boolean activo;
     //  @Setter(AccessLevel.NONE)

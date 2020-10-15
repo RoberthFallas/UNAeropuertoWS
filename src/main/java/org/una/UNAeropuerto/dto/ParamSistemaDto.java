@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,8 @@ public class ParamSistemaDto {
     private String telefonoAeropuerto;
     private String emailAeropuerto;
     private String nombreRepresentante;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date aperturaOficina;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date cierreOficina;
 }

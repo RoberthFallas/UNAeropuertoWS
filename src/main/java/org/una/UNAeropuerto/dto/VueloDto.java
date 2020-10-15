@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,9 @@ public class VueloDto {
 
     private Long id;
     private String nombreVuelo;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date horaSalida;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date horaLlegada;
     private Byte estado;
     @Setter(AccessLevel.NONE)
