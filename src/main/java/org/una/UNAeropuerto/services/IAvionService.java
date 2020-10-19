@@ -9,9 +9,11 @@ public interface IAvionService {
 
     public AvionDto getByMatricula(String matricula);
 
+    public  List<AvionDto>  getByMatriculaLike(String matricula);
+
     public List<AvionDto> findByEstado(boolean estado);
 
-    public List<AvionDto> findByAerolineaId(long id);
+    public List<AvionDto> findByAerolineaNombre(String id);
 
     public AvionDto update(AvionDto avion);
 

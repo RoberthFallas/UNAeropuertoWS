@@ -6,75 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.una.UNAeropuerto.dto.TipoServicioDto;
-import org.una.UNAeropuerto.services.ITipoServicioService;
+import org.una.UNAeropuerto.dto.CobroDto;
+import org.una.UNAeropuerto.services.ICobroService;
+
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
-@RequestMapping("/tipos_servicios")
-@Api(tags = {"Tipos de Servicios"})
-public class TipoServicioController {
+@RequestMapping("/cobros")
+@Api(tags = {"Cobros"})
+public class CobrosController {
 
     @Autowired
-    private ITipoServicioService tipoServicioService;
+    private ICobroService cobroService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Tipo Servicios basado en su Id", response = TipoServicioDto.class, tags = "Tipos de Servicios")
+    @ApiOperation(value = "Obtiene un solo cobro basado en su Id", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
-            TipoServicioDto result = tipoServicioService.getById(id);
+            CobroDto result = cobroService.getById(id);
             if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("getByNombre/{nombre}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Tipo Servicios basada en su nombre", response = TipoServicioDto.class, tags = "Tipos de Servicios")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
-        try {
-            TipoServicioDto result = tipoServicioService.getByNombre(nombre);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("findByNomb/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de los Tipos de Servicios cuyo nombre coinsida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos de Servicios")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> findByNombreAproximado(@PathVariable(value = "param") String parametro) {
-        try {
-            List<TipoServicioDto> result = tipoServicioService.findByNombreAproximado(parametro);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("findByDescripcion/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Tipos de Servicios cuyo nombre coincida parcial o totalmente con el parámetro.", response = TipoServicioDto.class, tags = "Tipos de Servicios")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> findByNombreDescripcionAprox(@PathVariable(value = "param") String parametro) {
-        try {
-            List<TipoServicioDto> result = tipoServicioService.findByDescripcionAproximado(parametro);
-            if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
@@ -85,11 +38,11 @@ public class TipoServicioController {
 
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Tipos Servicios basándose en su estado", response = TipoServicioDto.class, tags = "Tipos de Servicios")
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en su estado", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
-            List<TipoServicioDto> result = tipoServicioService.findByEstado(estado);
+            List<CobroDto> result = cobroService.findByActivos(estado);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -98,23 +51,61 @@ public class TipoServicioController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping()
+
+    @GetMapping("findByServiciosMantenimientoId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de todos los Tipos de Servicios", response = TipoServicioDto.class, responseContainer = "List", tags = "Tipos de Servicios")
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en su id de servicio mantenimiento", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    ResponseEntity<?> findAll() {
+    public ResponseEntity<?> findByMantenimientoId(@PathVariable(value = "id") long id) {
         try {
-            return new ResponseEntity(tipoServicioService.getAll(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+            List<CobroDto> result = cobroService.findByServiciosMantenimientoId(id);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("findByMontoAproximado/{monto}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en un monto aproximado", response = CobroDto.class, tags = "Cobros")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> findByMontoAproximado(@PathVariable(value = "monto") long monto) {
+        try {
+            List<CobroDto> result = cobroService.findByMontoAproximado(monto);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("findByDetalleCobroAprox/{detalle}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en un detalle aproximado", response = CobroDto.class, tags = "Cobros")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> findByDetalleAproximado(@PathVariable(value = "detalle") String detalle) {
+        try {
+            List<CobroDto> result = cobroService.findByDetalleCobroAproximado(detalle);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/create")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> create(@RequestBody TipoServicioDto tipoServicio) {
+    public ResponseEntity<?> create(@RequestBody CobroDto cobro) {
         try {
-            TipoServicioDto result = tipoServicioService.create(tipoServicio);
+            CobroDto result = cobroService.create(cobro);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -124,13 +115,13 @@ public class TipoServicioController {
     @PutMapping("/update")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> update(@RequestBody TipoServicioDto tipoServicio) {
+    public ResponseEntity<?> update(@RequestBody CobroDto cobro) {
         try {
-            TipoServicioDto result = tipoServicioService.update(tipoServicio);
+            CobroDto result = cobroService.update(cobro);
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Tipo Servicios)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el cobro)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

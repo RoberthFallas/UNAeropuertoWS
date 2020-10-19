@@ -12,7 +12,12 @@ public interface IAvionRepository extends JpaRepository<Avion, Long> {
 
     public Optional<Avion> findByMatricula(String matricula);
 
-    public Optional<List<Avion>> findByAerolineasId(long id);
+    public Optional<List<Avion>> findByMatriculaContaining(String valor);
+
+    public Optional<List<Avion>> findByAerolineasIdNombreContaining(String nombre);
+
+
+
 
 
 
