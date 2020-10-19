@@ -26,6 +26,23 @@ public class RolServiceImplementation implements IRolService {
     @Autowired
     private IRolRepository rolRepo;
 
+    private Optional<List<RolDto>> findList(List<Rol> list) {
+        if (list != null) {
+            List<RolDto> areaDtos = MapperUtils.DtoListFromEntityList(list, RolDto.class);
+            return Optional.ofNullable(areaDtos);
+        } else {
+            return null;
+        }
+    }
+
+    private Optional<List<RolDto>> findList(Optional<List<Rol>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
+
     @Override
     @Transactional(readOnly = true)
     public RolDto getById(long id) {
@@ -84,6 +101,13 @@ public class RolServiceImplementation implements IRolService {
             return MapperUtils.DtoFromEntity(entity, RolDto.class);
         }
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<RolDto>> findAll() {
+
+        return findList(rolRepo.findAll());
     }
 
 }

@@ -5,7 +5,9 @@
  */
 package org.una.UNAeropuerto.services;
 
+import java.sql.Date;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,6 +151,29 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         } else {
             return null;
         }
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UsuarioDto> busquedaMixta(String nombre, String apellidos, String cedula,boolean activo) {
+        Optional<List<Usuario>> result = userRepo.busquedaMixta(nombre, apellidos, cedula,activo);
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UsuarioDto> busquedaMixtaConFecha(String nombre, String apellidos, String cedula,boolean activo, String fechaInicio, String fechaFinal) {
+      
+
+        Optional<List<Usuario>> result = userRepo.busquedaMixtaConFecha(nombre, apellidos, cedula,activo,Date.valueOf(fechaInicio),Date.valueOf(fechaFinal));
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), UsuarioDto.class);
+        }
+        return new ArrayList();
 
     }
 
