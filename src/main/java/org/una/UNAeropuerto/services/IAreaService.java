@@ -6,6 +6,7 @@
 package org.una.UNAeropuerto.services;
 
 import java.util.List;
+import java.util.Optional;
 import org.una.UNAeropuerto.dto.AreaDto;
 
 /**
@@ -25,4 +26,6 @@ public interface IAreaService {
     public AreaDto update(AreaDto usuario);
 
     public AreaDto create(AreaDto usuario);
+
+    public  Optional<List<AreaDto>> findAll();
 }

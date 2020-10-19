@@ -15,7 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/cobros")
 @Api(tags = {"Cobros"})
-public class Cobros {
+public class CobrosController {
 
     @Autowired
     private ICobroService cobroService;

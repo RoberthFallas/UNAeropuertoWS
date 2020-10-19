@@ -125,4 +125,15 @@ public class RolController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping()
+    @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDto.class, responseContainer = "List", tags = "Roles")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(rolService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -6,6 +6,7 @@
 package org.una.UNAeropuerto.services;
 
 import java.util.List;
+import java.util.Optional;
 import org.una.UNAeropuerto.dto.RolDto;
 
 /**
@@ -25,5 +26,7 @@ public interface IRolService {
     public RolDto create(RolDto rol);
 
     public RolDto update(RolDto rol);
+
+    public Optional<List<RolDto>> findAll();
 
 }

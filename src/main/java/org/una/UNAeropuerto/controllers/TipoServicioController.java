@@ -98,7 +98,17 @@ public class TipoServicioController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping()
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de todos los Tipos de Servicios", response = TipoServicioDto.class, responseContainer = "List", tags = "Tipos de Servicios")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(tipoServicioService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PostMapping("/create")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")

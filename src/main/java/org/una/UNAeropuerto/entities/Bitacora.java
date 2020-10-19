@@ -6,6 +6,7 @@
 package org.una.UNAeropuerto.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *

@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface ITipoServicioService {
 
+    public List<TipoServicioDto> getAll();
     public TipoServicioDto getByNombre(String nombre);
 
     public TipoServicioDto getById(long id);
