@@ -23,7 +23,7 @@ import org.una.UNAeropuerto.utils.MapperUtils;
 
 /**
  *
- * @author LordLalo
+ * @author LordLalodssad
  */
 @Service
 public class AutenticacionServiceImplementation implements IAutenticacionService {

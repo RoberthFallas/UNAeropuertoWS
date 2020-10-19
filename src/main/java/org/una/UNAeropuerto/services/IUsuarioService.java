@@ -28,4 +28,8 @@ public interface IUsuarioService {
 
     public UsuarioDto ocultarById(long id);
 
+    public List<UsuarioDto> busquedaMixta(String nombre, String apellidos, String cedula,boolean activo);
+
+    public List<UsuarioDto> busquedaMixtaConFecha(String nombre, String apellidos, String cedula,boolean activo, String fechaInicio, String FechaFinal);
+
 }
