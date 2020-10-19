@@ -68,6 +68,8 @@ public class Area implements Serializable {
     private List<Usuario> usuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areasId")
     private List<GastoReparacion> gastoReparacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "areasId")
+    private List<Notificacion> notificacionesList;
 
     @PrePersist
     public void prePersist() {

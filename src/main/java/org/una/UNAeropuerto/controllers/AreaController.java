@@ -125,4 +125,15 @@ public class AreaController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping()
+    @ApiOperation(value = "Obtiene una lista de todas las areas", response = AreaDto.class, responseContainer = "List", tags = "Áreas")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(areaService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

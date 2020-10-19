@@ -34,5 +34,7 @@ public class AreaDto {
     private List<UsuarioDto> usuarioList;
     @Setter(AccessLevel.NONE)
     private List<GastoReparacionDto> gastoReparacionList;
+    @Setter(AccessLevel.NONE)
+    private List<NotificacionDto> notificacionesList;
     
 }

@@ -12,7 +12,7 @@ import org.una.UNAeropuerto.services.IParamSistemaService;
 
 @RestController
 @RequestMapping("/param_sistema")
-@Api(tags = {"Parámetros Sistema"})
+@Api(tags = {"Parámetros del Sistema"})
 public class ParamSistemaController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class ParamSistemaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo parámetro sistema basado en su Id", response = ParamSistemaDto.class, tags = "Parámetros Sistema")
+    @ApiOperation(value = "Obtiene un solo parámetro sistema basado en su Id", response = ParamSistemaDto.class, tags = "Parámetros del Sistema")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {

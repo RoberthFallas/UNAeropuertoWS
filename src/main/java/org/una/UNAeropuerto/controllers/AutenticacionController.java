@@ -34,7 +34,6 @@ import org.una.UNAeropuerto.services.IAutenticacionService;
 public class AutenticacionController {
 
     @Autowired
-    // private IUsuarioService usuarioService;
     private IAutenticacionService autenticacionService;
 
     @PostMapping("/login")
