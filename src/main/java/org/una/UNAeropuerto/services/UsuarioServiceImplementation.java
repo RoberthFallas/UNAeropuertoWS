@@ -149,6 +149,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
             UserDetails userDetails = new User(usuario.getCedula(), usuario.getContrasenna(), roles);
             return userDetails;
         } else {
+            System.out.println( "usuario no es presente");
             return null;
         }
 

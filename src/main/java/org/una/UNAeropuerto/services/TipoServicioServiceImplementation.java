@@ -19,6 +19,16 @@ public class TipoServicioServiceImplementation implements ITipoServicioService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TipoServicioDto> getAll() {
+        Optional<List<TipoServicio>> result = Optional.ofNullable(tipoServicioRepository.findAll());
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public TipoServicioDto getByNombre(String nombre) {
         Optional<TipoServicio> result = tipoServicioRepository.findByNombre(nombre);
         if (result.isPresent()) {
