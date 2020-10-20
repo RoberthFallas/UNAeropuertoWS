@@ -20,17 +20,22 @@ public class ParamSistemaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo parámetro sistema basado en su Id", response = ParamSistemaDto.class, tags = "Parámetros del Sistema")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
+    @ApiOperation(value = "Obtiene un solo usuario basado en su Id", response = ParamSistemaDto.class, tags = "Usuarios")
+    public ResponseEntity<?> getById(@PathVariable(value = "id") Integer id) {
+//        try {
+//            ParamSistemaDto result = paramSistemaService.getById(id);
+//            if (result != null) {
+//                return new ResponseEntity<>(result, HttpStatus.OK);
+//            }
+//            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+//        } catch (Exception ex) {
+//            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
         try {
-            ParamSistemaDto result = paramSistemaService.getById(id);
-            if (result != null) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(paramSistemaService.getById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

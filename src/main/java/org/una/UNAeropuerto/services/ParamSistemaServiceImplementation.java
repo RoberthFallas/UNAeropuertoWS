@@ -1,29 +1,34 @@
 package org.una.UNAeropuerto.services;
 
+
+
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.ParamSistemaDto;
-import org.una.UNAeropuerto.entities.ParamSistema;
 import org.una.UNAeropuerto.repositories.IParamSistemaRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
-
-import java.util.Optional;
+import org.una.UNAeropuerto.entities.ParamSistema;
 @Service
-public class ParamSistemaServiceImplementation implements  IParamSistemaService {
+public class ParamSistemaServiceImplementation implements IParamSistemaService {
 
     @Autowired
     IParamSistemaRepository paramSistemaRepo;
-
+//
+    private Optional<ParamSistemaDto> oneToDto(Optional<ParamSistema> one) {
+        if (one.isPresent()) {
+            ParamSistemaDto paramSistemaDto = MapperUtils.DtoFromEntity(one.get(), ParamSistemaDto.class);
+            return Optional.ofNullable(paramSistemaDto);
+        } else {
+            return null;
+        }
+    }
 
     @Override
     @Transactional(readOnly = true)
-    public ParamSistemaDto getById(long id) {
-        Optional<ParamSistema> result = paramSistemaRepo.findById(id);
-        if (result.isPresent()) {
-            return MapperUtils.DtoFromEntity(result.get(), ParamSistemaDto.class);
-        }
-        return null;
+    public Optional<ParamSistemaDto> getById(Integer id) {
+       return oneToDto(paramSistemaRepo.findById(id));
     }
 
     @Override
@@ -45,5 +50,7 @@ public class ParamSistemaServiceImplementation implements  IParamSistemaService 
         }
         return null;
     }
+
+   
 
 }

@@ -11,7 +11,6 @@
     <class>org.una.UNAeropuerto.entities.Avion</class>
     <class>org.una.UNAeropuerto.entities.RolUsuario</class>
     <class>org.una.UNAeropuerto.entities.Rol</class>
-    <class>org.una.UNAeropuerto.entities.ParamSistema</class>
     <class>org.una.UNAeropuerto.entities.Bitacora</class>
     <class>org.una.UNAeropuerto.entities.Pista</class>
     <class>org.una.UNAeropuerto.entities.Usuario</class>
@@ -21,6 +20,7 @@
     <class>org.una.UNAeropuerto.entities.Vuelo</class>
     <class>org.una.UNAeropuerto.entities.Lugar</class>
     <class>org.una.UNAeropuerto.entities.TipoReparacion</class>
+    <class>org.una.UNAeropuerto.entities.ParamSistema</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://107.180.0.205:3306/BD_PF_Grupo3?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="BD_PF_Grupo3_U"/>
