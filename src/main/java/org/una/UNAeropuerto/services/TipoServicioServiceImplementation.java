@@ -38,6 +38,7 @@ public class TipoServicioServiceImplementation implements ITipoServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TipoServicioDto getById(long id) {
         Optional<TipoServicio> result = tipoServicioRepository.findById(id);
         if (result.isPresent()) {

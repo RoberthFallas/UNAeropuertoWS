@@ -37,4 +37,4 @@ public class Notificacion {
     private Area areasId;
 
 
-}
+} 
