@@ -6,8 +6,10 @@
 package org.una.UNAeropuerto.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +51,9 @@ public class PistaServiceImplementation implements IPistaService {
     @Override
     @Transactional(readOnly = true)
     public List<PistaDto> findByNumeroPista(String numeroPista) {
-        Optional<List<Pista>> result = pistaRepo.findByNumeroPistaContaining(numeroPista);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), PistaDto.class);
+        List<Pista> result = pistaRepo.findByNumeroPistaContaining(numeroPista);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, PistaDto.class);
         }
         return new ArrayList();
     }
@@ -84,6 +86,37 @@ public class PistaServiceImplementation implements IPistaService {
             return MapperUtils.DtoFromEntity(entity, PistaDto.class);
         }
         return null;
+    }
+
+    @Override
+    public List<PistaDto> findAll() {
+        List<Pista> result = pistaRepo.findAll();
+        if (!result.isEmpty()) {
+            result.removeIf(act -> !act.getActivo());
+            return MapperUtils.DtoListFromEntityList(result, PistaDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public List<PistaDto> filter(String numerPista, float longitud) {
+        List<Pista> resultS = null;
+        List<Pista> resultF = new ArrayList();
+        resultS = pistaRepo.findByNumeroPistaContaining(numerPista);
+        if (-1.0 != longitud) {
+            resultF = pistaRepo.findLongitudInRange(longitud, 1000);
+        }
+        if (!resultS.isEmpty() || !resultF.isEmpty()) {
+            ArrayList<Pista> conbinedList = new ArrayList();
+            conbinedList.addAll(resultF);
+            conbinedList.addAll(resultS);
+            List<Pista> finaList = conbinedList.stream().distinct().collect(Collectors.toList());
+            finaList.removeIf(act -> !act.getActivo());
+            List<PistaDto> dtoList = MapperUtils.DtoListFromEntityList(finaList, PistaDto.class);
+            return dtoList;
+        }
+        return new ArrayList<>();
     }
 
 }

@@ -125,4 +125,34 @@ public class PistaController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/findAll")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> findAll() {
+        try {
+            List<PistaDto> result = pistaService.findAll();
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("No hay pistas registradas", HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/filter/{numerPista}/{longitud}")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> filter(@PathVariable(value = "numerPista") String numerPista, @PathVariable(value = "longitud") String longitud) {
+        try {
+            List<PistaDto> result = pistaService.filter((!"none".equals(numerPista) ? numerPista : ""), ("none".equals(longitud) ? -1 : Float.valueOf(longitud)));
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("No hay pistas registradas", HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
