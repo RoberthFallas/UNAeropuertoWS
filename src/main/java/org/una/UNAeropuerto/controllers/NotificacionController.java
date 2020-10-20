@@ -70,7 +70,7 @@ public class NotificacionController {
 
     @PostMapping("/create")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') and hasAuthority('GESTOR_CONTROL_VUELOS') and hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> create(@RequestBody NotificacionDto notificacion) {
         try {
             NotificacionDto result = notificacionService.create(notificacion);

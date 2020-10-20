@@ -37,6 +37,6 @@ public class UsuarioDto {
     private List<BitacoraDto> bitacoraList;
    // @Setter(AccessLevel.NONE)
     private List<RolUsuarioDto> rolUsuarioList;
-    @Setter(AccessLevel.NONE)
+   // @Setter(AccessLevel.NONE)
     private AreaDto areasId;
 }
