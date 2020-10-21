@@ -18,7 +18,7 @@ public interface IAerolineaRepository extends JpaRepository<Aerolinea, Long> {
 
     public Optional<Aerolinea> findByNombre(String nombre);
 
-    public Optional<List<Aerolinea>> findByNombreContaining(String nombre);
+    public List<Aerolinea> findByNombreContaining(String nombre);
 
-    public Optional<List<Aerolinea>> findByActiov(boolean estado);
+    public List<Aerolinea> findByActiov(boolean estado);
 }

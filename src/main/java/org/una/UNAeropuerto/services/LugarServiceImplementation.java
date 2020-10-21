@@ -87,9 +87,4 @@ public class LugarServiceImplementation implements ILugarService {
         return null;
     }
 
-    @Override
-    public List<LugarDto> findAllActiv() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

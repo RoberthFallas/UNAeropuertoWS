@@ -73,7 +73,7 @@ public class AerolineaController {
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String parametro) {
         try {
-            List<AerolineaDto> result = aeroService.findByNombre(parametro);
+            List<AerolineaDto> result = aeroService.findByNombre(!"none".equals(parametro) ? parametro : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }

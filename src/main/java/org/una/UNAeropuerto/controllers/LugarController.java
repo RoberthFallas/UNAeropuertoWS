@@ -125,5 +125,5 @@ public class LugarController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
 }
