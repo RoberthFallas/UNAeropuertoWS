@@ -18,7 +18,7 @@ public interface ILugarRepository extends JpaRepository<Lugar, Long> {
 
     public Optional<Lugar> findByNombre(String nombre);
 
-    public Optional<List<Lugar>> findByNombreContaining(String nombre);
+    public List<Lugar>findByNombreContaining(String nombre);
 
     public Optional<List<Lugar>> findByActivo(boolean activo);
 

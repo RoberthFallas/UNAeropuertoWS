@@ -144,6 +144,7 @@ public class PistaController {
     @GetMapping("/filter/{numerPista}/{longitud}")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @SuppressWarnings("UseSpecificCatch")
     public ResponseEntity<?> filter(@PathVariable(value = "numerPista") String numerPista, @PathVariable(value = "longitud") String longitud) {
         try {
             List<PistaDto> result = pistaService.filter((!"none".equals(numerPista) ? numerPista : ""), ("none".equals(longitud) ? -1 : Float.valueOf(longitud)));

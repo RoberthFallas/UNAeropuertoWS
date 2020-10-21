@@ -49,9 +49,10 @@ public class LugarServiceImplementation implements ILugarService {
     @Override
     @Transactional(readOnly = true)
     public List<LugarDto> findByNombre(String nombre) {
-        Optional<List<Lugar>> result = lugarRepo.findByNombreContaining(nombre);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), LugarDto.class);
+        List<Lugar> result = lugarRepo.findByNombreContaining(nombre);
+        if (!result.isEmpty()) {
+            result.removeIf(element -> !element.getActivo());
+            return MapperUtils.DtoListFromEntityList(result, LugarDto.class);
         }
         return new ArrayList();
     }
@@ -84,6 +85,11 @@ public class LugarServiceImplementation implements ILugarService {
             return MapperUtils.DtoFromEntity(entity, LugarDto.class);
         }
         return null;
+    }
+
+    @Override
+    public List<LugarDto> findAllActiv() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

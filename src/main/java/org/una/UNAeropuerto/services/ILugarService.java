@@ -25,4 +25,6 @@ public interface ILugarService {
     public LugarDto create(LugarDto lugar);
 
     public LugarDto update(LugarDto lugar);
+    
+    public List<LugarDto> findAllActiv();
 }

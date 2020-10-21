@@ -92,8 +92,10 @@ public class Usuario implements Serializable {
     public void refreshContrasenna(String newPassword) {
         this.contrasenna = newPassword;
     }
-       @PrePersist
+
+    @PrePersist
     public void prePersist() {
+        fechaIngreso = new Date();
         fechaModificacion = new Date();
     }
 
