@@ -35,8 +35,6 @@ public class AvionController {
         }
     }
 
-
-
     @GetMapping("getByMatricula/{matricula}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo avión basado en su matrícula", response = AvionDto.class, tags = "Aviones")
@@ -125,6 +123,22 @@ public class AvionController {
             return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el avión)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("filter/{matricula}/{aerolinea}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de aviones basándose en su matricula y aerolinea", response = AvionDto.class, tags = "Aviones")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> filter(@PathVariable(value = "matricula") String matricula, @PathVariable(value = "aerolinea") String aerolinea) {
+        try {
+            List<AvionDto> result = avionService.filter(!"none".equals(matricula) ? matricula : "", !"none".equals(aerolinea) ? aerolinea : "");
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -89,6 +89,7 @@ public class PistaServiceImplementation implements IPistaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PistaDto> findAll() {
         List<Pista> result = pistaRepo.findAll();
         if (!result.isEmpty()) {
@@ -100,6 +101,7 @@ public class PistaServiceImplementation implements IPistaService {
 
     @Override
     @SuppressWarnings("null")
+    @Transactional(readOnly = true)
     public List<PistaDto> filter(String numerPista, float longitud) {
         List<Pista> resultS = null;
         List<Pista> resultF = new ArrayList();

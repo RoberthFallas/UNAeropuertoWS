@@ -5,6 +5,8 @@ import org.una.UNAeropuerto.entities.Avion;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface IAvionRepository extends JpaRepository<Avion, Long> {
 
@@ -16,10 +18,10 @@ public interface IAvionRepository extends JpaRepository<Avion, Long> {
 
     public Optional<List<Avion>> findByAerolineasIdNombreContaining(String nombre);
 
-
-
-
-
-
+    @Query("select av from Avion av join av.aerolineasId aero"
+            + " where UPPER(av.matricula) like CONCAT('%',UPPER(:matr),'%')"
+            + " and UPPER(aero.nombre) like CONCAT('%',UPPER(:aerol),'%')"
+            + " and aero.actiov = true")
+    public List<Avion> filterByMatriculaAndAerolinea(@Param("matr") String matricula, @Param("aerol") String aerolinea);
 
 }
