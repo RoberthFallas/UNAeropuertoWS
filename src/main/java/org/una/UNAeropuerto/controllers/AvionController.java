@@ -132,6 +132,8 @@ public class AvionController {
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> filter(@PathVariable(value = "matricula") String matricula, @PathVariable(value = "aerolinea") String aerolinea) {
         try {
+            matricula = matricula.replace("-", " ");
+            aerolinea = aerolinea.replace("-", " ");
             List<AvionDto> result = avionService.filter(!"none".equals(matricula) ? matricula : "", !"none".equals(aerolinea) ? aerolinea : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);

@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -183,6 +184,34 @@ public class VueloController {
             return new ResponseEntity<>(IAE, HttpStatus.NOT_ACCEPTABLE);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/filter/{aerolinea}/{nombreVuelo}/{matriculaAvion}/{llegada}/{salida}/{desde}/{hasta}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de vuelos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> filter(
+            @PathVariable(value = "aerolinea") String aerolinea,
+            @PathVariable(value = "nombreVuelo") String nombreVuelo,
+            @PathVariable(value = "matriculaAvion") String matriculaAvion,
+            @PathVariable(value = "llegada") String llegada,
+            @PathVariable(value = "salida") String salida,
+            @PathVariable(value = "desde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date desde,
+            @PathVariable(value = "hasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date hasta) {
+        try {
+            aerolinea = !"none".equals(aerolinea) ? aerolinea : "";
+            nombreVuelo = !"none".equals(nombreVuelo) ? nombreVuelo : "";
+            matriculaAvion = !"none".equals(matriculaAvion) ? matriculaAvion : "";
+            llegada = !"none".equals(llegada) ? llegada : "";
+            salida = !"none".equals(salida) ? salida : "";
+            List<VueloDto> result = vueloService.filter(aerolinea, nombreVuelo, matriculaAvion, llegada, salida, desde, hasta);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
