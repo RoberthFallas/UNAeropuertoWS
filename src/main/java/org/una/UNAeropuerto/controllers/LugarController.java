@@ -67,19 +67,19 @@ public class LugarController {
         }
     }
 
-    @GetMapping("findByNombre/{nombre}")
+    @GetMapping("/findByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de lugares cuyo nombre coincida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
-    public ResponseEntity<?> findByEstado(@PathVariable(value = "nombre") String nombre) {
+    public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            List<LugarDto> result = lugarService.findByNombre(nombre);
+            List<LugarDto> result = lugarService.findByNombre(!"none".equals(nombre) ? nombre : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("No hay pistas registradas", HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -125,4 +125,5 @@ public class LugarController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
 }

@@ -73,7 +73,7 @@ public class AerolineaController {
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String parametro) {
         try {
-            List<AerolineaDto> result = aeroService.findByNombre(parametro);
+            List<AerolineaDto> result = aeroService.findByNombre(!"none".equals(parametro) ? parametro : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -123,6 +123,19 @@ public class AerolineaController {
             return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró la Aerolínea)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/countVuelos/{aerolineaId}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene la cantidad de vulos registrados por la aerolinea especificada..", response = Long.class, tags = "Aerolíneas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> countVuelos(@PathVariable(value = "aerolineaId") Long aeroId) {
+        try {
+            Long count = aeroService.getCountVuelos(aeroId);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

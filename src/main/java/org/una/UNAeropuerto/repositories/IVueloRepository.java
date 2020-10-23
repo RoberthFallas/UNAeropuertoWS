@@ -29,9 +29,19 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
     Optional<List<Vuelo>> findBitweenHoraYFecha(@Param("start") Date start, @Param("end") Date end);
 
     @Query("select v from Vuelo v where (DATE(v.horaSalida) between :start and :end) or (DATE(v.horaLlegada) between :start and :end)")
-    Optional<List<Vuelo>> findByBetweenDates(@Param("start") Date start, @Param("end") Date end);
+    List<Vuelo> findByBetweenDates(@Param("start") Date start, @Param("end") Date end);
 
     @Query("select v from Vuelo v where (DATE(v.horaSalida) = :fecha) or (DATE(v.horaLlegada) = :fecha)")
     Optional<List<Vuelo>> findByFechaVuelo(@Param("fecha") Date fecha);
+
+    @Query("select v from Vuelo v join v.avionesId av join av.aerolineasId ae "
+            + "join v.lugarSalida ls join v.lugarLlegada ll "
+            + "where UPPER(ae.nombre) like CONCAT('%', UPPER(:aero),'%') and "
+            + "UPPER(v.nombreVuelo) like CONCAT('%', UPPER(:nv),'%') and "
+            + "UPPER(av.matricula) like CONCAT('%', UPPER(:mtr),'%') and "
+            + "UPPER(ll.nombre) like CONCAT('%', UPPER(:lleg),'%') and "
+            + "UPPER(ls.nombre) like CONCAT('%', UPPER(:sal),'%') and "
+            + "v.estado <> 3")
+    List<Vuelo> findByTextParameters(@Param("aero") String aerolinea, @Param("nv") String nombreVuelo, @Param("mtr") String matriculaAvion, @Param("lleg") String llegada, @Param("sal") String salida);
 
 }

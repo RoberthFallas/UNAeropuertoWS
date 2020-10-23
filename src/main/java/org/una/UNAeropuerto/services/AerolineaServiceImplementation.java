@@ -49,9 +49,9 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     @Override
     @Transactional(readOnly = true)
     public List<AerolineaDto> findByNombre(String nombre) {
-        Optional<List<Aerolinea>> result = aeroRepo.findByNombreContaining(nombre);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), AerolineaDto.class);
+        List<Aerolinea> result = aeroRepo.findByNombreContaining(nombre);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, AerolineaDto.class);
         }
         return new ArrayList();
     }
@@ -59,9 +59,9 @@ public class AerolineaServiceImplementation implements IAerolineaService {
     @Override
     @Transactional(readOnly = true)
     public List<AerolineaDto> findByEstado(boolean estado) {
-        Optional<List<Aerolinea>> result = aeroRepo.findByActiov(estado);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), AerolineaDto.class);
+        List<Aerolinea> result = aeroRepo.findByActiov(estado);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, AerolineaDto.class);
         }
         return new ArrayList();
     }
@@ -84,6 +84,13 @@ public class AerolineaServiceImplementation implements IAerolineaService {
             return MapperUtils.DtoFromEntity(entity, AerolineaDto.class);
         }
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long getCountVuelos(long aerolineaId) {
+        Long count = aeroRepo.CountVuelosByAerolinea(aerolineaId);
+        return count != null ? count : 0L;
     }
 
 }
