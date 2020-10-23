@@ -86,4 +86,11 @@ public class AerolineaServiceImplementation implements IAerolineaService {
         return null;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Long getCountVuelos(long aerolineaId) {
+        Long count = aeroRepo.CountVuelosByAerolinea(aerolineaId);
+        return count != null ? count : 0L;
+    }
+
 }

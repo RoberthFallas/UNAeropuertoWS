@@ -127,6 +127,9 @@ public class VueloServiceImplementation implements IVueloService {
         }
         result.clear();
         if (desde != null && hasta != null) {
+            if ("".equals(aerolinea) && "".equals(nombreVuelo) && "".equals(matriculaAvion) && "".equals(llegada) && "".equals(salida)) {
+                resultDto.clear();
+            }
             result = vueloRepo.findByBetweenDates(desde, hasta);
         } else if (desde != null) {
             result = vueloRepo.findByBetweenDates(desde, new Date());

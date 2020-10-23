@@ -205,6 +205,8 @@ public class VueloController {
             matriculaAvion = !"none".equals(matriculaAvion) ? matriculaAvion : "";
             llegada = !"none".equals(llegada) ? llegada : "";
             salida = !"none".equals(salida) ? salida : "";
+            desde = (desde.getYear() != 600) ? desde : null;
+            hasta = (hasta.getYear() != 600) ? hasta : null;
             List<VueloDto> result = vueloService.filter(aerolinea, nombreVuelo, matriculaAvion, llegada, salida, desde, hasta);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);

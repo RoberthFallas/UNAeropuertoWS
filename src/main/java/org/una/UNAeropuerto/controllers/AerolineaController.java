@@ -126,4 +126,17 @@ public class AerolineaController {
         }
     }
 
+    @GetMapping("/countVuelos/{aerolineaId}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene la cantidad de vulos registrados por la aerolinea especificada..", response = Long.class, tags = "Aerolíneas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> countVuelos(@PathVariable(value = "aerolineaId") Long aeroId) {
+        try {
+            Long count = aeroService.getCountVuelos(aeroId);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
