@@ -71,7 +71,7 @@ public class NotificacionController {
     @GetMapping("buscarIdandEstado/{id}/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de notificacions basándose en el área id", response = NotificacionDto.class, tags = "Notificaciones")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO') or hasAuthority('GERENTE_SERVICIOS_AERONAVES') or hasAuthority('GERENTE_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> buscarIdandEstado(@PathVariable(value = "id") long id, @PathVariable(value = "estado") boolean estado) {
         try {
             List<NotificacionDto> result = notificacionService.buscarAreaAndestado(id, estado);
@@ -98,7 +98,7 @@ public class NotificacionController {
 
     @PutMapping("/update")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO') or hasAuthority('GERENTE_SERVICIOS_AERONAVES') or hasAuthority('GERENTE_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> update(@RequestBody NotificacionDto notificacionDto) {
         try {
             NotificacionDto result = notificacionService.upDate(notificacionDto);

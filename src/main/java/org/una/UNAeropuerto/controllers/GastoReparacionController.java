@@ -26,7 +26,7 @@ public class GastoReparacionController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo gasto reparación basado en su Id", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('GERENTE_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             GastoReparacionDto result = gastoReparacionService.getById(id);
@@ -58,7 +58,7 @@ public class GastoReparacionController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de gastos reparaciones basándose en su estado", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('GERENTE_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByEstado(estado);
@@ -117,7 +117,7 @@ public class GastoReparacionController {
 
     @PutMapping("/update")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('GERENTE_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> update(@RequestBody GastoReparacionDto gastoReparacion) {
         try {
             GastoReparacionDto result = gastoReparacionService.update(gastoReparacion);
