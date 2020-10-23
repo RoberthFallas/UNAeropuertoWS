@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import java.util.Date;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,19 +23,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class AreaDto {
-  
+
     private Long id;
     private String nombre;
     private String descripcion;
+    private Date fechaRegistro;
+    private Date fechaModificacion;
     private Boolean activo;
-    @Setter(AccessLevel.NONE)
-    private List<AlertaDto> alertaList;
     @Setter(AccessLevel.NONE)
     private List<UsuarioDto> usuarioList;
     @Setter(AccessLevel.NONE)
     private List<GastoReparacionDto> gastoReparacionList;
-
-    public Long getId() {
-        return id;
-    }
+    @Setter(AccessLevel.NONE)
+    private List<NotificacionDto> notificacionesList;
+    
 }

@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,16 +30,15 @@ import org.una.UNAeropuerto.services.IAutenticacionService;
  */
 @RestController
 @RequestMapping("/autenticacion")
-@Api(tags = {"Autenticacion"})
+@Api(tags = {"Autenticación"})
 public class AutenticacionController {
 
     @Autowired
-    // private IUsuarioService usuarioService;
     private IAutenticacionService autenticacionService;
 
     @PostMapping("/login")
     @ResponseBody
-    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDto.class, tags = "Autenticacion")
+    @ApiOperation(value = "Inicio de sesión para conseguir un token de acceso", response = UsuarioDto.class, tags = "Autenticación")
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequest authenticationRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -48,12 +49,12 @@ public class AutenticacionController {
             AuthenticationResponse token = autenticacionService.login(authenticationRequest);
             if (token != null) {
                 authenticationResponse = token;
-//                authenticationResponse.setUsuario(token.getUsuario());
-//                authenticationResponse.setPermisos(token.getPermisos());
                 return new ResponseEntity(authenticationResponse, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Credenciales invalidos", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Credenciales inválidos", HttpStatus.UNAUTHORIZED);
             }
+        } catch (InternalAuthenticationServiceException | BadCredentialsException AutEx) {
+            return new ResponseEntity<>(AutEx, HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

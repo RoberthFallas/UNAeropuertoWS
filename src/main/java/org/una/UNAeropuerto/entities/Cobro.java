@@ -50,7 +50,7 @@ public class Cobro implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
     @JoinColumn(name = "servicios_mantenimiento_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private ServicioMantenimiento serviciosMantenimientoId;
 
 }

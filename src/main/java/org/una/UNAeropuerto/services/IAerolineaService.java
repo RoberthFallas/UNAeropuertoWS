@@ -25,4 +25,6 @@ public interface IAerolineaService {
     public AerolineaDto create(AerolineaDto aerolinea);
 
     public AerolineaDto update(AerolineaDto aerolinea);
+    
+    public Long getCountVuelos(long aerolineaId);
 }

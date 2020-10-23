@@ -20,10 +20,6 @@ public interface IAlertaService {
 
     public List<AlertaDto> findByTitulo(String titulo);
 
-    public List<AlertaDto> findByEmisor(String titulo);
-
-    public List<AlertaDto> findByAreaIdId(long titulo);
-
     public AlertaDto create(AlertaDto alerta);
 
     public AlertaDto update(AlertaDto alerta);

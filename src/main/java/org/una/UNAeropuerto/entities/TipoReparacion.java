@@ -6,14 +6,15 @@
 package org.una.UNAeropuerto.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,12 +27,12 @@ import lombok.ToString;
  * @author Roberth :)
  */
 @Entity
-@Table(name = "direcciones")
+@Table(name = "tipos_reparaciones")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Direccion implements Serializable {
+public class TipoReparacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,14 +41,13 @@ public class Direccion implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Size(min = 1, max = 10)
-    @Column(name = "direccion_vuelo")
-    private String direccionVuelo;
-    @JoinColumn(name = "vuelos_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Vuelo vuelosId;
-    @JoinColumn(name = "lugares_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Lugar lugaresId;
+    @Size(min = 1, max = 45)
+    @Column(name = "nombre")
+    private String nombre;
+    @Basic(optional = false)
+    @Column(name = "activo")
+    private Boolean activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiposId")
+    private List<GastoReparacion> gastoReparList;
 
 }

@@ -15,14 +15,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/cobros")
 @Api(tags = {"Cobros"})
-public class Cobros {
+public class CobrosController {
 
     @Autowired
     private ICobroService cobroService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo cobro basada en su Id", response = CobroDto.class, tags = "Cobros")
+    @ApiOperation(value = "Obtiene un solo cobro basado en su Id", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -54,7 +54,7 @@ public class Cobros {
 
     @GetMapping("findByServiciosMantenimientoId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de cobros basándose en su id de servicio mantenimeinto", response = CobroDto.class, tags = "Cobros")
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en su id de servicio mantenimiento", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByMantenimientoId(@PathVariable(value = "id") long id) {
         try {
@@ -70,7 +70,7 @@ public class Cobros {
 
     @GetMapping("findByMontoAproximado/{monto}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de cobros basandose en un monto aproximado", response = CobroDto.class, tags = "Cobros")
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en un monto aproximado", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByMontoAproximado(@PathVariable(value = "monto") long monto) {
         try {
@@ -86,7 +86,7 @@ public class Cobros {
 
     @GetMapping("findByDetalleCobroAprox/{detalle}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de cobros basandose en un detalle aproximado", response = CobroDto.class, tags = "Cobros")
+    @ApiOperation(value = "Obtiene una lista de cobros basándose en un detalle aproximado", response = CobroDto.class, tags = "Cobros")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByDetalleAproximado(@PathVariable(value = "detalle") String detalle) {
         try {
@@ -121,7 +121,7 @@ public class Cobros {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el cobro)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el cobro)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

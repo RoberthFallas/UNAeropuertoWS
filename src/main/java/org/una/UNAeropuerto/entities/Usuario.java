@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -84,11 +86,22 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId", fetch = FetchType.EAGER)
     private List<RolUsuario> rolUsuarioList;
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Area areasId;
 
     public void refreshContrasenna(String newPassword) {
         this.contrasenna = newPassword;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        fechaIngreso = new Date();
+        fechaModificacion = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        fechaModificacion = new Date();
     }
 
 }

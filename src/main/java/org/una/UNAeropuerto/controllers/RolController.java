@@ -37,8 +37,8 @@ public class RolController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su Id", response = RolDto.class, tags = "Roles")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @ApiOperation(value = "Obtiene un solo rol basado en su Id", response = RolDto.class, tags = "Roles")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             RolDto result = rolService.getById(id);
@@ -53,7 +53,7 @@ public class RolController {
 
     @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo Rol basado en su nombre", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene un solo rol basado en su nombre", response = RolDto.class, tags = "Roles")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -67,25 +67,9 @@ public class RolController {
         }
     }
 
-    @GetMapping("/findByDescrip/{param}")
-    @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuya descripción coincida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
-    public ResponseEntity<?> findByDescripcion(@PathVariable(value = "param") String param) {
-        try {
-            List<RolDto> result = rolService.findByDescripcion(param);
-            if (!result.isEmpty()) {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
-            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/findByNombre/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coinsida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
+    @ApiOperation(value = "Obtiene una lista de roles cuyo nombre coincida parcial o totalmente con el parámetro.", response = RolDto.class, tags = "Roles")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String param) {
         try {
@@ -136,9 +120,21 @@ public class RolController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el rol)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el rol)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping()
+    @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDto.class, responseContainer = "List", tags = "Roles")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(rolService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

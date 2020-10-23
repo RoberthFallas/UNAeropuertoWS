@@ -12,19 +12,18 @@ public interface IServicioMantenimientoRepository extends JpaRepository<Servicio
 
     public Optional<List<ServicioMantenimiento>> findByFechaServicioBetween(Date startDate, Date endDate);
 
-    public Optional<ServicioMantenimiento> findByNumeroFactura(long numeroFactura);
+    public Optional<List<ServicioMantenimiento>>findByNumeroFacturaContaining(long numeroFactura);
 
-    public Optional<List<ServicioMantenimiento>> findByEstadoPagoLike(boolean estado);
+    public Optional<List<ServicioMantenimiento>> findByEstadoPago(boolean estado);
 
-    public Optional<List<ServicioMantenimiento>> findByActivoLike(boolean estado);
+    public Optional<List<ServicioMantenimiento>> findByActivo(boolean estado);
 
-    public Optional<List<ServicioMantenimiento>> findByEstaFinalizacionLike(boolean estado);
+    public Optional<List<ServicioMantenimiento>> findByEstaFinalizacion(boolean estado);
 
-    public Optional<List<ServicioMantenimiento>> findByAvionesId(long id);
+    public Optional<List<ServicioMantenimiento>> findByAvionesIdMatriculaContaining(String matricula);
 
-    public Optional<List<ServicioMantenimiento>> findByHangaresId(long id);
 
-    public Optional<List<ServicioMantenimiento>> findByTiposServiciosId(long id);
+    public Optional<List<ServicioMantenimiento>> findByTiposServiciosIdNombreContaining(String nombre);
 
 
 

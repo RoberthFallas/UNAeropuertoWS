@@ -26,6 +26,21 @@ public class AreaServiceImplementation implements IAreaService {
     @Autowired
     IAreaRepository areaRepo;
 
+    private Optional<List<AreaDto>> findList(List<Area> list) {
+        if (list != null) {
+            List<AreaDto> areaDtos= MapperUtils.DtoListFromEntityList(list, AreaDto.class);
+            return Optional.ofNullable(areaDtos);
+        } else {
+            return null;
+        }
+    }
+ private Optional<List<AreaDto>> findList(Optional<List<Area>> list) {
+        if (list.isPresent()) {
+            return findList(list.get());
+        } else {
+            return null;
+        }
+    }
     @Override
     @Transactional(readOnly = true)
     public AreaDto getById(long id) {
@@ -84,6 +99,12 @@ public class AreaServiceImplementation implements IAreaService {
         Area entityUser = MapperUtils.entityFromDto(usuario, Area.class);
         entityUser = areaRepo.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, AreaDto.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<AreaDto>> findAll() {
+       return findList(areaRepo.findAll());
     }
 
 }

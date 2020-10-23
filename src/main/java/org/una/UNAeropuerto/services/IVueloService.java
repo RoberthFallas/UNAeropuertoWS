@@ -33,4 +33,6 @@ public interface IVueloService {
 
     public VueloDto update(VueloDto vuelo);
 
+    public List<VueloDto> filter(String aerolinea, String nombreVuelo, String matriculaAvion, String llegada, String salida, Date desde, Date hasta);
+
 }

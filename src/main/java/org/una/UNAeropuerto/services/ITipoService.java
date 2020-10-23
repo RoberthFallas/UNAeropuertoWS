@@ -1,20 +1,24 @@
 package org.una.UNAeropuerto.services;
 
-import org.una.UNAeropuerto.dto.TipoDto;
+import org.una.UNAeropuerto.dto.TipoReparacionDto;
+import org.una.UNAeropuerto.dto.TipoServicioDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ITipoService {
 
-    public TipoDto getById(long id);
 
-    public TipoDto getByNombre(String nombre);
 
-    public List<TipoDto> findByNombre(String nombre);
+    public TipoReparacionDto getById(long id);
 
-    public List<TipoDto> findByActivos(boolean activo);
+    public TipoReparacionDto getByNombre(String nombre);
 
-    public TipoDto update(TipoDto tipo);
+    public List<TipoReparacionDto> findByNombre(String nombre);
 
-    public TipoDto create(TipoDto tipo);
+    public List<TipoReparacionDto> findByActivos(boolean activo);
+
+    public TipoReparacionDto update(TipoReparacionDto tipo);
+
+    public TipoReparacionDto create(TipoReparacionDto tipo);
 }

@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 public class ParamSistemaDto {
 
-    private Long id;
+    private Integer id;
     private Short vuelosHora;
     private Integer tiempoInactividad;
     private String telefonoAeropuerto;

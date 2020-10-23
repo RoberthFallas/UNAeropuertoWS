@@ -19,6 +19,16 @@ public class TipoServicioServiceImplementation implements ITipoServicioService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TipoServicioDto> getAll() {
+        Optional<List<TipoServicio>> result = Optional.ofNullable(tipoServicioRepository.findAll());
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public TipoServicioDto getByNombre(String nombre) {
         Optional<TipoServicio> result = tipoServicioRepository.findByNombre(nombre);
         if (result.isPresent()) {
@@ -28,6 +38,7 @@ public class TipoServicioServiceImplementation implements ITipoServicioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TipoServicioDto getById(long id) {
         Optional<TipoServicio> result = tipoServicioRepository.findById(id);
         if (result.isPresent()) {
@@ -59,7 +70,7 @@ public class TipoServicioServiceImplementation implements ITipoServicioService {
     @Override
     @Transactional(readOnly = true)
     public List<TipoServicioDto> findByEstado(boolean estado) {
-        Optional<List<TipoServicio>> result = tipoServicioRepository.findByAvtivoLike(estado);
+        Optional<List<TipoServicio>> result = tipoServicioRepository.findByActivoLike(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), TipoServicioDto.class);
         }

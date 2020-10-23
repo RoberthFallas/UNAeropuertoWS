@@ -38,6 +38,15 @@ public class AvionServiceImplementation implements IAvionService {
     }
 
     @Override
+    public List<AvionDto> getByMatriculaLike(String matricula) {
+        Optional<List<Avion>> result = avionRepository.findByMatriculaContaining(matricula);
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), AvionDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<AvionDto> findByEstado(boolean estado) {
         Optional<List<Avion>> result = avionRepository.findByActivoLike(estado);
@@ -49,8 +58,8 @@ public class AvionServiceImplementation implements IAvionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AvionDto> findByAerolineaId(long id) {
-        Optional<List<Avion>> result = avionRepository.findByAerolineasId(id);
+    public List<AvionDto> findByAerolineaNombre(String id) {
+        Optional<List<Avion>> result = avionRepository.findByAerolineasIdNombreContaining(id);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), AvionDto.class);
         }
@@ -75,5 +84,15 @@ public class AvionServiceImplementation implements IAvionService {
         Avion entityUser = MapperUtils.entityFromDto(avion, Avion.class);
         entityUser = avionRepository.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, AvionDto.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AvionDto> filter(String matricula, String aerolinea) {
+        List<Avion> result = avionRepository.filterByMatriculaAndAerolinea(matricula, aerolinea);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, AvionDto.class);
+        }
+        return new ArrayList();
     }
 }

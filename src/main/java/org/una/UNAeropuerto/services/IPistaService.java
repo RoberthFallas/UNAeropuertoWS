@@ -22,7 +22,11 @@ public interface IPistaService {
 
     public List<PistaDto> findByEstado(boolean estate);
 
+    public List<PistaDto> findAll();
+
     public PistaDto create(PistaDto pista);
 
     public PistaDto update(PistaDto pista);
+    
+    public List<PistaDto> filter(String numerPista, float longitud);
 }

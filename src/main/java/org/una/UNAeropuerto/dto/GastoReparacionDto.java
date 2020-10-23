@@ -33,11 +33,9 @@ public class GastoReparacionDto {
     private String observaciones;
     private Boolean activo;
     @Setter(AccessLevel.NONE)
-    private List<DetalleServicioDto> detalleServicioList;
-    @Setter(AccessLevel.NONE)
     private AreaDto areasId;
+    private TipoReparacionDto tiposId;
+    @Setter(AccessLevel.NONE)
+    private ProvedorDto provedoresId;
 
-    public Long getId() {
-        return id;
-    }
 }

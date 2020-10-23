@@ -54,7 +54,26 @@ public class SwaggerConfiguration {
                 .paths(PathSelectors.regex("/.*"))
                 .build()
                 .apiInfo(apiInfo())
-                .tags(new Tag("Autenticacion", "Metodos de Seguridad")
+                .tags(  new Tag("Autenticación", "Métodos de Seguridad"),
+                        new Tag("Aerolíneas", "Entidad de Aerolínea"),
+                        new Tag("Alertas", "Entidad de Alerta"),
+                        new Tag("Áreas", "Entidad de Área"),
+                        new Tag("Aviones", "Entidad de Avión"),
+                        new Tag("Bitácoras", "Entidad de Bitácora"),
+                        new Tag("Cobros", "Entidad de Cobro "),
+                        new Tag("Gastos Reparaciones", "Entidad de Gasto Reparación"),
+                        new Tag("Lugares", "Entidad de Lugar"),
+                        new Tag("Parámetros del Sistema", "Entidad de Parámetro Sistema"),
+                        new Tag("Pistas", "Entidad de Pista"),
+                        new Tag("Provedores", "Entidad de Provedor"),
+                        new Tag("Roles", "Entidad de Rol"),
+                        new Tag("Roles Usuarios","Entidad de Rol por Usuario "),
+                        new Tag("Servicios de Mantenimiento","Entidad de Servicio de Mantenimiento"),
+                        new Tag("Tipos de Reparaciones","Entidad de Tipo de Reparacion"),
+                        new Tag("Tipos de Servicios","Entidad de Tipo de Servicio"),
+                        new Tag("Usuarios","Entidad de Usuario"),
+                         new Tag("Vuelos","Entidad de Vuelos"),
+                        new Tag("Notificaciones","Entidad de Notificaciones")
                 );
     }
 //    @Bean

@@ -29,7 +29,7 @@ import org.una.UNAeropuerto.services.IAerolineaService;
  */
 @RestController
 @RequestMapping("/aerolineas")
-@Api(tags = {"Aerolineas"})
+@Api(tags = {"Aerolíneas"})
 public class AerolineaController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class AerolineaController {
     @GetMapping("/{id}")
     @ResponseBody
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
-    @ApiOperation(value = "Obtiene una sola aerolinea basada en su Id", response = AerolineaDto.class, tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una sola aerolínea basada en su ID", response = AerolineaDto.class, tags = "Aerolíneas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             AerolineaDto result = aeroService.getById(id);
@@ -53,7 +53,7 @@ public class AerolineaController {
 
     @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una sola aerolinea basada en su nombre", response = AerolineaDto.class, tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una sola aerolínea basada en su nombre", response = AerolineaDto.class, tags = "Aerolíneas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -69,11 +69,11 @@ public class AerolineaController {
 
     @GetMapping("/findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de aerolineas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AerolineaDto.class, tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de aerolíneas cuyo nombre coincida parcial o totalmente con el parámetro.", response = AerolineaDto.class, tags = "Aerolíneas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String parametro) {
         try {
-            List<AerolineaDto> result = aeroService.findByNombre(parametro);
+            List<AerolineaDto> result = aeroService.findByNombre(!"none".equals(parametro) ? parametro : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -85,7 +85,7 @@ public class AerolineaController {
 
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de aerolineas cuyo estado coinsida con el parametro.", response = AerolineaDto.class, tags = "Aerolineas")
+    @ApiOperation(value = "Obtiene una lista de aerolíneas cuyo estado coincida con el parámetro.", response = AerolineaDto.class, tags = "Aerolíneas")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "state") Boolean state) {
         try {
@@ -120,9 +120,22 @@ public class AerolineaController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró la Aerolínea)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/countVuelos/{aerolineaId}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene la cantidad de vulos registrados por la aerolinea especificada..", response = Long.class, tags = "Aerolíneas")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> countVuelos(@PathVariable(value = "aerolineaId") Long aeroId) {
+        try {
+            Long count = aeroService.getCountVuelos(aeroId);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

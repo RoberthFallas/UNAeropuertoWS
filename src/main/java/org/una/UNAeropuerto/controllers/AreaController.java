@@ -29,7 +29,7 @@ import org.una.UNAeropuerto.services.IAreaService;
  */
 @RestController
 @RequestMapping("/areas")
-@Api(tags = {"Areas"})
+@Api(tags = {"Áreas"})
 public class AreaController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class AreaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo área basada en su Id", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene un solo área basada en su Id", response = AreaDto.class, tags = "Áreas")
     @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -53,7 +53,7 @@ public class AreaController {
 
     @GetMapping("/getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo area basado en su nombre", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene un solo área basado en su nombre", response = AreaDto.class, tags = "Áreas")
     @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
@@ -69,7 +69,7 @@ public class AreaController {
 
     @GetMapping("/findByNomb/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de áreas cuyo nombre coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene una lista de áreas cuyo nombre coincida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Áreas")
     @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> findByCedulaAproximada(@PathVariable(value = "param") String parametro) {
         try {
@@ -85,7 +85,7 @@ public class AreaController {
 
     @GetMapping("/findByDescrip/{param}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de áreas cuya descripcion coinsida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Areas")
+    @ApiOperation(value = "Obtiene una lista de áreas cuya descripción coincida parcial o totalmente con el parámetro.", response = AreaDto.class, tags = "Áreas")
     @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> findByDescripAprox(@PathVariable(value = "param") String parametro) {
         try {
@@ -120,9 +120,20 @@ public class AreaController {
             if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encontró el área)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping()
+    @ApiOperation(value = "Obtiene una lista de todas las areas", response = AreaDto.class, responseContainer = "List", tags = "Áreas")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(areaService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

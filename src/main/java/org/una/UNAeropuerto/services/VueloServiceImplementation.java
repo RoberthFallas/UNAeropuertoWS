@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.VueloDto;
-import org.una.UNAeropuerto.entities.Direccion;
 import org.una.UNAeropuerto.entities.Vuelo;
-import org.una.UNAeropuerto.repositories.IDireccionRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 import org.una.UNAeropuerto.repositories.IVueloRepository;
 
@@ -28,8 +27,6 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Autowired
     private IVueloRepository vueloRepo;
-    @Autowired
-    private IDireccionRepository direcRepo;
 
     @Override
     @Transactional(readOnly = true)
@@ -84,9 +81,9 @@ public class VueloServiceImplementation implements IVueloService {
     @Override
     @Transactional(readOnly = true)
     public List<VueloDto> findEntreFechas(Date start, Date end) {
-        Optional<List<Vuelo>> result = vueloRepo.findByBetweenDates(start, end);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), VueloDto.class);
+        List<Vuelo> result = vueloRepo.findByBetweenDates(start, end);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, VueloDto.class);
         }
         return new ArrayList();
     }
@@ -105,11 +102,7 @@ public class VueloServiceImplementation implements IVueloService {
     @Transactional
     public VueloDto create(VueloDto vuelo) {
         Vuelo entityVuelo = MapperUtils.entityFromDto(vuelo, Vuelo.class);
-        Direccion direc = MapperUtils.entityFromDto(vuelo.getDireccionList().get(0), Direccion.class);
-        entityVuelo.getDireccionList().clear();
         entityVuelo = vueloRepo.save(entityVuelo);
-        direc.setVuelosId(entityVuelo);
-        direcRepo.save(direc);
         return MapperUtils.DtoFromEntity(entityVuelo, VueloDto.class);
     }
 
@@ -123,6 +116,32 @@ public class VueloServiceImplementation implements IVueloService {
             return MapperUtils.DtoFromEntity(entity, VueloDto.class);
         }
         return null;
+    }
+
+    @Override
+    public List<VueloDto> filter(String aerolinea, String nombreVuelo, String matriculaAvion, String llegada, String salida, Date desde, Date hasta) {
+        List<Vuelo> result = vueloRepo.findByTextParameters(aerolinea, nombreVuelo, matriculaAvion, llegada, salida);
+        List<VueloDto> resultDto = new ArrayList();
+        if (!result.isEmpty()) {
+            resultDto.addAll(MapperUtils.DtoListFromEntityList(result, VueloDto.class));
+        }
+        result.clear();
+        if (desde != null && hasta != null) {
+            if ("".equals(aerolinea) && "".equals(nombreVuelo) && "".equals(matriculaAvion) && "".equals(llegada) && "".equals(salida)) {
+                resultDto.clear();
+            }
+            result = vueloRepo.findByBetweenDates(desde, hasta);
+        } else if (desde != null) {
+            result = vueloRepo.findByBetweenDates(desde, new Date());
+        } else if (hasta != null) {
+            result = vueloRepo.findByBetweenDates(new Date(), hasta);
+        }
+        if (!result.isEmpty()) {
+            resultDto.addAll(MapperUtils.DtoListFromEntityList(result, VueloDto.class));
+        }
+        resultDto = resultDto.stream().distinct().collect(Collectors.toList());
+        resultDto.removeIf(vuelo -> vuelo.getEstado() == 3);
+        return resultDto;
     }
 
 }

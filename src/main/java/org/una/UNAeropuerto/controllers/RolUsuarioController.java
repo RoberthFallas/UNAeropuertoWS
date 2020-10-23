@@ -37,7 +37,7 @@ public class RolUsuarioController {
 
     @GetMapping("/findByUserId/{id}")
     @ResponseBody
-    @ApiOperation(value = "Retorna lista de Roles_Usuario tomando como parámetro el Id del usuario al que pertenecen", response = UsuarioDto.class, tags = "Usuarios")
+    @ApiOperation(value = "Retorna lista de Roles_Usuario tomando como parámetro el Id del usuario al que pertenecen", response = UsuarioDto.class, tags = "Roles Usuarios")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByUsuarioId(@PathVariable(value = "id") long id) {
         try {
@@ -67,7 +67,7 @@ public class RolUsuarioController {
 
     @GetMapping("/changeStateById/{id}/{state}")
     @ResponseBody
-    @ApiOperation(value = "Cambia estado (Activo inactivo) de RolUsuaario especificado en id", response = UsuarioDto.class, tags = "Usuarios")
+    @ApiOperation(value = "Cambia estado (Activo inactivo) de RolUsuaario especificado en id", response = UsuarioDto.class, tags = "Roles Usuarios")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> changeStateById(@PathVariable(value = "id") long id,
             @PathVariable(value = "state") boolean state) {

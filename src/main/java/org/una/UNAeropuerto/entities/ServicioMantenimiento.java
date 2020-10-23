@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,15 +63,14 @@ public class ServicioMantenimiento implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
     @JoinColumn(name = "aviones_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Avion avionesId;
-    @JoinColumn(name = "hangares_id", referencedColumnName = "id")
-    @ManyToOne
-    private Hangar hangaresId;
     @JoinColumn(name = "tipos_servicios_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private TipoServicio tiposServiciosId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviciosMantenimientoId")
     private List<Cobro> cobroList;
+
+   
 
 }

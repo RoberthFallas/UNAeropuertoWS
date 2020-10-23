@@ -8,6 +8,8 @@ package org.una.UNAeropuerto.repositories;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.una.UNAeropuerto.entities.Aerolinea;
 
 /**
@@ -18,7 +20,11 @@ public interface IAerolineaRepository extends JpaRepository<Aerolinea, Long> {
 
     public Optional<Aerolinea> findByNombre(String nombre);
 
-    public Optional<List<Aerolinea>> findByNombreContaining(String nombre);
+    public List<Aerolinea> findByNombreContaining(String nombre);
 
-    public Optional<List<Aerolinea>> findByActiov(boolean estado);
+    public List<Aerolinea> findByActiov(boolean estado);
+
+    @Query("select count(vue.id) from Aerolinea aero join aero.avionList av join av.vueloList vue "
+            + "where aero.id = :id")
+    public Long CountVuelosByAerolinea(@Param("id") long id);
 }

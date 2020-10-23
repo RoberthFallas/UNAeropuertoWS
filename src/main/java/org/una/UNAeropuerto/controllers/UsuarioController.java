@@ -100,6 +100,70 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/busquedaCompleta/{nombre}/{apellido}/{cedula}/{activo}")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
+    public ResponseEntity<?> busquedaCompleta(@PathVariable(value = "nombre") String nombre,
+            @PathVariable(value = "apellido") String apellidos, @PathVariable(value = "cedula") String cedula,
+            @PathVariable(value = "activo") boolean activo) {
+        String pName = "%";
+        String pApellido = "%";
+        String pCedula = "%";
+        try {
+
+            if (!nombre.equals("none")) {
+                pName = nombre;
+            }
+            if (!apellidos.equals("none")) {
+                pApellido = apellidos;
+            }
+            if (!cedula.equals("none")) {
+                pCedula = cedula;
+            }
+            List<UsuarioDto> result = userService.busquedaMixta(pName, pApellido, pCedula, activo);
+
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/busquedaCompletaConFechas/{nombre}/{apellido}/{cedula}/{activo}/{fechaInicio}/{fechaFinal}")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @ApiOperation(value = "Obtiene una lista de usuarios cuyo nombre completo coinsida parcial o totalmente con el parámetro.", response = UsuarioDto.class, tags = "Usuarios")
+    public ResponseEntity<?> busquedaCompletaConFechas(@PathVariable(value = "nombre") String nombre,
+            @PathVariable(value = "apellido") String apellidos, @PathVariable(value = "cedula") String cedula, @PathVariable(value = "activo") boolean activo,
+            @PathVariable(value = "fechaInicio") String fechaInicio, @PathVariable(value = "fechaFinal") String fechaFinal) {
+        String pName = "%";
+        String pApellido = "%";
+        String pCedula = "%";
+        try {
+
+            if (!nombre.equals("none")) {
+                pName = nombre;
+            }
+            if (!apellidos.equals("none")) {
+                pApellido = apellidos;
+            }
+            if (!cedula.equals("none")) {
+                pCedula = cedula;
+            }
+            List<UsuarioDto> result = userService.busquedaMixtaConFecha(pName, pApellido, pCedula,activo, fechaInicio, fechaFinal);
+
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/hideById/{id}")
     @ResponseBody
     @ApiOperation(value = "Oculta del sistema a un usuario, basándose en su Id.", response = UsuarioDto.class, tags = "Usuarios")

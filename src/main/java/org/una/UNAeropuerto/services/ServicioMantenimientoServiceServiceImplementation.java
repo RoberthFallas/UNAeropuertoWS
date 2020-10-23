@@ -20,12 +20,12 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
 
     @Override
     @Transactional(readOnly = true)
-    public ServicioMantenimientoDto getByNumeroFactura(long numeroFactura) {
-        Optional<ServicioMantenimiento> result = servicioMantenimientoRepository.findByNumeroFactura(numeroFactura);
+    public  List<ServicioMantenimientoDto> getByNumeroFactura(long numeroFactura) {
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByNumeroFacturaContaining(numeroFactura);
         if (result.isPresent()) {
-            return MapperUtils.DtoFromEntity(result.get(), ServicioMantenimientoDto.class);
+            return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }
-        return null;
+        return new ArrayList();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
     @Override
     @Transactional(readOnly = true)
     public List<ServicioMantenimientoDto> findByEstadoPago(boolean estado) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByEstadoPagoLike(estado);
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByEstadoPago(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }
@@ -61,7 +61,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
     @Override
     @Transactional(readOnly = true)
     public List<ServicioMantenimientoDto> findByEstado(boolean estado) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByActivoLike(estado);
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByActivo(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }
@@ -71,7 +71,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
     @Override
     @Transactional(readOnly = true)
     public List<ServicioMantenimientoDto> findByEstadoFinalizacion(boolean estado) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByEstaFinalizacionLike(estado);
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByEstaFinalizacion(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }
@@ -80,28 +80,20 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
 
     @Override
     @Transactional(readOnly = true)
-    public List<ServicioMantenimientoDto> findByAvionesId(long id) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByAvionesId(id);
+    public List<ServicioMantenimientoDto> findByAvionesMatricula(String matricula) {
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByAvionesIdMatriculaContaining(matricula);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }
         return new ArrayList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ServicioMantenimientoDto> findByHangaresId(long id) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByHangaresId(id);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
-        }
-        return new ArrayList();
-    }
+
 
     @Override
     @Transactional(readOnly = true)
-    public List<ServicioMantenimientoDto> findByTiposServiciosId(long id) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByTiposServiciosId(id);
+    public List<ServicioMantenimientoDto>  findByTiposServiciosNombre(String nombre) {
+        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByTiposServiciosIdNombreContaining(nombre);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
         }

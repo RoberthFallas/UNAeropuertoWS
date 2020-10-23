@@ -5,6 +5,7 @@
  */
 package org.una.UNAeropuerto.dto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
@@ -26,8 +28,6 @@ public class BitacoraDto {
     private Long id;
     private Date fechaModificacion;
     private String tipoCambio;
-    private Boolean activa;
-    @Setter(AccessLevel.NONE)
     private UsuarioDto usuariosId;
     
 }

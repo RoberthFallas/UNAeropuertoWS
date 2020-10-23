@@ -6,6 +6,7 @@
 package org.una.UNAeropuerto.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
@@ -50,11 +54,18 @@ public class Bitacora implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "tipo_cambio")
     private String tipoCambio;
-    @Basic(optional = false)
-    @Column(name = "activa")
-    private Boolean activa;
     @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(/*optional = false*/)
     private Usuario usuariosId;
+
+    @PrePersist
+    public void prePersist() {
+        fechaModificacion = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        fechaModificacion = new Date();
+    }
 
 }

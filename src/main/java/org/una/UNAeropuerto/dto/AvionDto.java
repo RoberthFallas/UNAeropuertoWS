@@ -29,7 +29,6 @@ public class AvionDto {
     private Boolean activo;
     @Setter(AccessLevel.NONE)
     private List<ServicioMantenimientoDto> servicioMantenimientoList;
-    @Setter(AccessLevel.NONE)
     private AerolineaDto aerolineasId;
     @Setter(AccessLevel.NONE)
     private List<VueloDto> vueloList;

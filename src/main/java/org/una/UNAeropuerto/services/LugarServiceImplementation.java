@@ -49,9 +49,10 @@ public class LugarServiceImplementation implements ILugarService {
     @Override
     @Transactional(readOnly = true)
     public List<LugarDto> findByNombre(String nombre) {
-        Optional<List<Lugar>> result = lugarRepo.findByNombreContaining(nombre);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), LugarDto.class);
+        List<Lugar> result = lugarRepo.findByNombreContaining(nombre);
+        if (!result.isEmpty()) {
+            result.removeIf(element -> !element.getActivo());
+            return MapperUtils.DtoListFromEntityList(result, LugarDto.class);
         }
         return new ArrayList();
     }
