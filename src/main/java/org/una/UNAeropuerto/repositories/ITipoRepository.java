@@ -10,7 +10,7 @@ public interface ITipoRepository extends JpaRepository<TipoReparacion, Long> {
 
     public Optional<List<TipoReparacion>> findByNombreContaining(String nombre);
 
-    public Optional<List<TipoReparacion>> findByActivoLike(boolean activo);
+    public Optional<List<TipoReparacion>> findByActivo(boolean activo);
 
 
 

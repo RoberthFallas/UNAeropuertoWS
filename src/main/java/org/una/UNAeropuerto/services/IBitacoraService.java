@@ -19,6 +19,10 @@ public interface IBitacoraService {
 
     public List<BitacoraDto> findByUserId(long id);
 
+    public List<BitacoraDto> findByTipoCambio(String tipo);
+
+    public List<BitacoraDto> findByUserCedula(String nombre);
+
     public List<BitacoraDto> findByFechaBitacora(Date fecha);
 
     public List<BitacoraDto> findBetweenDates(Date startDate, Date endDate);

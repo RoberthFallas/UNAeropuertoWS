@@ -34,7 +34,6 @@ public class GastoReparacionDto {
     private Boolean activo;
     @Setter(AccessLevel.NONE)
     private AreaDto areasId;
-    @Setter(AccessLevel.NONE)
     private TipoReparacionDto tiposId;
     @Setter(AccessLevel.NONE)
     private ProvedorDto provedoresId;

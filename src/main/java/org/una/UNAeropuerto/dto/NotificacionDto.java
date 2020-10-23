@@ -8,7 +8,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class NotificacionDto {
-    int id;
+    Long id;
     boolean activo;
     int idObjeto;
     Date fechaRegistro;
