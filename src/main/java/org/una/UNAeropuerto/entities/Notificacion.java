@@ -1,5 +1,6 @@
 package org.una.UNAeropuerto.entities;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Notificacion {
+public class Notificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -35,5 +36,10 @@ public class Notificacion {
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Area areasId;
+
+    @PrePersist
+    public void prePersist() {
+        fechaRegistro = new Date();
+    }
 
 }
