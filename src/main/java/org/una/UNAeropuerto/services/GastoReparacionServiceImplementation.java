@@ -30,7 +30,7 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
 
     @Override
     @Transactional(readOnly = true)
-    public GastoReparacionDto getByNumeroContrato(Long numeroContrato) {
+    public  GastoReparacionDto getByNumeroContrato(Long numeroContrato) {
         Optional<GastoReparacion> result = gastoReparacionRepository.findByNumeroContrato(numeroContrato);
         if (result.isPresent()) {
             return MapperUtils.DtoFromEntity(result.get(), GastoReparacionDto.class);
@@ -41,7 +41,7 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
     @Override
     @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByEstado(boolean estado) {
-        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByActivoLike(estado);
+        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByActivo(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
         }
@@ -51,7 +51,7 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
     @Override
     @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByEstadoPago(boolean estado) {
-        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByEstadoPagoLike(estado);
+        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByEstadoPago(estado);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
         }
@@ -61,7 +61,7 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
     @Override
     @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByAreaId(long id) {
-        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByAreasId(id);
+        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByAreasIdId(id);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
         }
@@ -72,6 +72,33 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
     @Transactional(readOnly = true)
     public List<GastoReparacionDto> findByFechaRegistroBetween(Date startDate, Date endDate) {
         Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByFechaRegistroBetween(startDate, endDate);
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    public List<GastoReparacionDto> findBetweenDiasPeriocidad(Integer start, Integer end) {
+        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByPeriodicidadBetween(start, end);
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    public List<GastoReparacionDto> findBweteenDiasDuracion(Integer start, Integer end) {
+        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByDuracionBetween(start, end);
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    public List<GastoReparacionDto> findByTipoNombre(String nombre) {
+        Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByTiposIdNombreContaining(nombre);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), GastoReparacionDto.class);
         }

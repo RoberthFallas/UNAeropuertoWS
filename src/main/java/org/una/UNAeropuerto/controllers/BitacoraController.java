@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -67,6 +68,38 @@ public class BitacoraController {
         }
     }
 
+    @GetMapping("/getByUserCedula/{cedula}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Bitácoras")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    public ResponseEntity<?> getByUserId(@PathVariable(value = "cedula") String cedula) {
+        try {
+            List<BitacoraDto> result = bitacoraRepo.findByUserCedula(cedula);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getByTipoCambio/{parametro}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Bitácoras")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    public ResponseEntity<?> getByTipoCambio(@PathVariable(value = "parametro") String parametro) {
+        try {
+            List<BitacoraDto> result = bitacoraRepo.findByTipoCambio(parametro);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/findByFecha/{fecha}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Bitácoras")
@@ -88,12 +121,11 @@ public class BitacoraController {
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras que hayan sido creadas entre las fechas especificadas", response = BitacoraDto.class, tags = "Bitácoras")
     @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
-    public ResponseEntity<?> findBetweenFechas(@PathVariable(value = "start") String start,
-            @PathVariable(value = "end") String end) {
+    public ResponseEntity<?> findBetweenFechas(@PathVariable(value = "start")@DateTimeFormat(pattern = "yyyy-MM-dd")  Date start,
+            @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         try {
-            Date fStart = java.sql.Date.valueOf(start);
-            Date fEnd = java.sql.Date.valueOf(end);
-            List<BitacoraDto> result = bitacoraRepo.findBetweenDates(fStart, fEnd);
+
+            List<BitacoraDto> result = bitacoraRepo.findBetweenDates(start, end);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }

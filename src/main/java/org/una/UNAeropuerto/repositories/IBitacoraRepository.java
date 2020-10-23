@@ -23,9 +23,11 @@ public interface IBitacoraRepository extends JpaRepository<Bitacora, Long> {
 
     public Optional<List<Bitacora>> findByusuariosIdId(long id);
 
+    public Optional<List<Bitacora>> findByUsuariosIdCedula(String nombre);
+
     @Query("select b from Bitacora b where DATE(b.fechaModificacion) like :fechaModificacion")
     public Optional<List<Bitacora>> findByFechaModificacion(@Param("fechaModificacion") Date fechaModificacion);
 
-    @Query("select b from Bitacora b where b.fechaModificacion between :fechaInicio and :fechaFinal")
-    public Optional<List<Bitacora>> findBetweenDates(@Param("fechaInicio") Date fechaInicio, @Param("fechaFinal") Date fechaFinal);
+  //  @Query("select b from Bitacora b where b.fechaModificacion between :fechaInicio and :fechaFinal")
+    public Optional<List<Bitacora>> findByFechaModificacionBetween( Date fechaInicio,  Date fechaFinal);
 }
