@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -16,12 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class Notificacion {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;
@@ -36,5 +36,4 @@ public class Notificacion {
     @ManyToOne(/*optional = false*/)
     private Area areasId;
 
-
-} 
+}
