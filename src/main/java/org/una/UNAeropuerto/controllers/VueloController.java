@@ -40,7 +40,7 @@ public class VueloController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo vuelo basado en su Id", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             VueloDto result = vueloService.getById(id);

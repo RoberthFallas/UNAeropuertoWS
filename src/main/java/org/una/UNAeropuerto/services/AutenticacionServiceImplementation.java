@@ -28,8 +28,7 @@ import org.una.UNAeropuerto.utils.MapperUtils;
 @Service
 public class AutenticacionServiceImplementation implements IAutenticacionService {
 
-    @Autowired
-    private IUsuarioRepository usuarioRepository;
+   
     @Autowired
     private JwtProvider jwtProvider;
     @Autowired
