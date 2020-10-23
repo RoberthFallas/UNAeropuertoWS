@@ -11,8 +11,10 @@ import org.una.UNAeropuerto.utils.MapperUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class NotificacionServiceImplementation implements INotificacionService {
+
     @Autowired
     INotificacionRepository notificacionRepository;
 
@@ -25,6 +27,7 @@ public class NotificacionServiceImplementation implements INotificacionService {
         }
         return null;
     }
+
     @Override
     @Transactional(readOnly = true)
     public List<NotificacionDto> findByActivos(boolean estado) {
@@ -50,5 +53,27 @@ public class NotificacionServiceImplementation implements INotificacionService {
         Notificacion entityUser = MapperUtils.entityFromDto(notificacion, Notificacion.class);
         entityUser = notificacionRepository.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, NotificacionDto.class);
+    }
+
+    @Override
+    @Transactional
+    public NotificacionDto upDate(NotificacionDto update) {
+        Optional<Notificacion> result = notificacionRepository.findById(update.getId());
+        if (result.isPresent()) {
+            Notificacion entity = MapperUtils.entityFromDto(update, Notificacion.class);
+            entity = notificacionRepository.save(entity);
+            return MapperUtils.DtoFromEntity(entity, NotificacionDto.class);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<NotificacionDto> buscarAreaAndestado(long id,boolean estado) {
+       Optional<List<Notificacion>> result = notificacionRepository.findByAreasIdIdAndActivo(id, estado);
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), NotificacionDto.class);
+        }
+        return new ArrayList();
     }
 }

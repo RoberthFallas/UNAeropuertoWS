@@ -38,7 +38,7 @@ public class RolController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo rol basado en su Id", response = RolDto.class, tags = "Roles")
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             RolDto result = rolService.getById(id);
@@ -125,6 +125,7 @@ public class RolController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping()
     @ApiOperation(value = "Obtiene una lista de todos los roles", response = RolDto.class, responseContainer = "List", tags = "Roles")
     @ResponseBody
