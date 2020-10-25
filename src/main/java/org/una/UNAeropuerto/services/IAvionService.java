@@ -1,5 +1,6 @@
 package org.una.UNAeropuerto.services;
 
+import java.util.Date;
 import org.una.UNAeropuerto.dto.AvionDto;
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IAvionService {
     public AvionDto create(AvionDto avion);
 
     public List<AvionDto> filter(String matricula, String aerolinea);
+
+    public Boolean verificarAvionEnVuelo(Date start, Date end, long id);
 }

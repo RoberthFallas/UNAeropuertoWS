@@ -29,6 +29,8 @@ public interface IVueloService {
 
     public List<VueloDto> findByFechaVuelo(Date fecha);
 
+    public Boolean isAvionLibre(Date start, Date end, long idVuelo, long idAvion);
+
     public VueloDto create(VueloDto vuelo);
 
     public VueloDto update(VueloDto vuelo);

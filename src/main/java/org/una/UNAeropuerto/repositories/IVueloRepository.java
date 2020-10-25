@@ -26,13 +26,20 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
     Optional<List<Vuelo>> findByNombreVueloContaining(String nombre);
 
     @Query("select v from Vuelo v where (v.horaSalida between :start and :end) or (v.horaLlegada between :start and :end)")
-    Optional<List<Vuelo>> findBitweenHoraYFecha(@Param("start") Date start, @Param("end") Date end);
+    List<Vuelo> findBitweenHoraYFecha(@Param("start") Date start, @Param("end") Date end);
 
     @Query("select v from Vuelo v where (DATE(v.horaSalida) between :start and :end) or (DATE(v.horaLlegada) between :start and :end)")
     List<Vuelo> findByBetweenDates(@Param("start") Date start, @Param("end") Date end);
 
     @Query("select v from Vuelo v where (DATE(v.horaSalida) = :fecha) or (DATE(v.horaLlegada) = :fecha)")
     Optional<List<Vuelo>> findByFechaVuelo(@Param("fecha") Date fecha);
+
+    @Query("select v from Vuelo v join v. avionesId av where "
+            + "((:start between v.horaSalida and v.horaLlegada) or "
+            + "(:end between v.horaSalida and v.horaLlegada) or "
+            + "(v.horaSalida between :start and :end) or "
+            + "(v.horaLlegada between :start and :end)) and av.id = :avId and v.estado <> 3")
+    List<Vuelo> findBitweenHoraYFechaByAvion(@Param("start") Date start, @Param("end") Date end, @Param("avId") long avionId);
 
     @Query("select v from Vuelo v join v.avionesId av join av.aerolineasId ae "
             + "join v.lugarSalida ls join v.lugarLlegada ll "

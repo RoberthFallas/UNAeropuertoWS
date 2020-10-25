@@ -2,6 +2,7 @@ package org.una.UNAeropuerto.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.AvionDto;
 import org.una.UNAeropuerto.services.IAvionService;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.una.UNAeropuerto.dto.VueloDto;
 
 @RestController
 @RequestMapping("/aviones")
@@ -139,6 +142,22 @@ public class AvionController {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/verificarAvionOcupado/{start}/{end}/{id}")
+    @ResponseBody
+    @ApiOperation(value = "Verifica si un avión tiene programado algún vuelo entre las fechas y horas especificadas (True = avion en vuelo, False = avion desocupado)", response = Boolean.class, tags = "Aviones")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> verificarAvionOcupado(
+            @PathVariable(value = "start") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date start,
+            @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date end,
+            @PathVariable(value = "id") Long id) {
+        try {
+            boolean result = avionService.verificarAvionEnVuelo(start, end, id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }

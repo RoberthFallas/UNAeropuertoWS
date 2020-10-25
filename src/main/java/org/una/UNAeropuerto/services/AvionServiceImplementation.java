@@ -8,6 +8,7 @@ import org.una.UNAeropuerto.entities.Avion;
 import org.una.UNAeropuerto.repositories.IAvionRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,4 +96,17 @@ public class AvionServiceImplementation implements IAvionService {
         }
         return new ArrayList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean verificarAvionEnVuelo(Date start, Date end, long id) {
+        Optional<Avion> optnAvion = avionRepository.findById(id);
+        if (optnAvion.isPresent()) {
+            List<Avion> result = avionRepository.findAvionConVueloEntreFechas(start, end, id);
+            return !result.isEmpty();
+        } else {
+            return true;
+        }
+    }
+
 }
