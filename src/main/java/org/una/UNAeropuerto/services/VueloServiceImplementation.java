@@ -40,6 +40,16 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<VueloDto> findByIdUsingListParam(List<Long> idList) {
+        List<Vuelo> result = vueloRepo.findByIdUsingListParam(idList);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, VueloDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public VueloDto getByNombreVuelo(String nombre) {
         Optional<Vuelo> result = vueloRepo.findByNombreVuelo(nombre);
         if (result.isPresent()) {
@@ -71,9 +81,9 @@ public class VueloServiceImplementation implements IVueloService {
     @Override
     @Transactional(readOnly = true)
     public List<VueloDto> findEntreFechaYHora(Date start, Date end) {
-        Optional<List<Vuelo>> result = vueloRepo.findBitweenHoraYFecha(start, end);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), VueloDto.class);
+        List<Vuelo> result = vueloRepo.findBitweenHoraYFecha(start, end);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, VueloDto.class);
         }
         return new ArrayList();
     }
@@ -119,6 +129,7 @@ public class VueloServiceImplementation implements IVueloService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<VueloDto> filter(String aerolinea, String nombreVuelo, String matriculaAvion, String llegada, String salida, Date desde, Date hasta) {
         List<Vuelo> result = vueloRepo.findByTextParameters(aerolinea, nombreVuelo, matriculaAvion, llegada, salida);
         List<VueloDto> resultDto = new ArrayList();
@@ -142,6 +153,23 @@ public class VueloServiceImplementation implements IVueloService {
         resultDto = resultDto.stream().distinct().collect(Collectors.toList());
         resultDto.removeIf(vuelo -> vuelo.getEstado() == 3);
         return resultDto;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean isAvionLibre(Date start, Date end, long idVuelo, long idAvion) {
+        List<Vuelo> result = vueloRepo.findBitweenHoraYFechaByAvion(start, end, idAvion);
+        if (!result.isEmpty()) {
+            if (result.size() > 1) {
+                return false;
+            } else {
+                if (idVuelo > 0) {
+                    return result.get(0).getId() == idVuelo;
+                }
+                return false;
+            }
+        }
+        return true;
     }
 
 }

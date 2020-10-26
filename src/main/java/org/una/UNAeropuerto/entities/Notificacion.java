@@ -28,7 +28,7 @@ public class Notificacion implements Serializable {
     private Boolean activo;
     @Basic(optional = false)
     @Column(name = "idObjeto")
-    private int idObjeto;
+    private Long idObjeto;
     @Basic(optional = false)
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.TIMESTAMP)

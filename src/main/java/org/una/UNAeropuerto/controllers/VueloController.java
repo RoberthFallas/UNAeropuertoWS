@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */ 
+ */
 package org.una.UNAeropuerto.controllers;
 
 import io.swagger.annotations.Api;
@@ -137,6 +137,22 @@ public class VueloController {
         }
     }
 
+    @PutMapping("/findByIdUsingListParam")
+    @ResponseBody
+    @ApiOperation(value = "Recibe una lista de valores long. Retorna los vuelos cuyo Id se halle dentro de la lista", response = VueloDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    public ResponseEntity<?> findByIdUsingListParam(@RequestBody List<Long> idList) {
+        try {
+            List<VueloDto> result = vueloService.findByIdUsingListParam(idList);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/findEntreFechas/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd').Obtiene una lista de vuelos que hallan ocurrido o estén por ocurrir en el lapso suministrado.", response = VueloDto.class, tags = "Vuelos")
@@ -172,7 +188,7 @@ public class VueloController {
 
     @PutMapping("/update")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> update(@RequestBody VueloDto vuelo) {
         try {
             VueloDto result = vueloService.update(vuelo);
@@ -212,6 +228,21 @@ public class VueloController {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/isAvionLibre/{start}/{end}/{idVuelo}/{idAvion}")
+    @ResponseBody
+    @ApiOperation(value = "Retorna true si vuelo choca en horario con otro vuelo de este mismo avion", response = Boolean.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    public ResponseEntity<?> isAvionLibre(@PathVariable(value = "start") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date start,
+            @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date end,
+            @PathVariable(value = "idVuelo") Long idVuelo, @PathVariable(value = "idAvion") Long idAvion) {
+        try {
+            boolean result = vueloService.isAvionLibre(start, end, idVuelo, idAvion);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
