@@ -37,4 +37,5 @@ public interface IVueloService {
 
     public List<VueloDto> filter(String aerolinea, String nombreVuelo, String matriculaAvion, String llegada, String salida, Date desde, Date hasta);
 
+    public List<VueloDto> findByIdUsingListParam(List<Long> idList);
 }

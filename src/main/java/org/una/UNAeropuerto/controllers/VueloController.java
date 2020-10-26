@@ -137,6 +137,22 @@ public class VueloController {
         }
     }
 
+    @PutMapping("/findByIdUsingListParam")
+    @ResponseBody
+    @ApiOperation(value = "Recibe una lista de valores long. Retorna los vuelos cuyo Id se halle dentro de la lista", response = VueloDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    public ResponseEntity<?> findByIdUsingListParam(@RequestBody List<Long> idList) {
+        try {
+            List<VueloDto> result = vueloService.findByIdUsingListParam(idList);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/findEntreFechas/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd').Obtiene una lista de vuelos que hallan ocurrido o estén por ocurrir en el lapso suministrado.", response = VueloDto.class, tags = "Vuelos")
@@ -172,7 +188,7 @@ public class VueloController {
 
     @PutMapping("/update")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> update(@RequestBody VueloDto vuelo) {
         try {
             VueloDto result = vueloService.update(vuelo);

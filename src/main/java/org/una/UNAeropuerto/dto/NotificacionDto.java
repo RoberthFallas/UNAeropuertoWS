@@ -12,8 +12,7 @@ public class NotificacionDto {
 
     Long id;
     boolean activo;
-    int idObjeto;
+    Long idObjeto;
     Date fechaRegistro;
-    //@Setter(AccessLevel.NONE)
     AreaDto areasId;
 }

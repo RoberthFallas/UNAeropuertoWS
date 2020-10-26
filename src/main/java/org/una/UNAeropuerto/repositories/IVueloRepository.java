@@ -25,6 +25,9 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
 
     Optional<List<Vuelo>> findByNombreVueloContaining(String nombre);
 
+    @Query("select v from Vuelo v where v.id in :list")
+    List<Vuelo> findByIdUsingListParam(@Param("list") List<Long> list);
+
     @Query("select v from Vuelo v where (v.horaSalida between :start and :end) or (v.horaLlegada between :start and :end)")
     List<Vuelo> findBitweenHoraYFecha(@Param("start") Date start, @Param("end") Date end);
 

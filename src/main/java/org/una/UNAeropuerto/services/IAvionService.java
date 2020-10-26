@@ -22,5 +22,4 @@ public interface IAvionService {
 
     public List<AvionDto> filter(String matricula, String aerolinea);
 
-    public Boolean verificarAvionEnVuelo(Date start, Date end, long id);
 }

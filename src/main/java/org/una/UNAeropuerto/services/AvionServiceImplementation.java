@@ -97,16 +97,4 @@ public class AvionServiceImplementation implements IAvionService {
         return new ArrayList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Boolean verificarAvionEnVuelo(Date start, Date end, long id) {
-        Optional<Avion> optnAvion = avionRepository.findById(id);
-        if (optnAvion.isPresent()) {
-            List<Avion> result = avionRepository.findAvionConVueloEntreFechas(start, end, id);
-            return !result.isEmpty();
-        } else {
-            return true;
-        }
-    }
-
 }

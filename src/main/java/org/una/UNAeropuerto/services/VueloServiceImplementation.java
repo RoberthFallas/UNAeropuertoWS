@@ -40,6 +40,16 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<VueloDto> findByIdUsingListParam(List<Long> idList) {
+        List<Vuelo> result = vueloRepo.findByIdUsingListParam(idList);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, VueloDto.class);
+        }
+        return new ArrayList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public VueloDto getByNombreVuelo(String nombre) {
         Optional<Vuelo> result = vueloRepo.findByNombreVuelo(nombre);
         if (result.isPresent()) {
