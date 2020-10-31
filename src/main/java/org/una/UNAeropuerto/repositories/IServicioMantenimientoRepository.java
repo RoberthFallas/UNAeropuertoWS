@@ -12,7 +12,7 @@ public interface IServicioMantenimientoRepository extends JpaRepository<Servicio
 
     public Optional<List<ServicioMantenimiento>> findByFechaServicioBetween(Date startDate, Date endDate);
 
-    public Optional<List<ServicioMantenimiento>>findByNumeroFacturaContaining(long numeroFactura);
+    public Optional<ServicioMantenimiento>findByNumeroFactura(Long numeroFactura);
 
     public Optional<List<ServicioMantenimiento>> findByEstadoPago(boolean estado);
 

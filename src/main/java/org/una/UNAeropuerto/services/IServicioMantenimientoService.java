@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IServicioMantenimientoService {
 
-    public List<ServicioMantenimientoDto> getByNumeroFactura(long numeroFactura);
+    public ServicioMantenimientoDto getByNumeroFactura(Long numeroFactura);
 
     public ServicioMantenimientoDto getById(long id);
 

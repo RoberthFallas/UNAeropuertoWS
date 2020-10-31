@@ -20,12 +20,12 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
 
     @Override
     @Transactional(readOnly = true)
-    public  List<ServicioMantenimientoDto> getByNumeroFactura(long numeroFactura) {
-        Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByNumeroFacturaContaining(numeroFactura);
+    public  ServicioMantenimientoDto getByNumeroFactura(Long numeroFactura) {
+        Optional<ServicioMantenimiento> result = servicioMantenimientoRepository.findByNumeroFactura(numeroFactura);
         if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
+            return MapperUtils.DtoFromEntity(result.get(), ServicioMantenimientoDto.class);
         }
-        return new ArrayList();
+        return null;
     }
 
     @Override

@@ -40,12 +40,12 @@ public class ServicioMantenimientoController {
     }
     @GetMapping("findByNumeroFactura/{numero}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
+    @ApiOperation(value = "Obtiene un  Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNumeroFactura(@PathVariable(value = "numero") Long numero) {
         try {
-            List<ServicioMantenimientoDto> result = servicioMantenimientoService.getByNumeroFactura(numero);
-            if (!result.isEmpty()) {
+            ServicioMantenimientoDto result = servicioMantenimientoService.getByNumeroFactura(numero);
+            if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
