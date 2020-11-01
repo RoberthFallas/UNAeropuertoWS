@@ -30,4 +30,6 @@ public class LugarDto {
     private List<VueloDto> vuelosSalidaList;
     @Setter(AccessLevel.NONE)
     private List<VueloDto> vuelosLlegadaList;
+    @Setter(AccessLevel.NONE)
+    private ParamSistemaDto paramSistema;
 }

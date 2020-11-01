@@ -29,4 +29,5 @@ public class ParamSistemaDto {
     private String nombreRepresentante;
     private Date aperturaOficina;
     private Date cierreOficina;
+    private LugarDto ubicacion;
 }
