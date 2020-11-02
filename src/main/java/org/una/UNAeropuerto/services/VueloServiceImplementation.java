@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.VueloDto;
 import org.una.UNAeropuerto.entities.Vuelo;
+import org.una.UNAeropuerto.entities.ParamSistema;
+import org.una.UNAeropuerto.repositories.IParamSistemaRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 import org.una.UNAeropuerto.repositories.IVueloRepository;
 
@@ -27,6 +29,8 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Autowired
     private IVueloRepository vueloRepo;
+    @Autowired
+    private IParamSistemaRepository paramRepo;
 
     @Override
     @Transactional(readOnly = true)
@@ -170,6 +174,18 @@ public class VueloServiceImplementation implements IVueloService {
             }
         }
         return true;
+    }
+
+    @Override
+    public Boolean isVueloSeguro(Date localExecutionDate) {
+        Optional<ParamSistema> paramSistOpt = paramRepo.findById(1);
+        if (paramSistOpt.isPresent()) {
+            ParamSistema paramS = paramSistOpt.get();
+            Long coinsidentFlights = vueloRepo.findVuelosCercanos(localExecutionDate,
+                    paramS.getUbicacion().getId(), (60 / paramS.getVuelosHora()));
+            return coinsidentFlights == 0;
+        }
+        throw new UnsupportedOperationException("No es posible continuar la ejecución, hay datos aucente que lo impiden");
     }
 
 }

@@ -54,4 +54,8 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
             + "v.estado <> 3")
     List<Vuelo> findByTextParameters(@Param("aero") String aerolinea, @Param("nv") String nombreVuelo, @Param("mtr") String matriculaAvion, @Param("lleg") String llegada, @Param("sal") String salida);
 
+    @Query("select count(v) from Vuelo v join v.lugarSalida ls join v.lugarLlegada ll "
+            + "where (ls.id = :lug_ap and ABS(DATEDIFF(MINUTE, v.horaSalida, :exeDate)) <= :safe_t) or "
+            + "(ll.id = :lug_ap and ABS(DATEDIFF(MINUTE, v.horaLlegada, :exeDate)) <= :safe_t)")
+    Long findVuelosCercanos(@Param("exeDate") Date executionDate, @Param("lug_ap") Long lugarAerPId, @Param("safe_t") Integer safeTime);
 }

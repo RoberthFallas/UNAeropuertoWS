@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.una.UNAeropuerto.dto.VueloDto;
 import org.una.UNAeropuerto.services.IVueloService;
+import org.una.UNAeropuerto.utils.Pair;
 
 /**
  *
@@ -233,16 +234,22 @@ public class VueloController {
         }
     }
 
-    @GetMapping("/isAvionLibre/{start}/{end}/{idVuelo}/{idAvion}")
+    @GetMapping("/validarContratiemposVuelo/{start}/{end}/{exeDate}/{idVuelo}/{idAvion}")
     @ResponseBody
     @ApiOperation(value = "Retorna true si vuelo choca en horario con otro vuelo de este mismo avion", response = Boolean.class, tags = "Vuelos")
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
-    public ResponseEntity<?> isAvionLibre(@PathVariable(value = "start") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date start,
+    public ResponseEntity<?> validarContratiemposVuelo(@PathVariable(value = "start") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date start,
             @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date end,
+            @PathVariable(value = "exeDate") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date localExecutDate,
             @PathVariable(value = "idVuelo") Long idVuelo, @PathVariable(value = "idAvion") Long idAvion) {
         try {
-            boolean result = vueloService.isAvionLibre(start, end, idVuelo, idAvion);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            if (!vueloService.isAvionLibre(start, end, idVuelo, idAvion)) {
+                return new ResponseEntity<>(new Pair("NoCorrect", "El avión que has seleccionado ya tiene un vuelo programado en esta fecha y hora."), HttpStatus.OK);
+            }
+            if (!vueloService.isVueloSeguro(localExecutDate)) {
+                return new ResponseEntity<>(new Pair("Dangerous", "Este vuelo se ejecutará peligrosamente cerca de este aeropuerto"), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new Pair<>("Correct", "ok"), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
