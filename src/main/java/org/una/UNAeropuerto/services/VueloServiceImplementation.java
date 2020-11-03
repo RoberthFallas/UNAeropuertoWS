@@ -177,12 +177,12 @@ public class VueloServiceImplementation implements IVueloService {
     }
 
     @Override
-    public Boolean isVueloSeguro(Date localExecutionDate) {
+    public Boolean isVueloSeguro(Date localExecutionDate, long idVuelo) {
         Optional<ParamSistema> paramSistOpt = paramRepo.findById(1);
         if (paramSistOpt.isPresent()) {
             ParamSistema paramS = paramSistOpt.get();
-            Long coinsidentFlights = vueloRepo.findVuelosCercanos(localExecutionDate,
-                    paramS.getUbicacion().getId(), (60 / paramS.getVuelosHora()));
+            Long coinsidentFlights = vueloRepo.countVuelosCercanos(localExecutionDate,
+                    paramS.getUbicacion().getId(), (60 / paramS.getVuelosHora()), idVuelo);
             return coinsidentFlights == 0;
         }
         throw new UnsupportedOperationException("No es posible continuar la ejecución, hay datos aucente que lo impiden");

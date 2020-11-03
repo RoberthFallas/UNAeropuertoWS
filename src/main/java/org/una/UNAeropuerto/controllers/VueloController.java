@@ -240,14 +240,14 @@ public class VueloController {
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
     public ResponseEntity<?> validarContratiemposVuelo(@PathVariable(value = "start") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date start,
             @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date end,
-            @PathVariable(value = "exeDate") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date localExecutDate,
+            @PathVariable(value = "exeDate") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date exeDate,
             @PathVariable(value = "idVuelo") Long idVuelo, @PathVariable(value = "idAvion") Long idAvion) {
         try {
             if (!vueloService.isAvionLibre(start, end, idVuelo, idAvion)) {
                 return new ResponseEntity<>(new Pair("NoCorrect", "El avión que has seleccionado ya tiene un vuelo programado en esta fecha y hora."), HttpStatus.OK);
             }
-            if (!vueloService.isVueloSeguro(localExecutDate)) {
-                return new ResponseEntity<>(new Pair("Dangerous", "Este vuelo se ejecutará peligrosamente cerca de este aeropuerto"), HttpStatus.OK);
+            if (!vueloService.isVueloSeguro(exeDate, idVuelo)) {
+                return new ResponseEntity<>(new Pair("Dangerous", "Este vuelo se ejecutará peligrosamente cerca de otros vuelos ya programados."), HttpStatus.OK);
             }
             return new ResponseEntity<>(new Pair<>("Correct", "ok"), HttpStatus.OK);
         } catch (Exception ex) {

@@ -39,5 +39,5 @@ public interface IVueloService {
 
     public List<VueloDto> findByIdUsingListParam(List<Long> idList);
 
-    public Boolean isVueloSeguro(Date localExecutionDate);
+    public Boolean isVueloSeguro(Date localExecutionDate, long idVuelo);
 }
