@@ -38,6 +38,7 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("findByNumeroFactura/{numero}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
@@ -53,6 +54,7 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
@@ -117,12 +119,11 @@ public class ServicioMantenimientoController {
         }
     }
 
-
     @GetMapping("findEntreFechas/{fechaInicio}/{fechaFinal}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaFinal){
+    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByFechaServicioBetween(fechaInicio, fechaFinal);
             if (!result.isEmpty()) {
@@ -133,8 +134,6 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     @GetMapping("findByTiposServiciosNombre/{nombre}")
     @ResponseBody
@@ -166,7 +165,7 @@ public class ServicioMantenimientoController {
 
     @PutMapping("/update")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GERENTE_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> update(@RequestBody ServicioMantenimientoDto servicioMantenimiento) {
         try {
             ServicioMantenimientoDto result = servicioMantenimientoService.update(servicioMantenimiento);
@@ -176,6 +175,22 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Servicio Mantenimiento)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/findByIdUsingListParam")
+    @ResponseBody
+    @ApiOperation(value = "Recibe una lista de valores long. Retorna los servicios a aeronaves cuyo Id se halle dentro de la lista", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
+    @PreAuthorize("hasAuthority('GERENTE_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> findByIdUsingListParam(@RequestBody List<Long> idList) {
+        try {
+            List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByIdUsingListParam(idList);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

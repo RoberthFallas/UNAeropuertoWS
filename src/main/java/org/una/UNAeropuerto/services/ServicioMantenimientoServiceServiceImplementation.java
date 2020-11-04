@@ -20,7 +20,7 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
 
     @Override
     @Transactional(readOnly = true)
-    public  List<ServicioMantenimientoDto> getByNumeroFactura(long numeroFactura) {
+    public List<ServicioMantenimientoDto> getByNumeroFactura(long numeroFactura) {
         Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByNumeroFacturaContaining(numeroFactura);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
@@ -88,11 +88,9 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
         return new ArrayList();
     }
 
-
-
     @Override
     @Transactional(readOnly = true)
-    public List<ServicioMantenimientoDto>  findByTiposServiciosNombre(String nombre) {
+    public List<ServicioMantenimientoDto> findByTiposServiciosNombre(String nombre) {
         Optional<List<ServicioMantenimiento>> result = servicioMantenimientoRepository.findByTiposServiciosIdNombreContaining(nombre);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ServicioMantenimientoDto.class);
@@ -118,5 +116,14 @@ public class ServicioMantenimientoServiceServiceImplementation implements IServi
         ServicioMantenimiento entityUser = MapperUtils.entityFromDto(servicioMantenimientoDto, ServicioMantenimiento.class);
         entityUser = servicioMantenimientoRepository.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, ServicioMantenimientoDto.class);
+    }
+
+    @Override
+    public List<ServicioMantenimientoDto> findByIdUsingListParam(List<Long> idList) {
+        List<ServicioMantenimiento> result = servicioMantenimientoRepository.findByIdUsingListParam(idList);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, ServicioMantenimientoDto.class);
+        }
+        return new ArrayList();
     }
 }
