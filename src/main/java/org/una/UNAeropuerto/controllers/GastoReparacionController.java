@@ -134,7 +134,7 @@ public class GastoReparacionController {
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos entre dias de periocidad", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
-    public ResponseEntity<?> findEntreDiasPeriocidad(@PathVariable(value = "inicio")  Integer inicio, @PathVariable(value = "fin") Integer fin){
+    public ResponseEntity<?> findEntreDiasPeriocidad(@PathVariable(value = "inicio") Integer inicio, @PathVariable(value = "fin") Integer fin) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findBetweenDiasPeriocidad(inicio, fin);
             if (!result.isEmpty()) {
@@ -150,7 +150,7 @@ public class GastoReparacionController {
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos entre dias de periocidad", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
-    public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "inicio")  Integer inicio, @PathVariable(value = "fin") Integer fin){
+    public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "inicio") Integer inicio, @PathVariable(value = "fin") Integer fin) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findBweteenDiasDuracion(inicio, fin);
             if (!result.isEmpty()) {
@@ -166,7 +166,7 @@ public class GastoReparacionController {
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos según el tipo de reparación", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
-    public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "parametro")  String parametro){
+    public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "parametro") String parametro) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByTipoNombre(parametro);
             if (!result.isEmpty()) {
@@ -182,7 +182,7 @@ public class GastoReparacionController {
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
-    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaFinal){
+    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByFechaRegistroBetween(fechaInicio, fechaFinal);
             if (!result.isEmpty()) {
@@ -194,4 +194,19 @@ public class GastoReparacionController {
         }
     }
 
+    @PutMapping("/findByIdUsingListParam")
+    @ResponseBody
+    @ApiOperation(value = "Recibe una lista de valores long. Retorna los vuelos cuyo Id se halle dentro de la lista", response = GastoReparacionDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GERENTE_MANTENIMIENTO_AEROPUERTO')")
+    public ResponseEntity<?> findByIdUsingListParam(@RequestBody List<Long> idList) {
+        try {
+            List<GastoReparacionDto> result = gastoReparacionService.findByIdUsingListParam(idList);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

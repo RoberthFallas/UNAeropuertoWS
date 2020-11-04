@@ -31,4 +31,6 @@ public interface IGastoReparacionService {
 
     public GastoReparacionDto create(GastoReparacionDto gastoReparacionDto);
 
+    public List<GastoReparacionDto> findByIdUsingListParam(List<Long> idList);
+
 }
