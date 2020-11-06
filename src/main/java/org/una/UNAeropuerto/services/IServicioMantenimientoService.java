@@ -26,4 +26,6 @@ public interface IServicioMantenimientoService {
     public ServicioMantenimientoDto update(ServicioMantenimientoDto servicioMantenimientoDto);
 
     public ServicioMantenimientoDto create(ServicioMantenimientoDto servicioMantenimientoDto);
+
+    public List<ServicioMantenimientoDto> findByIdUsingListParam(List<Long> idList);
 }

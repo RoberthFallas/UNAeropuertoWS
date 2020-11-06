@@ -30,7 +30,7 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
 
     @Override
     @Transactional(readOnly = true)
-    public  GastoReparacionDto getByNumeroContrato(Long numeroContrato) {
+    public GastoReparacionDto getByNumeroContrato(Long numeroContrato) {
         Optional<GastoReparacion> result = gastoReparacionRepository.findByNumeroContrato(numeroContrato);
         if (result.isPresent()) {
             return MapperUtils.DtoFromEntity(result.get(), GastoReparacionDto.class);
@@ -123,5 +123,14 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
         GastoReparacion entityUser = MapperUtils.entityFromDto(gastoReparacionDto, GastoReparacion.class);
         entityUser = gastoReparacionRepository.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, GastoReparacionDto.class);
+    }
+
+    @Override
+    public List<GastoReparacionDto> findByIdUsingListParam(List<Long> idList) {
+        List<GastoReparacion> result = gastoReparacionRepository.findByIdUsingListParam(idList);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, GastoReparacionDto.class);
+        }
+        return new ArrayList();
     }
 }
