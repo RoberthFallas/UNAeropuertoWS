@@ -18,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/servicios_mantenimientos")
 @Api(tags = {"Servicios de Mantenimiento"})
-
 public class ServicioMantenimientoController {
 
     @Autowired
@@ -189,14 +188,12 @@ public class ServicioMantenimientoController {
             @PathVariable(value = "numFactura") String numFactura,
             @PathVariable(value = "activo") String activo,
             @PathVariable(value = "pago") String pago,
-            @PathVariable(value = "finalizacion")String finalizacion,
-            @PathVariable(value = "dateDesde")String dateDesde,
-            @PathVariable(value = "dateHasta")String dateHasta
+            @PathVariable(value = "finalizacion") String finalizacion,
+            @PathVariable(value = "dateDesde") String dateDesde,
+            @PathVariable(value = "dateHasta") String dateHasta
     ) {
         try {
-
-
-            List<ServicioMantenimientoDto> result = servicioMantenimientoService.busquedaMixtaTodosEstados(matricula, tipo, numFactura,activo, pago,finalizacion, dateDesde, dateHasta);
+            List<ServicioMantenimientoDto> result = servicioMantenimientoService.busquedaMixtaTodosEstados(matricula, tipo, numFactura, activo, pago, finalizacion, dateDesde, dateHasta);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -205,9 +202,6 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 
     @PutMapping("/findByIdUsingListParam")
     @ResponseBody

@@ -1,9 +1,6 @@
 package org.una.UNAeropuerto.services;
 
-import io.swagger.models.auth.In;
-import org.springframework.data.repository.query.Param;
 import org.una.UNAeropuerto.dto.GastoReparacionDto;
-
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +8,7 @@ public interface IGastoReparacionService {
 
     public GastoReparacionDto getById(long id);
 
-    public  GastoReparacionDto getByNumeroContrato(Long numeroContrato);
+    public GastoReparacionDto getByNumeroContrato(Long numeroContrato);
 
     public List<GastoReparacionDto> findByEstado(boolean estado);
 
