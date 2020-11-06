@@ -28,6 +28,7 @@ public class UsuarioDto {
     private String cedula;
     private String nombre;
     private String apellidos;
+    @Setter(AccessLevel.NONE)
     private String contrasenna;
     private Date fechaNacimiento;
     private Date fechaIngreso;

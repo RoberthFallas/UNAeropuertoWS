@@ -97,6 +97,13 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<GastoReparacionDto> busquedaMixta(String numContrato, String tipo, String proveedor, String activo, String activo2, String pago, String pago2, String date1, String date2, String duracion1, String duracion2, String periocidad1, String periocidad2) {
+
+        return new ArrayList();
+    }
+
+    @Override
     public List<GastoReparacionDto> findByTipoNombre(String nombre) {
         Optional<List<GastoReparacion>> result = gastoReparacionRepository.findByTiposIdNombreContaining(nombre);
         if (result.isPresent()) {

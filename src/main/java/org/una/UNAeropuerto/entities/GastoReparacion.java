@@ -65,6 +65,9 @@ public class GastoReparacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "activo")
     private Boolean activo;
+    @Basic(optional = false)
+    @Column(name = "monto")
+    private Float monto;
     @JoinColumn(name = "areas_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Area areasId;

@@ -20,6 +20,8 @@ public interface IServicioMantenimientoService {
 
     public List<ServicioMantenimientoDto> findByAvionesMatricula(String matricula);
 
+    public  List<ServicioMantenimientoDto> busquedaMixtaTodosEstados(String matricula, String tipo, String numFactura, String activo, String pago, String finalizacion,  String dateDesde, String dateHasta);
+
 
     public List<ServicioMantenimientoDto> findByTiposServiciosNombre(String nombre);
 

@@ -29,6 +29,6 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("select u from Usuario u where UPPER(u.nombre) like CONCAT('%',UPPER(:nombre),'%') and UPPER(u.apellidos) like CONCAT('%',UPPER(:apellidos),'%') and UPPER(u.cedula) like CONCAT('%',UPPER(:cedula),'%')and u.activo=:activo")
     public Optional<List<Usuario>> busquedaMixta(@Param("nombre") String nombre, @Param("apellidos") String apellidos, @Param("cedula") String cedula, @Param("activo")boolean activo);
 
-    @Query("select u from Usuario u where UPPER(u.nombre) like CONCAT('%',UPPER(:nombre),'%') and UPPER(u.apellidos) like CONCAT('%',UPPER(:apellidos),'%') and UPPER(u.cedula) like CONCAT('%',UPPER(:cedula),'%')and  u.activo=:activo and fechaIngreso BETWEEN :fechaInicio and :fechaFinal")
+    @Query("select u from Usuario u where UPPER(u.nombre) like CONCAT('%',UPPER(:nombre),'%') and UPPER(u.apellidos) like CONCAT('%',UPPER(:apellidos),'%') and UPPER(u.cedula) like CONCAT('%',UPPER(:cedula),'%')and  u.activo=:activo and :fechaIngreso BETWEEN :fechaInicio and :fechaFinal")
     public Optional<List<Usuario>> busquedaMixtaConFecha(@Param("nombre") String nombre, @Param("apellidos") String apellidos, @Param("cedula") String cedula,@Param("activo") boolean activo,@Param("fechaInicio")Date fechaInicio,@Param("fechaFinal")Date fechaFinal);
 }

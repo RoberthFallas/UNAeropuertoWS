@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
+import org.una.UNAeropuerto.dto.VueloDto;
 import org.una.UNAeropuerto.services.IServicioMantenimientoService;
 
 import java.util.Date;
@@ -178,4 +179,34 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/filter/{matricula}/{tipo}/{numFactura}/{activo}/{pago}/{finalizacion}/{dateDesde}/{dateHasta}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> filter(
+            @PathVariable(value = "matricula") String matricula,
+            @PathVariable(value = "tipo") String tipo,
+            @PathVariable(value = "numFactura") String numFactura,
+            @PathVariable(value = "activo") String activo,
+            @PathVariable(value = "pago") String pago,
+            @PathVariable(value = "finalizacion")String finalizacion,
+            @PathVariable(value = "dateDesde")String dateDesde,
+            @PathVariable(value = "dateHasta")String dateHasta
+    ) {
+        try {
+
+
+            List<ServicioMantenimientoDto> result = servicioMantenimientoService.busquedaMixtaTodosEstados(matricula, tipo, numFactura,activo, pago,finalizacion, dateDesde, dateHasta);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 }

@@ -90,8 +90,13 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         Optional<Usuario> result = userRepo.findById(usuario.getId());
         if (result.isPresent()) {
             Usuario entity = MapperUtils.entityFromDto(usuario, Usuario.class);
-            entity.refreshContrasenna(result.get().getContrasenna());
-            encodePassword(entity, usuario);
+            if(!usuario.getContrasenna().isEmpty()) {
+                entity.refreshContrasenna(result.get().getContrasenna());
+                encodePassword(entity, usuario);
+            }else {
+                entity.setContrasenna(result.get().getContrasenna());
+            }
+
             entity = userRepo.save(entity);
             return MapperUtils.DtoFromEntity(entity, UsuarioDto.class);
         }

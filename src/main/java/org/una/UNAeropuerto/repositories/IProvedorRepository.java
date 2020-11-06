@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProvedorRepository extends JpaRepository<Provedor, Long> {
-    public Optional<Provedor> findByNombre(String nombre);
+    public Optional<List<Provedor>> findByNombreContaining(String nombre);
 
-    public Optional<List<Provedor>> findByActivoLike(boolean activo);
+    public Optional<List<Provedor>> findByActivo(boolean activo);
 }
