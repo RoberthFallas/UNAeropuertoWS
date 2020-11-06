@@ -29,18 +29,18 @@ public class ProvedorServiceImplementation implements IProvedorService {
 
     @Override
     @Transactional(readOnly = true)
-    public ProvedorDto getByNombre(String nombre) {
-        Optional<Provedor> result = provedorRepository.findByNombre(nombre);
+    public List<ProvedorDto> getByNombre(String nombre) {
+        Optional<List<Provedor>> result = provedorRepository.findByNombreContaining(nombre);
         if (result.isPresent()) {
-            return MapperUtils.DtoFromEntity(result.get(), ProvedorDto.class);
+            return MapperUtils.DtoListFromEntityList(result.get(), ProvedorDto.class);
         }
-        return null;
+        return new ArrayList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<ProvedorDto> findByActivos(boolean activo) {
-        Optional<List<Provedor>> result = provedorRepository.findByActivoLike(activo);
+        Optional<List<Provedor>> result = provedorRepository.findByActivo(activo);
         if (result.isPresent()) {
             return MapperUtils.DtoListFromEntityList(result.get(), ProvedorDto.class);
         }

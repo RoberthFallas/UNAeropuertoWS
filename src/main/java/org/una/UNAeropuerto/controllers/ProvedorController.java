@@ -37,12 +37,12 @@ public class ProvedorController {
 
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene un solo provedor basado en su nombre", response = ProvedorDto.class, tags = "Provedores")
+    @ApiOperation(value = "Obtiene proveedores basado en un  nombre", response = ProvedorDto.class, tags = "Provedores")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            ProvedorDto result = provedorService.getByNombre(nombre);
-            if (result != null) {
+            List<ProvedorDto> result = provedorService.getByNombre(nombre);
+            if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);

@@ -65,7 +65,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Size(min = 1, max = 100)
     @Column(name = "contrasenna")
-    @Setter(AccessLevel.NONE)
+   // @Setter(AccessLevel.NONE)
     private String contrasenna;
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_nacimiento")

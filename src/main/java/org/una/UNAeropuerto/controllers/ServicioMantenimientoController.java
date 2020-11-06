@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
+import org.una.UNAeropuerto.dto.VueloDto;
 import org.una.UNAeropuerto.services.IServicioMantenimientoService;
 
 import java.util.Date;
@@ -41,12 +42,12 @@ public class ServicioMantenimientoController {
 
     @GetMapping("findByNumeroFactura/{numero}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
+    @ApiOperation(value = "Obtiene un  Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNumeroFactura(@PathVariable(value = "numero") Long numero) {
         try {
-            List<ServicioMantenimientoDto> result = servicioMantenimientoService.getByNumeroFactura(numero);
-            if (!result.isEmpty()) {
+            ServicioMantenimientoDto result = servicioMantenimientoService.getByNumeroFactura(numero);
+            if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
@@ -177,6 +178,36 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/filter/{matricula}/{tipo}/{numFactura}/{activo}/{pago}/{finalizacion}/{dateDesde}/{dateHasta}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> filter(
+            @PathVariable(value = "matricula") String matricula,
+            @PathVariable(value = "tipo") String tipo,
+            @PathVariable(value = "numFactura") String numFactura,
+            @PathVariable(value = "activo") String activo,
+            @PathVariable(value = "pago") String pago,
+            @PathVariable(value = "finalizacion")String finalizacion,
+            @PathVariable(value = "dateDesde")String dateDesde,
+            @PathVariable(value = "dateHasta")String dateHasta
+    ) {
+        try {
+
+
+            List<ServicioMantenimientoDto> result = servicioMantenimientoService.busquedaMixtaTodosEstados(matricula, tipo, numFactura,activo, pago,finalizacion, dateDesde, dateHasta);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
     @PutMapping("/findByIdUsingListParam")
     @ResponseBody

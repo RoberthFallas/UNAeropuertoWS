@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IServicioMantenimientoService {
 
-    public List<ServicioMantenimientoDto> getByNumeroFactura(long numeroFactura);
+    public ServicioMantenimientoDto getByNumeroFactura(Long numeroFactura);
 
     public ServicioMantenimientoDto getById(long id);
 
@@ -19,6 +19,8 @@ public interface IServicioMantenimientoService {
     public List<ServicioMantenimientoDto> findByEstadoFinalizacion(boolean estado);
 
     public List<ServicioMantenimientoDto> findByAvionesMatricula(String matricula);
+
+    public  List<ServicioMantenimientoDto> busquedaMixtaTodosEstados(String matricula, String tipo, String numFactura, String activo, String pago, String finalizacion,  String dateDesde, String dateHasta);
 
 
     public List<ServicioMantenimientoDto> findByTiposServiciosNombre(String nombre);
