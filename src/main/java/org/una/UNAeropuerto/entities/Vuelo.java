@@ -72,5 +72,8 @@ public class Vuelo implements Serializable {
     @JoinColumn(name = "alertas_id", referencedColumnName = "id")
     @ManyToOne(/*optional = false*/)
     private Alerta alertasId;
+    @JoinColumn(name = "tipo_vuelo_id", referencedColumnName = "id")
+    @ManyToOne(/*optional = false*/)
+    private TipoVuelo tipoVuelo;
 
 }

@@ -5,31 +5,27 @@
  */
 package org.una.UNAeropuerto.dto;
 
-import java.util.Date;
+import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  *
- * @author Roberth :)
+ * @author roberth :)
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class VueloDto {
+public class TipoVueloDto {
 
     private Long id;
-    private String nombreVuelo;
-    private Date horaSalida;
-    private Date horaLlegada;
-    private Byte estado;
-    private AvionDto avionesId;
-    private PistaDto pistasId;
-    private LugarDto lugarSalida;
-    private LugarDto lugarLlegada;
-    private AlertaDto alerta;
-    private TipoVueloDto tipoVuelo;
+    private String nombre;
+    private Boolean activo;
+    @Setter(AccessLevel.NONE)
+    private List<VueloDto> vueloList;
 }
