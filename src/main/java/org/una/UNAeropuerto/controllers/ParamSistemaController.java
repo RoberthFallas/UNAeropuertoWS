@@ -20,7 +20,7 @@ public class ParamSistemaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene un solo usuario basado en su Id", response = ParamSistemaDto.class, tags = "Usuarios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") Integer id) {
         try {

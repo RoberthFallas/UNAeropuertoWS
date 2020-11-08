@@ -35,7 +35,7 @@ public class TipoVueloController {
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un una lista de Tipos de vuelos basado en su estado", response = TipoVueloDto.class, tags = "Tipos de vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findAll(@PathVariable(value = "state") boolean state) {
         try {
             List<TipoVueloDto> result = tipoVueloService.findByEstado(state);
@@ -51,7 +51,7 @@ public class TipoVueloController {
     @GetMapping("/findAll")
     @ResponseBody
     @ApiOperation(value = "Obtiene un una lista con todos los tipos de vuelos registrados", response = TipoVueloDto.class, tags = "Tipos de vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById() {
         try {
             List<TipoVueloDto> result = tipoVueloService.findAll();

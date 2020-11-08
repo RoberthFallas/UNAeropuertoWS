@@ -38,7 +38,7 @@ public class PistaController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola pista basada en su Id", response = PistaDto.class, tags = "Pistas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             PistaDto result = pistaService.getById(id);
@@ -54,7 +54,7 @@ public class PistaController {
     @GetMapping("getByNombre/{numPista}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola pista basada en su número de pista", response = PistaDto.class, tags = "Pistas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNumeroPista(@PathVariable(value = "numPista") String numPista) {
         try {
             PistaDto result = pistaService.getByNumeroPista(numPista);
@@ -70,7 +70,7 @@ public class PistaController {
     @GetMapping("findByNumeroPista/{numPista}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de pistas cuyo número coincida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "numPista") String numPista) {
         try {
             List<PistaDto> result = pistaService.findByNumeroPista(numPista);
@@ -86,7 +86,7 @@ public class PistaController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coincida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<PistaDto> result = pistaService.findByEstado(estado);
@@ -128,7 +128,7 @@ public class PistaController {
 
     @GetMapping("/findAll")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findAll() {
         try {
             List<PistaDto> result = pistaService.findAll();
@@ -143,7 +143,7 @@ public class PistaController {
 
     @GetMapping("/filter/{numerPista}/{longitud}")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     @SuppressWarnings("UseSpecificCatch")
     public ResponseEntity<?> filter(@PathVariable(value = "numerPista") String numerPista, @PathVariable(value = "longitud") String longitud) {
         try {
