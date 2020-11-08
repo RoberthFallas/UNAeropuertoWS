@@ -38,7 +38,7 @@ public class LugarController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Lugar basado en su Id", response = LugarDto.class, tags = "Lugares")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             LugarDto result = lugarService.getById(id);
@@ -54,7 +54,7 @@ public class LugarController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo Lugar basado en su nombre", response = LugarDto.class, tags = "Lugares")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             LugarDto result = lugarService.getByNombre(nombre);
@@ -70,7 +70,7 @@ public class LugarController {
     @GetMapping("/findByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de lugares cuyo nombre coincida de manera total o parcial con el parámetro suministrado.", response = LugarDto.class, tags = "Lugares")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             List<LugarDto> result = lugarService.findByNombre(!"none".equals(nombre) ? nombre : "");
@@ -86,7 +86,7 @@ public class LugarController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de lugares basándose en su estado", response = LugarDto.class, tags = "Lugares")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<LugarDto> result = lugarService.findByEstado(estado);

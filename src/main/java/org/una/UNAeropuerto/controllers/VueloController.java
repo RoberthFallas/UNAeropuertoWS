@@ -41,7 +41,7 @@ public class VueloController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo vuelo basado en su Id", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GERENTE_CONTROL_VUELO') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             VueloDto result = vueloService.getById(id);
@@ -57,7 +57,7 @@ public class VueloController {
     @GetMapping("/getByNombreVuelo/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo vuelo basado en su nombre", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNombreVuelo(@PathVariable(value = "nombre") String nombre) {
         try {
             VueloDto result = vueloService.getByNombreVuelo(nombre);
@@ -73,7 +73,7 @@ public class VueloController {
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
     @ApiOperation(value = "Obtiene lista de vuelos según si estado.", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "state") Byte state) {
         try {
             List<VueloDto> result = vueloService.findByEstado(state);
@@ -89,7 +89,7 @@ public class VueloController {
     @GetMapping("/findByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de vuelos cuyo nobre coinsida parcial o totalmente con el parámetro.", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             List<VueloDto> result = vueloService.findByNombre(nombre);
@@ -105,7 +105,7 @@ public class VueloController {
     @GetMapping("/findByEntreFechaYHoras/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd HH:mm:ss').Obtiene una lista de vuelos cuyo día y hora coinsida con los parámetro sumistrado.", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByEntreFechaYHoras(@PathVariable(value = "start") String start,
             @PathVariable(value = "end") String end) {
         try {
@@ -124,7 +124,7 @@ public class VueloController {
     @GetMapping("/findByFechaVuelo/{fecha}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd').Obtiene una lista de vuelos que halla ocurrido o estén por ocurrir en la fecha suministrada", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByFechaVuelo(@PathVariable(value = "fecha") String fecha) {
         try {
             Date fFecha = java.sql.Date.valueOf(fecha);
@@ -141,7 +141,7 @@ public class VueloController {
     @PutMapping("/findByIdUsingListParam")
     @ResponseBody
     @ApiOperation(value = "Recibe una lista de valores long. Retorna los vuelos cuyo Id se halle dentro de la lista", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByIdUsingListParam(@RequestBody List<Long> idList) {
         try {
             List<VueloDto> result = vueloService.findByIdUsingListParam(idList);
@@ -157,7 +157,7 @@ public class VueloController {
     @GetMapping("/findEntreFechas/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd').Obtiene una lista de vuelos que hallan ocurrido o estén por ocurrir en el lapso suministrado.", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findEntreFechas(@PathVariable(value = "start") String start,
             @PathVariable(value = "end") String end) {
         try {
@@ -207,7 +207,7 @@ public class VueloController {
     @GetMapping("/filter/{aerolinea}/{nombreVuelo}/{matriculaAvion}/{llegada}/{salida}/{desde}/{hasta}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de vuelos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> filter(
             @PathVariable(value = "aerolinea") String aerolinea,
             @PathVariable(value = "nombreVuelo") String nombreVuelo,
