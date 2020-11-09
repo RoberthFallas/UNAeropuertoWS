@@ -167,7 +167,7 @@ public class GastoReparacionController {
     @GetMapping("findByTipoReparacionNombre/{parametro}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos según el tipo de reparación", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO') ")
     public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "parametro") String parametro) {
         try {
             List<GastoReparacionDto> result = gastoReparacionService.findByTipoNombre(parametro);
@@ -183,7 +183,7 @@ public class GastoReparacionController {
     @GetMapping("/filter/{numeroContrato}/{tipo}/{proveedor}/{activo}/{pago}/{dateDesde}/{dateHasta}/{duracionDesde}/{duracionHasta}/{periocidadDesde}/{periocidadHasta}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO') ")
     public ResponseEntity<?> filter(
             @PathVariable(value = "numeroContrato") String numeroContrato,
             @PathVariable(value = "tipo") String tipo,

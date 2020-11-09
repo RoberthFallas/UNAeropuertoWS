@@ -106,8 +106,9 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     @Override
     @Transactional
     public UsuarioDto create(UsuarioDto usuario) {
+
         Usuario entityUser = MapperUtils.entityFromDto(usuario, Usuario.class);
-        encodePassword(entityUser, usuario);
+        entityUser.refreshContrasenna(passwordEncoder.encode(usuario.getContrasenna()));
         entityUser = userRepo.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, UsuarioDto.class);
     }
@@ -129,6 +130,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (!userDto.getContrasenna().isBlank()) {
             if (user.getContrasenna() == null) {
                 user.refreshContrasenna(passwordEncoder.encode(userDto.getContrasenna()));
+
                 return;
             } else {
                 if (!user.getContrasenna().equals(userDto.getContrasenna())) {
