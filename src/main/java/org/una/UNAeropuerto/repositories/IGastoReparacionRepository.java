@@ -40,5 +40,5 @@ public interface IGastoReparacionRepository extends JpaRepository<GastoReparacio
             + " and gr.fechaRegistro between :date1 and :date2"
             + " and gr.duracion between  :duracion1 and :duracion2"
             + " and gr.periodicidad between  :periocidad1 and :periocidad2")
-    public Optional<List<GastoReparacionDto>> busquedaMixtaTodosLosEstados(@Param("numContrato") String numContrato, @Param("tipo") String tipo, @Param("proveedor") String  proveedor, @Param("activo") boolean activo, @Param("activo2") boolean activo2, @Param("pago") boolean pago, @Param("pago2") boolean pago2, @Param("date1")  Date date1, @Param("date2")  Date date2, @Param("duracion1")  Long duracion1, @Param("duracion2")  Long duracion2  , @Param("periocidad1")  Long periocidad1, @Param("periocidad2")  Long periocidad2    );
+    public Optional<List<GastoReparacion>> busquedaMixtaTodosLosEstados(@Param("numContrato") String numContrato, @Param("tipo") String tipo, @Param("proveedor") String  proveedor, @Param("activo") boolean activo, @Param("activo2") boolean activo2, @Param("pago") boolean pago, @Param("pago2") boolean pago2, @Param("date1")  Date date1, @Param("date2")  Date date2, @Param("duracion1")  int duracion1, @Param("duracion2")  int duracion2  , @Param("periocidad1")  int periocidad1, @Param("periocidad2")  int periocidad2    );
 }

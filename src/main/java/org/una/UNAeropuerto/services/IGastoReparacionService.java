@@ -22,7 +22,7 @@ public interface IGastoReparacionService {
 
     public List<GastoReparacionDto> findBweteenDiasDuracion(Integer start, Integer end);
 
-    public List<GastoReparacionDto> busquedaMixta(String numContrato, String tipo, String proveedor, String activo, String activo2, String pago, String pago2, String date1, String date2, String duracion1, String duracion2, String periocidad1, String periocidad2);
+    public List<GastoReparacionDto> busquedaMixta(String numContrato, String tipo, String proveedor, String activo, String pago, String startDate, String endDate, String startDuracion, String endDuracion, String startPeriocidad, String endPeriocidad) ;
 
     public List<GastoReparacionDto> findByTipoNombre(String nombre);
 
