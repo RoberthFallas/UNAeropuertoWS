@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.GastoReparacionDto;
+import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
+import org.una.UNAeropuerto.dto.VueloDto;
+import org.una.UNAeropuerto.entities.GastoReparacion;
 import org.una.UNAeropuerto.services.IGastoReparacionService;
 
 import java.util.Date;
@@ -131,7 +134,7 @@ public class GastoReparacionController {
 
     @GetMapping("findEntreDiasPeriocidad/{inicio}/{fin}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos entre dias de periocidad", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos entre dias de periocidad", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findEntreDiasPeriocidad(@PathVariable(value = "inicio") Integer inicio, @PathVariable(value = "fin") Integer fin) {
         try {
@@ -147,7 +150,7 @@ public class GastoReparacionController {
 
     @GetMapping("findEntreDiasDuracion/{inicio}/{fin}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos entre dias de periocidad", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos entre dias de periocidad", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "inicio") Integer inicio, @PathVariable(value = "fin") Integer fin) {
         try {
@@ -163,7 +166,7 @@ public class GastoReparacionController {
 
     @GetMapping("findByTipoReparacionNombre/{parametro}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos según el tipo de reparación", response = GastoReparacionDto.class, tags = "Servicios de Mantenimiento")
+    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos según el tipo de reparación", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
     @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
     public ResponseEntity<?> findEntreDiasDuracion(@PathVariable(value = "parametro") String parametro) {
         try {
@@ -176,6 +179,36 @@ public class GastoReparacionController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/filter/{numeroContrato}/{tipo}/{proveedor}/{activo}/{pago}/{dateDesde}/{dateHasta}/{duracionDesde}/{duracionHasta}/{periocidadDesde}/{periocidadHasta}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> filter(
+            @PathVariable(value = "numeroContrato") String numeroContrato,
+            @PathVariable(value = "tipo") String tipo,
+            @PathVariable(value = "proveedor") String proveedor,
+            @PathVariable(value = "activo") String activo,
+            @PathVariable(value = "pago") String pago,
+            @PathVariable(value = "dateDesde") String dateDesde,
+            @PathVariable(value = "dateHasta") String dateHasta,
+            @PathVariable(value = "duracionDesde") String duracionDesde,
+            @PathVariable(value = "duracionHasta") String duracionHasta,
+            @PathVariable(value = "periocidadDesde") String periocidadDesde,
+            @PathVariable(value = "periocidadHasta") String periocidadHasta
+
+    ) {
+        try {
+            List<GastoReparacionDto> result = gastoReparacionService.busquedaMixta(numeroContrato, tipo, proveedor, activo, pago, dateDesde, dateHasta, duracionDesde, duracionHasta,periocidadDesde, periocidadHasta);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("findEntreFechas/{fechaInicio}/{fechaFinal}")
     @ResponseBody

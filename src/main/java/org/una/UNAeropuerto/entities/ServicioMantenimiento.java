@@ -48,7 +48,7 @@ public class ServicioMantenimiento implements Serializable {
     private Long id;
     @Basic(optional = false)
     @Column(name = "fecha_servicio")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fechaServicio;
     @Basic(optional = false)
     @Column(name = "numero_factura")

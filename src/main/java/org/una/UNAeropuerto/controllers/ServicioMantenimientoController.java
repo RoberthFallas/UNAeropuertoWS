@@ -180,7 +180,7 @@ public class ServicioMantenimientoController {
 
     @GetMapping("/filter/{matricula}/{tipo}/{numFactura}/{activo}/{pago}/{finalizacion}/{dateDesde}/{dateHasta}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
+    @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> filter(
             @PathVariable(value = "matricula") String matricula,
