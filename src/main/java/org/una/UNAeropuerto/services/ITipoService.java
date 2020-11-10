@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ITipoService {
 
-
+    public List<TipoReparacionDto> getAll();
 
     public TipoReparacionDto getById(long id);
 

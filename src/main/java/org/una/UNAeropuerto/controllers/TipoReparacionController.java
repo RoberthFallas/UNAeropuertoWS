@@ -109,4 +109,14 @@ public class TipoReparacionController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/reparacion")
+    //@PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')or hasAuthority('AUDITOR_SERVICIOS_AERONAVES')")
+    ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(tipoService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

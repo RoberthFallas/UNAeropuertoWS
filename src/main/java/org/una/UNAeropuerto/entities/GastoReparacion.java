@@ -87,7 +87,7 @@ public class GastoReparacion implements Serializable {
 
     @PreUpdate
     public void preUpdate() {
-       fechaRegistro = new Date();
+        fechaRegistro = new Date();
     }
 
 }
