@@ -75,4 +75,14 @@ public class TipoServiceImplementation implements ITipoService {
         entityUser = tipoRepository.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, TipoReparacionDto.class);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TipoReparacionDto> getAll() {
+        Optional<List<TipoReparacion>> result = Optional.ofNullable(tipoRepository.findAll());
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), TipoReparacionDto.class);
+        }
+        return new ArrayList();
+    }
 }

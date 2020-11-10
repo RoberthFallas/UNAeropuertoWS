@@ -46,7 +46,7 @@ public class GastoReparacion implements Serializable {
     private Long id;
     @Basic(optional = false)
     @Column(name = "fecha_registro")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
     @Basic(optional = false)
     @Column(name = "estado_pago")
@@ -87,7 +87,7 @@ public class GastoReparacion implements Serializable {
 
     @PreUpdate
     public void preUpdate() {
-       fechaRegistro = new Date();
+        fechaRegistro = new Date();
     }
 
 }
