@@ -147,7 +147,7 @@ public class PistaController {
     @SuppressWarnings("UseSpecificCatch")
     public ResponseEntity<?> filter(@PathVariable(value = "numerPista") String numerPista, @PathVariable(value = "longitud") String longitud) {
         try {
-            List<PistaDto> result = pistaService.filter((!"none".equals(numerPista) ? numerPista : ""), ("none".equals(longitud) ? -1 : Float.valueOf(longitud)));
+            List<PistaDto> result = pistaService.filter((!"none".equals(numerPista) ? numerPista.replace("_", " ") : ""), ("none".equals(longitud) ? -1f : Float.valueOf(longitud)));
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }

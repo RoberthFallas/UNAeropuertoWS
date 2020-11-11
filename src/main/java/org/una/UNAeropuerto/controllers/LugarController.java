@@ -73,7 +73,7 @@ public class LugarController {
     @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
-            List<LugarDto> result = lugarService.findByNombre(!"none".equals(nombre) ? nombre : "");
+            List<LugarDto> result = lugarService.findByNombre(!"none".equals(nombre) ? nombre.replace("-", " ") : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -125,5 +125,5 @@ public class LugarController {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }
