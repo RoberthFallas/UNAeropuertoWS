@@ -86,7 +86,7 @@ public class PistaController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coincida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<PistaDto> result = pistaService.findByEstado(estado);
@@ -143,11 +143,11 @@ public class PistaController {
 
     @GetMapping("/filter/{numerPista}/{longitud}")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     @SuppressWarnings("UseSpecificCatch")
     public ResponseEntity<?> filter(@PathVariable(value = "numerPista") String numerPista, @PathVariable(value = "longitud") String longitud) {
         try {
-            List<PistaDto> result = pistaService.filter((!"none".equals(numerPista) ? numerPista : ""), ("none".equals(longitud) ? -1 : Float.valueOf(longitud)));
+            List<PistaDto> result = pistaService.filter((!"none".equals(numerPista) ? numerPista.replace("_", " ") : ""), ("none".equals(longitud) ? -1f : Float.valueOf(longitud)));
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }

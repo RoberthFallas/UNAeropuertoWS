@@ -162,7 +162,6 @@ public class BitacoraController {
 
     @PostMapping("/create")
     @ResponseBody
- //   @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
     public ResponseEntity<?> create(@RequestBody BitacoraDto bitacora) {
         try {
             BitacoraDto result = bitacoraRepo.create(bitacora);

@@ -207,7 +207,7 @@ public class VueloController {
     @GetMapping("/filter/{aerolinea}/{nombreVuelo}/{matriculaAvion}/{llegada}/{salida}/{desde}/{hasta}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de vuelos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> filter(
             @PathVariable(value = "aerolinea") String aerolinea,
             @PathVariable(value = "nombreVuelo") String nombreVuelo,
@@ -217,11 +217,11 @@ public class VueloController {
             @PathVariable(value = "desde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date desde,
             @PathVariable(value = "hasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date hasta) {
         try {
-            aerolinea = !"none".equals(aerolinea) ? aerolinea : "";
-            nombreVuelo = !"none".equals(nombreVuelo) ? nombreVuelo : "";
-            matriculaAvion = !"none".equals(matriculaAvion) ? matriculaAvion : "";
-            llegada = !"none".equals(llegada) ? llegada : "";
-            salida = !"none".equals(salida) ? salida : "";
+            aerolinea = !"none".equals(aerolinea) ? aerolinea.replace("-", " ") : "";
+            nombreVuelo = !"none".equals(nombreVuelo) ? nombreVuelo.replace("-", " ") : "";
+            matriculaAvion = !"none".equals(matriculaAvion) ? matriculaAvion.replace("-", " ") : "";
+            llegada = !"none".equals(llegada) ? llegada.replace("-", " ") : "";
+            salida = !"none".equals(salida) ? salida.replace("-", " ") : "";
             desde = (desde.getYear() != 600) ? desde : null;
             hasta = (hasta.getYear() != 600) ? hasta : null;
             List<VueloDto> result = vueloService.filter(aerolinea, nombreVuelo, matriculaAvion, llegada, salida, desde, hasta);
