@@ -39,7 +39,8 @@ public class NotificacionController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de notificacions basándose en su estado", response = NotificacionDto.class, tags = "Notificaciones")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')"
+            + " or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<NotificacionDto> result = notificacionService.findByActivos(estado);

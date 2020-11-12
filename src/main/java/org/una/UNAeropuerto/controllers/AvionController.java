@@ -54,7 +54,7 @@ public class AvionController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones basándose en su estado", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<AvionDto> result = avionService.findByEstado(estado);
@@ -86,7 +86,8 @@ public class AvionController {
     @GetMapping("findByAerolineaNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones basándose en su aerolínea", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')"
+            + " or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByAerolineaNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             List<AvionDto> result = avionService.findByAerolineaNombre(nombre);
@@ -129,7 +130,8 @@ public class AvionController {
     @GetMapping("filter/{matricula}/{aerolinea}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones basándose en su matricula y aerolinea", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')"
+            + " or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> filter(@PathVariable(value = "matricula") String matricula, @PathVariable(value = "aerolinea") String aerolinea) {
         try {
             matricula = matricula.replace("-", " ");

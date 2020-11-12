@@ -207,7 +207,7 @@ public class VueloController {
     @GetMapping("/filter/{aerolinea}/{nombreVuelo}/{matriculaAvion}/{llegada}/{salida}/{desde}/{hasta}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de vuelos filtrados por medio de los parámetros suministrados", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> filter(
             @PathVariable(value = "aerolinea") String aerolinea,
             @PathVariable(value = "nombreVuelo") String nombreVuelo,
