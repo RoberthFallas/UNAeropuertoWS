@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a78c538f-a767-4f58-adf0-5730aa3ddccb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dataset1" uuid="1e52e33e-6b15-4d61-b414-2a431dc3482c"/>
+	<parameter name="fechaInicial" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="area" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoVuelo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select v.nombre_vuelo as nombre_vuelo,tv.nombre as tipoVuelo,av.matricula,
+v.hora_llegada,v.hora_salida,ae.nombre as aerolinea,ls.nombre as salida,ld.nombre as destino from vuelos v 
+join tipos_vuelos tv on tv.id=v.tipo_vuelo_id join aviones av on 
+av.id=v.aviones_id join aerolineas ae on av.aerolineas_id=ae.id 
+join lugares ls on v.lugar_salida_id=ls.id join lugares ld on ld.id=v.lugar_llegada_id
+where tv.nombre like $P{tipoVuelo} and ae.nombre like $P{area}  and
+ ((v.hora_llegada between $P{fechaInicial} and $P{fechaFinal})or(v.hora_salida between $P{fechaInicial} and $P{fechaFinal}));]]>
+	</queryString>
+	<field name="nombre_vuelo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoVuelo" class="java.lang.String"/>
+	<field name="matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hora_llegada" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hora_salida" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="aerolinea" class="java.lang.String"/>
+	<field name="salida" class="java.lang.String"/>
+	<field name="destino" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="66" backcolor="#00CCCC" uuid="011738b9-4b97-49fc-985a-a73ed4012069"/>
+				<staticText>
+					<reportElement style="Title" mode="Transparent" x="0" y="0" width="370" height="66" forecolor="#333333" backcolor="#000000" uuid="49a6d0c0-1e0c-4c17-a82f-90275bbdc2ee"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[UNAeropuerto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="370" y="37" width="316" height="29" forecolor="#000000" uuid="eb7e3a78-a6c4-48d5-b2cb-455b7b0f886b"/>
+					<textElement textAlignment="Right">
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte Vuelos]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="802" height="32" forecolor="#000000" backcolor="#009999" uuid="e15a8938-f3cb-4d14-8bd6-27828c86e379"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="fb217b4b-500c-4908-bd64-9192dac58678"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="99" height="18" forecolor="#000000" uuid="0d239983-2abd-4fa2-b899-4f3ea3480a76"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aerolinea]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="99" y="0" width="99" height="18" forecolor="#000000" uuid="569d614b-3d77-4871-8ffc-2e791c998894"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nombre Vuelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="198" y="0" width="99" height="18" forecolor="#000000" uuid="dda07c8f-e56c-4de3-a5b7-a627a2c8a7dd"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tipo Vuelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="297" y="0" width="99" height="18" forecolor="#000000" uuid="a59ccb05-79cf-450d-a3a7-44c4953e4056"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="396" y="0" width="99" height="18" forecolor="#000000" uuid="2f7e6243-47de-49ef-8433-34df44202340"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Hora de Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="495" y="0" width="99" height="18" forecolor="#000000" uuid="de65b681-081c-4e6b-b6a5-f1bc2ec345b0"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Lugar de Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="594" y="0" width="99" height="18" forecolor="#000000" uuid="e5070301-822f-4436-8f94-894ee9cb3e5a"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Hora llegada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="693" y="0" width="99" height="18" forecolor="#000000" uuid="4a358b66-a1ee-403a-bac2-07f8a3d4e221"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Destino]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="a72b59e0-fdbf-41a9-a329-8d740bf65bef"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="99" height="18" uuid="43b0b3ae-a74a-4947-9bff-07011b8a3b45"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{aerolinea}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="99" y="0" width="99" height="18" uuid="88066aad-15bf-47a6-9a9d-b78fe9ec9359"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_vuelo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="198" y="0" width="99" height="18" uuid="635073da-20c4-488c-bf74-af915f2945c0"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipoVuelo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="297" y="0" width="99" height="18" uuid="7563f393-4dcf-4f45-93e6-5f453b859ef3"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="396" y="0" width="99" height="18" uuid="15e12c67-9143-4f5f-a6b8-12861bbddbf9"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hora_salida}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="495" y="0" width="99" height="18" uuid="96ca8b99-26e6-4bde-b262-b9f89a529a21"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{salida}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="594" y="0" width="99" height="18" uuid="103e6427-62dc-4ca2-9192-2ed404f46fc0"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hora_llegada}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="693" y="0" width="99" height="18" uuid="de2bf792-8366-469f-9433-2060f795efba"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{destino}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#009999" uuid="99dd3026-b76a-4b6d-b1a1-5e31e9d10384"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="f8d709e1-712c-4a19-8523-af9bdd2f6117"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="843c8afb-99f2-4516-bb3f-59fb9d66991f"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="c2f8e05c-b92d-41e8-92db-3eaaaac7745a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

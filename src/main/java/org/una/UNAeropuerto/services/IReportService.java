@@ -14,6 +14,10 @@ import net.sf.jasperreports.engine.JasperPrint;
  * @author LordLalo
  */
 public interface IReportService {
-    public Optional<JasperPrint>reporteServicios(Date fechaInicial,Date fechaFinal,String nombre);
-    public Optional<JasperPrint>reporteMantenimiento(Date fechaInicial,Date fechaFinal,String nombre);
+
+    public Optional<JasperPrint> reporteServicios(Date fechaInicial, Date fechaFinal, String nombre);
+
+    public Optional<JasperPrint> reporteMantenimiento(Date fechaInicial, Date fechaFinal, String nombre);
+
+    public Optional<JasperPrint> reporteVuelo(Date fechaInicial, Date fechaFinal, String area,String tipoVuelo);
 }

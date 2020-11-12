@@ -13,7 +13,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select tr.nombre,ga.numero_contrato, DATE_FORMAT(ga.fecha_registro,'%d/%m/%Y') as fecha from  tipos_reparaciones tr join gastos_reparaciones ga on ga.tipos_id=tr.id
+		<![CDATA[select tr.nombre,ga.numero_contrato, DATE_FORMAT(ga.fecha_registro,'%d/%m/%Y') as fecha,ga.monto from  tipos_reparaciones tr join gastos_reparaciones ga on ga.tipos_id=tr.id
 where tr.nombre like $P{nombre} and ga.fecha_registro BETWEEN $P{fechaInicio}  and $P{fechaFinal} ;]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String">
@@ -23,6 +23,9 @@ where tr.nombre like $P{nombre} and ga.fecha_registro BETWEEN $P{fechaInicio}  a
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="fecha" class="java.lang.String"/>
+	<field name="monto" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -72,6 +75,10 @@ where tr.nombre like $P{nombre} and ga.fecha_registro BETWEEN $P{fechaInicio}  a
 				<reportElement x="0" y="14" width="148" height="20" uuid="cce7c647-dbab-49c1-a4b8-e99c7bd7822d"/>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="455" y="14" width="100" height="20" uuid="107e2a65-afcc-4608-8f63-470c8b683be8"/>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -87,6 +94,10 @@ where tr.nombre like $P{nombre} and ga.fecha_registro BETWEEN $P{fechaInicio}  a
 			<textField>
 				<reportElement x="257" y="0" width="195" height="35" uuid="6e83dd85-d534-4ed7-89c6-4978240460c7"/>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="35" uuid="50527b00-a3c7-4505-9641-c699b95603f6"/>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
