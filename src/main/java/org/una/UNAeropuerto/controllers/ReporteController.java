@@ -70,7 +70,7 @@ public class ReporteController {
     }
 
     @GetMapping("/generateReportVuelo/{fechaInicial}/{fechaFinal}/{area}/{tipoVuelo}")
-    @PreAuthorize("hasAuthority('AUDITOR_CONTROL_VUELOS ')")
+    @PreAuthorize("hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> generateReportVuelo(@PathVariable(value = "fechaInicial") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicial,
             @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal,
             @PathVariable(value = "area") String area, @PathVariable(value = "tipoVuelo") String tipoVuelo)
