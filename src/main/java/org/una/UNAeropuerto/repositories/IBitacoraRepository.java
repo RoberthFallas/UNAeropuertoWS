@@ -25,9 +25,17 @@ public interface IBitacoraRepository extends JpaRepository<Bitacora, Long> {
 
     public Optional<List<Bitacora>> findByUsuariosIdCedula(String nombre);
 
-    @Query("select b from Bitacora b where DATE(b.fechaModificacion) like :fechaModificacion")
+   // @Query("select b from Bitacora b where DATE(b.fechaModificacion)like :fechaModificacion")
     public Optional<List<Bitacora>> findByFechaModificacion(@Param("fechaModificacion") Date fechaModificacion);
 
-  //  @Query("select b from Bitacora b where b.fechaModificacion between :fechaInicio and :fechaFinal")
     public Optional<List<Bitacora>> findByFechaModificacionBetween( Date fechaInicio,  Date fechaFinal);
+
+    @Query("select b from Bitacora b join b.usuariosId u  where"
+            + " UPPER(b.tipoCambio) like CONCAT('%',UPPER(:accion),'%')"
+            + " or UPPER(u.nombre )like CONCAT('%',UPPER(:nombre),'%')"
+            + " and UPPER(u.apellidos) like CONCAT('%',UPPER(:apellido),'%')"
+            + " and UPPER(u.cedula ) like CONCAT('%',UPPER(:cedula),'%')"
+            + " and b.fechaModificacion between :date1 and :date2")
+    public  Optional<List<Bitacora>> busquedaMixta(@Param("accion") String accion, @Param("nombre") String nombre, @Param("apellido") String apellido, @Param("cedula") String cedula, @Param("date1") Date date1, @Param("date2") Date date2 );
+
 }

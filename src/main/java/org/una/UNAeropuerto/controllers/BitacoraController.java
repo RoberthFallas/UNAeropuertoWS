@@ -55,7 +55,7 @@ public class BitacoraController {
     @GetMapping("/getByUserId/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Bitácoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByUserId(@PathVariable(value = "id") long id) {
         try {
             List<BitacoraDto> result = bitacoraRepo.findByUserId(id);
@@ -71,7 +71,7 @@ public class BitacoraController {
     @GetMapping("/getByUserCedula/{cedula}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Bitácoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByUserId(@PathVariable(value = "cedula") String cedula) {
         try {
             List<BitacoraDto> result = bitacoraRepo.findByUserCedula(cedula);
@@ -87,7 +87,7 @@ public class BitacoraController {
     @GetMapping("/getByTipoCambio/{parametro}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en el Id del usuario al que pertenece", response = BitacoraDto.class, tags = "Bitácoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByTipoCambio(@PathVariable(value = "parametro") String parametro) {
         try {
             List<BitacoraDto> result = bitacoraRepo.findByTipoCambio(parametro);
@@ -100,10 +100,34 @@ public class BitacoraController {
         }
     }
 
+
+    @GetMapping("/filter/{accion}/{nombre}/{apellido}/{cedula}/{dateInicio}/{dateFinal}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de bitácoras según los filtros aplicados", response = BitacoraDto.class, tags = "Bitácoras")
+    @PreAuthorize("hasAuthority('AUDITOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO')  or hasAuthority('ADMINISTRADOR')"  )
+    public ResponseEntity<?> filter(
+            @PathVariable(value = "accion") String accion,
+            @PathVariable(value = "nombre") String nombre,
+            @PathVariable(value = "apellido") String apellido,
+            @PathVariable(value = "cedula") String cedula,
+            @PathVariable(value = "dateInicio") String dateInicio,
+            @PathVariable(value = "dateFinal") String dateFinal)
+    {
+        try {
+            List<BitacoraDto> result = bitacoraRepo.busquedaMixta(accion, nombre,apellido, cedula,dateInicio, dateFinal);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/findByFecha/{fecha}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras basada en su fecha de creación", response = BitacoraDto.class, tags = "Bitácoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByFecha(@PathVariable(value = "fecha") String fecha) {
         try {
             Date fFecha = java.sql.Date.valueOf(fecha);
@@ -120,7 +144,7 @@ public class BitacoraController {
     @GetMapping("/findBetweenFechas/{start}/{end}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de bitácoras que hayan sido creadas entre las fechas especificadas", response = BitacoraDto.class, tags = "Bitácoras")
-    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')")
+    @PreAuthorize("hasAuthority('GERENTE_CONTROL_VUELO')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findBetweenFechas(@PathVariable(value = "start")@DateTimeFormat(pattern = "yyyy-MM-dd")  Date start,
             @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         try {

@@ -114,7 +114,6 @@ public class GastoReparacionServiceImplementation implements IGastoReparacionSer
     }
 
     private  int getNum(boolean isStartNum , String num){
-        System.out.println("is in num");
         if(num.equals("none") && isStartNum) return 0;
         else if(num.equals("none") && !isStartNum) return Integer.MAX_VALUE;
         else {

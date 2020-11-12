@@ -5,10 +5,10 @@
  */
 package org.una.UNAeropuerto.services;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +83,40 @@ public class BitacoraServiceImplementation implements IBitacoraService {
             return MapperUtils.DtoListFromEntityList(result.get(), BitacoraDto.class);
         }
         return new ArrayList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BitacoraDto> busquedaMixta(String accion, String nombre, String apellido, String cedula,  String dateInicio, String dateFin) {
+
+        accion  = !"none".equals(accion) ? accion : "";
+        nombre = !"none".equals(nombre)? nombre: "";
+        cedula  = !"none".equals(cedula)? cedula: "";
+
+        Optional<List<Bitacora>> result = bitacoraRepo.busquedaMixta(accion, nombre, apellido, cedula, getDate(true,dateInicio), getDate(false, dateFin));
+
+        System.out.println(result.isEmpty());
+        if (result.isPresent()) {
+            return MapperUtils.DtoListFromEntityList(result.get(), BitacoraDto.class);
+        }
+        return new ArrayList();
+    }
+    private Date getDate(boolean isStartDate, String date) {
+        if (isStartDate && date.equals("none")) {
+           return new Date(Long.MIN_VALUE);
+        }
+
+        if (!date.equals("none")) {
+            try {
+                return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return new Date(System.currentTimeMillis());
+
     }
 
     @Override
