@@ -38,7 +38,7 @@ public class ProvedorController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene proveedores basado en un  nombre", response = ProvedorDto.class, tags = "Provedores")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             List<ProvedorDto> result = provedorService.getByNombre(nombre);
@@ -54,7 +54,7 @@ public class ProvedorController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de provedors basándose en su estado", response = ProvedorDto.class, tags = "Provedores")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") boolean estado) {
         try {
             List<ProvedorDto> result = provedorService.findByActivos(estado);

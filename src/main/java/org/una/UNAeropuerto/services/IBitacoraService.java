@@ -27,5 +27,7 @@ public interface IBitacoraService {
 
     public List<BitacoraDto> findBetweenDates(Date startDate, Date endDate);
 
+    public List<BitacoraDto> busquedaMixta(String accion,String nombre, String apellido, String cedula, String dateInicio,String dateFin);
+
     public BitacoraDto create(BitacoraDto bitacora);
 }

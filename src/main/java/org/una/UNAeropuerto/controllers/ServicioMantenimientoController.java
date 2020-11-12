@@ -122,7 +122,7 @@ public class ServicioMantenimientoController {
     @GetMapping("findEntreFechas/{fechaInicio}/{fechaFinal}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_SERVICIOS_AERONAVES') ")
     public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByFechaServicioBetween(fechaInicio, fechaFinal);
@@ -181,7 +181,7 @@ public class ServicioMantenimientoController {
     @GetMapping("/filter/{matricula}/{tipo}/{numFactura}/{activo}/{pago}/{finalizacion}/{dateDesde}/{dateHasta}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')  or hasAuthority('AUDITOR_SERVICIOS_AERONAVES') or hasAuthority('ADMINISTRADOR') ")
     public ResponseEntity<?> filter(
             @PathVariable(value = "matricula") String matricula,
             @PathVariable(value = "tipo") String tipo,

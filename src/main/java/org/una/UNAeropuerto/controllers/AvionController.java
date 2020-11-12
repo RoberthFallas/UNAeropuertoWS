@@ -22,7 +22,7 @@ public class AvionController {
     @GetMapping("/{id}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo avión basado en su Id", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
             AvionDto result = avionService.getById(id);
@@ -38,7 +38,7 @@ public class AvionController {
     @GetMapping("getByMatricula/{matricula}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo avión basado en su matrícula", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByMatricula(@PathVariable(value = "matricula") String matricula) {
         try {
             AvionDto result = avionService.getByMatricula(matricula);
@@ -70,7 +70,7 @@ public class AvionController {
     @GetMapping("findByMatriculaLike/{matricula}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones que coincinal parcialmente con el valor", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')  or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByMatriculaLike(@PathVariable(value = "matricula") String matricula) {
         try {
             List<AvionDto> result = avionService.getByMatriculaLike(matricula);
@@ -86,7 +86,7 @@ public class AvionController {
     @GetMapping("findByAerolineaNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aviones basándose en su aerolínea", response = AvionDto.class, tags = "Aviones")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or  hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_CONTROL_VUELOS')or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByAerolineaNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             List<AvionDto> result = avionService.findByAerolineaNombre(nombre);

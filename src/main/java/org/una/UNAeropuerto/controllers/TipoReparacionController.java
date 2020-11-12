@@ -38,7 +38,7 @@ public class TipoReparacionController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoReparacionDto.class, tags = "Tipos de Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             TipoReparacionDto result = tipoService.getByNombre(nombre);

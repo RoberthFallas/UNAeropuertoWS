@@ -183,7 +183,7 @@ public class GastoReparacionController {
     @GetMapping("/filter/{numeroContrato}/{tipo}/{proveedor}/{activo}/{pago}/{dateDesde}/{dateHasta}/{duracionDesde}/{duracionHasta}/{periocidadDesde}/{periocidadHasta}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = GastoReparacionDto.class, tags = "Gastos Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO') ")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('ADMINISTRADOR') ")
     public ResponseEntity<?> filter(
             @PathVariable(value = "numeroContrato") String numeroContrato,
             @PathVariable(value = "tipo") String tipo,
