@@ -107,4 +107,35 @@ public class ReportServiceImplementation implements IReportService {
         }
     }
 
+    @Override
+    public Optional<JasperPrint> reporteVuelo(Date fechaInicial, Date fechaFinal, String area,String tipoVuelo) {
+        try {
+            final Map parameters = new HashMap();
+            parameters.put("fechaInicial", modificarFecha(fechaInicial));
+            parameters.put("fechaFinal", modificarFecha(fechaFinal));
+            parameters.put("area", area);
+            parameters.put("tipoVuelo",tipoVuelo);
+            System.err.println(UnAeropuertoApplication.class.getProtectionDomain().getCodeSource().getLocation());
+            URL url = UnAeropuertoApplication.class.getProtectionDomain().getCodeSource().getLocation();
+            String rutaUrl = decode(url.toURI().toString());
+            System.out.println(rutaUrl);
+            String ruta = rutaUrl.replaceFirst("file:/", "");
+            String report = ruta.replaceAll("/target/classes/", "/src/main/java/org/una/UNAeropuerto/report/"
+                    + "VuelosReport" + ".jasper");
+            String ruta1 = report.replaceAll("/", "\\\\");
+            String rutaFinal = ruta1.replaceAll("%20", " ");
+            System.out.println("[" + rutaFinal + "]");
+            File file = new File(rutaFinal);
+            System.out.println(file.toString());
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, crearConnection());
+            return Optional.of(jasperPrint);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

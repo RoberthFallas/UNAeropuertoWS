@@ -111,7 +111,7 @@ public class TipoReparacionController {
     }
 
     @GetMapping("/reparacion")
-    //@PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')or hasAuthority('AUDITOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO')")
     ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity(tipoService.getAll(), HttpStatus.OK);
