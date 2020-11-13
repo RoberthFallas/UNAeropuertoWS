@@ -86,7 +86,7 @@ public class PistaController {
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Pistas cuyo estado coincida de manera total o parcial con el parámetro suministrado.", response = PistaDto.class, tags = "Pistas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')  or hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "estado") Boolean estado) {
         try {
             List<PistaDto> result = pistaService.findByEstado(estado);
@@ -128,7 +128,7 @@ public class PistaController {
 
     @GetMapping("/findAll")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findAll() {
         try {
             List<PistaDto> result = pistaService.findAll();
