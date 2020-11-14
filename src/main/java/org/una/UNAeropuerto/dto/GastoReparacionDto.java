@@ -32,10 +32,10 @@ public class GastoReparacionDto {
     private Integer periodicidad;
     private String observaciones;
     private Boolean activo;
+    private Float monto;
     @Setter(AccessLevel.NONE)
     private AreaDto areasId;
     private TipoReparacionDto tiposId;
-    @Setter(AccessLevel.NONE)
     private ProvedorDto provedoresId;
 
 }

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.VueloDto;
 import org.una.UNAeropuerto.entities.Vuelo;
+import org.una.UNAeropuerto.entities.ParamSistema;
+import org.una.UNAeropuerto.repositories.IParamSistemaRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 import org.una.UNAeropuerto.repositories.IVueloRepository;
 
@@ -27,6 +29,8 @@ public class VueloServiceImplementation implements IVueloService {
 
     @Autowired
     private IVueloRepository vueloRepo;
+    @Autowired
+    private IParamSistemaRepository paramRepo;
 
     @Override
     @Transactional(readOnly = true)
@@ -36,6 +40,16 @@ public class VueloServiceImplementation implements IVueloService {
             return MapperUtils.DtoFromEntity(result.get(), VueloDto.class);
         }
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VueloDto> findByIdUsingListParam(List<Long> idList) {
+        List<Vuelo> result = vueloRepo.findByIdUsingListParam(idList);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, VueloDto.class);
+        }
+        return new ArrayList();
     }
 
     @Override
@@ -71,9 +85,9 @@ public class VueloServiceImplementation implements IVueloService {
     @Override
     @Transactional(readOnly = true)
     public List<VueloDto> findEntreFechaYHora(Date start, Date end) {
-        Optional<List<Vuelo>> result = vueloRepo.findBitweenHoraYFecha(start, end);
-        if (result.isPresent()) {
-            return MapperUtils.DtoListFromEntityList(result.get(), VueloDto.class);
+        List<Vuelo> result = vueloRepo.findBitweenHoraYFecha(start, end);
+        if (!result.isEmpty()) {
+            return MapperUtils.DtoListFromEntityList(result, VueloDto.class);
         }
         return new ArrayList();
     }
@@ -119,6 +133,7 @@ public class VueloServiceImplementation implements IVueloService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<VueloDto> filter(String aerolinea, String nombreVuelo, String matriculaAvion, String llegada, String salida, Date desde, Date hasta) {
         List<Vuelo> result = vueloRepo.findByTextParameters(aerolinea, nombreVuelo, matriculaAvion, llegada, salida);
         List<VueloDto> resultDto = new ArrayList();
@@ -142,6 +157,35 @@ public class VueloServiceImplementation implements IVueloService {
         resultDto = resultDto.stream().distinct().collect(Collectors.toList());
         resultDto.removeIf(vuelo -> vuelo.getEstado() == 3);
         return resultDto;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean isAvionLibre(Date start, Date end, long idVuelo, long idAvion) {
+        List<Vuelo> result = vueloRepo.findBitweenHoraYFechaByAvion(start, end, idAvion);
+        if (!result.isEmpty()) {
+            if (result.size() > 1) {
+                return false;
+            } else {
+                if (idVuelo > 0) {
+                    return result.get(0).getId() == idVuelo;
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean isVueloSeguro(Date localExecutionDate, long idVuelo) {
+        Optional<ParamSistema> paramSistOpt = paramRepo.findById(1);
+        if (paramSistOpt.isPresent()) {
+            ParamSistema paramS = paramSistOpt.get();
+            Long coinsidentFlights = vueloRepo.countVuelosCercanos(localExecutionDate,
+                    paramS.getUbicacion().getId(), (60 / paramS.getVuelosHora()), idVuelo);
+            return coinsidentFlights == 0;
+        }
+        throw new UnsupportedOperationException("No es posible continuar la ejecución, hay datos aucente que lo impiden");
     }
 
 }

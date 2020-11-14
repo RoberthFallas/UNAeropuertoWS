@@ -1,5 +1,6 @@
 package org.una.UNAeropuerto.repositories;
 
+import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.una.UNAeropuerto.entities.Avion;
 
@@ -23,5 +24,5 @@ public interface IAvionRepository extends JpaRepository<Avion, Long> {
             + " and UPPER(aero.nombre) like CONCAT('%',UPPER(:aerol),'%')"
             + " and aero.actiov = true")
     public List<Avion> filterByMatriculaAndAerolinea(@Param("matr") String matricula, @Param("aerol") String aerolinea);
-
+    
 }

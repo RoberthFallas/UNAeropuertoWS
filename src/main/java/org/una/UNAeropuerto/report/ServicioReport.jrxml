@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78c1f313-206e-4645-b80a-72f6c9a44d59">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechaInicial" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ts.nombre,sm.numero_factura,cb.detalle_cobro,cb.monto from cobros cb join servicios_mantenimientos sm on cb.servicios_mantenimiento_id=sm.id
+join tipos_servicios ts on sm.tipos_servicios_id=ts.id where sm.fecha_servicio between $P{fechaInicial} and $P{fechaFinal};]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_factura" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="detalle_cobro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="monto" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="79" backcolor="#00CCCC" uuid="bea1f849-8a91-4820-99ff-3a2aa508e728"/>
+				<staticText>
+					<reportElement x="29" y="11" width="153" height="29" uuid="68e0044d-482b-4556-9216-c716dcc7eec8"/>
+					<textElement>
+						<font fontName="Arial" size="20"/>
+					</textElement>
+					<text><![CDATA[UNAeropuerto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="182" y="40" width="145" height="24" uuid="98bf9e75-b75d-4cdd-a2b3-369bb756cbcf"/>
+					<textElement>
+						<font fontName="Arial" size="15"/>
+					</textElement>
+					<text><![CDATA[Reporte de Servicios]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="35" backcolor="#009999" uuid="b31222cc-9f8c-447d-b223-67c26a8de087"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="445" y="15" width="100" height="20" uuid="7f40c635-0fb1-46c2-b72b-37ba8b352b5f"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="192" height="34" uuid="6ff23a2a-9144-4bd6-bc44-66bc83a98030"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="0" width="100" height="34" uuid="d2a4b402-a40c-47e5-8ee2-014978814d90"/>
+				<text><![CDATA[Número de factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="0" width="100" height="34" uuid="12614d81-5585-47a4-8710-dd72f38f3933"/>
+				<text><![CDATA[Detalle de servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="100" height="34" uuid="6b9064c0-b5ae-4da8-b7e2-e00917e8122b"/>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="192" height="23" uuid="94082865-9877-42da-a64f-3fb4c8da2aad"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="0" width="100" height="20" uuid="e940e22f-35e2-4367-ade5-42ea12803201"/>
+				<textFieldExpression><![CDATA[$F{numero_factura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="0" width="100" height="20" uuid="d4c651ad-8b91-4630-a524-c5fcb6684a15"/>
+				<textFieldExpression><![CDATA[$F{detalle_cobro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="100" height="20" uuid="86f240f3-94d8-45ab-afc1-9c998328ee7c"/>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="22" backcolor="#009999" uuid="7b10f407-3560-475f-b484-8ac473502e87"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="0" y="0" width="129" height="20" uuid="bcea2f68-c0a7-49ec-8c0b-461a74e96408"/>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="511" y="2" width="44" height="20" uuid="1c52a80a-e2b1-4a59-aeb5-71c02c61f190"/>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="445" y="2" width="66" height="20" uuid="e014aefc-53af-44a8-9db2-1fdfa4e853d6"/>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

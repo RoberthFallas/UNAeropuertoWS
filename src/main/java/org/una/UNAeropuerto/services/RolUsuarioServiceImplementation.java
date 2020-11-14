@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.UNAeropuerto.dto.RolUsuarioDto;
+import org.una.UNAeropuerto.dto.RolUsuarioDto;
+import org.una.UNAeropuerto.entities.RolUsuario;
 import org.una.UNAeropuerto.entities.RolUsuario;
 import org.una.UNAeropuerto.repositories.IRolUsuarioRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
@@ -53,6 +55,17 @@ public class RolUsuarioServiceImplementation implements IRolUsuarioService {
             entityRolUser.setActivo(state);
             entityRolUser = rolUserRepo.save(entityRolUser);
             return MapperUtils.DtoFromEntity(entityRolUser, RolUsuarioDto.class);
+        }
+        return null;
+    }
+    @Override
+    @Transactional
+    public RolUsuarioDto update(RolUsuarioDto rolUsuario) {
+        Optional<RolUsuario> result = rolUserRepo.findById(rolUsuario.getId());
+        if (result.isPresent()) {
+            RolUsuario entity = MapperUtils.entityFromDto(rolUsuario, RolUsuario.class);
+            entity = rolUserRepo.save(entity);
+            return MapperUtils.DtoFromEntity(entity, RolUsuarioDto.class);
         }
         return null;
     }

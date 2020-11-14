@@ -37,7 +37,7 @@ public class AerolineaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene una sola aerolínea basada en su ID", response = AerolineaDto.class, tags = "Aerolíneas")
     public ResponseEntity<?> getById(@PathVariable(value = "id") long id) {
         try {
@@ -54,7 +54,7 @@ public class AerolineaController {
     @GetMapping("/getByNomb/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una sola aerolínea basada en su nombre", response = AerolineaDto.class, tags = "Aerolíneas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             AerolineaDto result = aeroService.getByNombre(nombre);
@@ -70,10 +70,10 @@ public class AerolineaController {
     @GetMapping("/findByNomb/{param}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aerolíneas cuyo nombre coincida parcial o totalmente con el parámetro.", response = AerolineaDto.class, tags = "Aerolíneas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByNombre(@PathVariable(value = "param") String parametro) {
         try {
-            List<AerolineaDto> result = aeroService.findByNombre(!"none".equals(parametro) ? parametro : "");
+            List<AerolineaDto> result = aeroService.findByNombre(!"none".equals(parametro) ? parametro.replace("-", " ") : "");
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
@@ -86,7 +86,7 @@ public class AerolineaController {
     @GetMapping("/findByEstado/{state}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de aerolíneas cuyo estado coincida con el parámetro.", response = AerolineaDto.class, tags = "Aerolíneas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> findByEstado(@PathVariable(value = "state") Boolean state) {
         try {
             List<AerolineaDto> result = aeroService.findByEstado(state);
@@ -129,7 +129,7 @@ public class AerolineaController {
     @GetMapping("/countVuelos/{aerolineaId}")
     @ResponseBody
     @ApiOperation(value = "Obtiene la cantidad de vulos registrados por la aerolinea especificada..", response = Long.class, tags = "Aerolíneas")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS')")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     public ResponseEntity<?> countVuelos(@PathVariable(value = "aerolineaId") Long aeroId) {
         try {
             Long count = aeroService.getCountVuelos(aeroId);

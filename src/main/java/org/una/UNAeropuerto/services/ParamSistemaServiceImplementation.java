@@ -1,7 +1,5 @@
 package org.una.UNAeropuerto.services;
 
-
-
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,12 +8,14 @@ import org.una.UNAeropuerto.dto.ParamSistemaDto;
 import org.una.UNAeropuerto.repositories.IParamSistemaRepository;
 import org.una.UNAeropuerto.utils.MapperUtils;
 import org.una.UNAeropuerto.entities.ParamSistema;
+
 @Service
 public class ParamSistemaServiceImplementation implements IParamSistemaService {
 
     @Autowired
     IParamSistemaRepository paramSistemaRepo;
 //
+
     private Optional<ParamSistemaDto> oneToDto(Optional<ParamSistema> one) {
         if (one.isPresent()) {
             ParamSistemaDto paramSistemaDto = MapperUtils.DtoFromEntity(one.get(), ParamSistemaDto.class);
@@ -28,7 +28,7 @@ public class ParamSistemaServiceImplementation implements IParamSistemaService {
     @Override
     @Transactional(readOnly = true)
     public Optional<ParamSistemaDto> getById(Integer id) {
-       return oneToDto(paramSistemaRepo.findById(id));
+        return oneToDto(paramSistemaRepo.findById(id));
     }
 
     @Override
@@ -51,6 +51,11 @@ public class ParamSistemaServiceImplementation implements IParamSistemaService {
         return null;
     }
 
-   
+    @Override
+    @Transactional(readOnly = true)
+    public Integer getSesionDurationMinutos() {
+        Integer duration = paramSistemaRepo.getSesionDurationMinutos();
+        return (duration != null) ? duration : 10;
+    }
 
 }

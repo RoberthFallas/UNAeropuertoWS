@@ -31,4 +31,5 @@ public class VueloDto {
     private LugarDto lugarSalida;
     private LugarDto lugarLlegada;
     private AlertaDto alerta;
+    private TipoVueloDto tipoVuelo;
 }

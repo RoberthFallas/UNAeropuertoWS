@@ -38,7 +38,7 @@ public class TipoReparacionController {
     @GetMapping("getByNombre/{nombre}")
     @ResponseBody
     @ApiOperation(value = "Obtiene un solo tipo basado en su nombre", response = TipoReparacionDto.class, tags = "Tipos de Reparaciones")
-    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO') or hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> getByNombre(@PathVariable(value = "nombre") String nombre) {
         try {
             TipoReparacionDto result = tipoService.getByNombre(nombre);
@@ -107,6 +107,16 @@ public class TipoReparacionController {
             return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el área)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/reparacion")
+    @PreAuthorize("hasAuthority('GESTOR_MANTENIMIENTO_AEROPUERTO')or hasAuthority('AUDITOR_MANTENIMIENTO_AEROPUERTO')")
+    ResponseEntity<?> findAll() {
+        try {
+            return new ResponseEntity(tipoService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

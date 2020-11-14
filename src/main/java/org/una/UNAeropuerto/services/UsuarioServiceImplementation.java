@@ -90,8 +90,13 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         Optional<Usuario> result = userRepo.findById(usuario.getId());
         if (result.isPresent()) {
             Usuario entity = MapperUtils.entityFromDto(usuario, Usuario.class);
-            entity.refreshContrasenna(result.get().getContrasenna());
-            encodePassword(entity, usuario);
+            if(!usuario.getContrasenna().isEmpty()) {
+                entity.refreshContrasenna(result.get().getContrasenna());
+                encodePassword(entity, usuario);
+            }else {
+                entity.setContrasenna(result.get().getContrasenna());
+            }
+
             entity = userRepo.save(entity);
             return MapperUtils.DtoFromEntity(entity, UsuarioDto.class);
         }
@@ -101,8 +106,9 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
     @Override
     @Transactional
     public UsuarioDto create(UsuarioDto usuario) {
+
         Usuario entityUser = MapperUtils.entityFromDto(usuario, Usuario.class);
-        encodePassword(entityUser, usuario);
+        entityUser.refreshContrasenna(passwordEncoder.encode(usuario.getContrasenna()));
         entityUser = userRepo.save(entityUser);
         return MapperUtils.DtoFromEntity(entityUser, UsuarioDto.class);
     }
@@ -124,6 +130,7 @@ public class UsuarioServiceImplementation implements IUsuarioService, UserDetail
         if (!userDto.getContrasenna().isBlank()) {
             if (user.getContrasenna() == null) {
                 user.refreshContrasenna(passwordEncoder.encode(userDto.getContrasenna()));
+
                 return;
             } else {
                 if (!user.getContrasenna().equals(userDto.getContrasenna())) {

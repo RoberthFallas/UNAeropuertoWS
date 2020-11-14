@@ -18,5 +18,7 @@ public interface IRolUsuarioService {
 
     public RolUsuarioDto create(RolUsuarioDto rolUsuario);
 
+    public RolUsuarioDto update(RolUsuarioDto rolUsuario);
+
     public RolUsuarioDto changeState(long id, boolean state);
 }

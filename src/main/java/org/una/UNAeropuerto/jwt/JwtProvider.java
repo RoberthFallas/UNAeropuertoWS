@@ -12,10 +12,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.stereotype.Component;
 import org.una.UNAeropuerto.dto.AuthenticationRequest;
+import org.una.UNAeropuerto.services.IParamSistemaService;
 
 /**
  *
@@ -26,15 +27,16 @@ public class JwtProvider {
 
     @Value("${jwt.secret}")
     private String secret;
-
     @Value("${jwt.expiration}")
     private int expiration;
+    @Autowired
+    private IParamSistemaService paramServ;
 
     public String generateToken(AuthenticationRequest authenticationRequest) {
 
         return Jwts.builder().setSubject(authenticationRequest.getCedula())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + expiration * 1000))
+                .setExpiration(new Date(new Date().getTime() + (getDurationMinuts() * 60000)))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
@@ -50,7 +52,14 @@ public class JwtProvider {
         } catch (ExpiredJwtException | MalformedJwtException | SignatureException | UnsupportedJwtException | IllegalArgumentException ex) {
             return false;
         }
+    }
 
+    public Integer getDurationMinuts() {
+        try {
+            return paramServ.getSesionDurationMinutos();
+        } catch (Exception ex) {
+            return expiration / 60; //La expiración en el archivo está en segundos, se retorna en minutos
+        }
     }
 
 }

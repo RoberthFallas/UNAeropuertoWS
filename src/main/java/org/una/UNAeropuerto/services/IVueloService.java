@@ -29,10 +29,15 @@ public interface IVueloService {
 
     public List<VueloDto> findByFechaVuelo(Date fecha);
 
+    public Boolean isAvionLibre(Date start, Date end, long idVuelo, long idAvion);
+
     public VueloDto create(VueloDto vuelo);
 
     public VueloDto update(VueloDto vuelo);
 
     public List<VueloDto> filter(String aerolinea, String nombreVuelo, String matriculaAvion, String llegada, String salida, Date desde, Date hasta);
 
+    public List<VueloDto> findByIdUsingListParam(List<Long> idList);
+
+    public Boolean isVueloSeguro(Date localExecutionDate, long idVuelo);
 }

@@ -1,8 +1,6 @@
 package org.una.UNAeropuerto.services;
 
-import io.swagger.models.auth.In;
 import org.una.UNAeropuerto.dto.GastoReparacionDto;
-
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +8,7 @@ public interface IGastoReparacionService {
 
     public GastoReparacionDto getById(long id);
 
-    public  GastoReparacionDto getByNumeroContrato(Long numeroContrato);
+    public GastoReparacionDto getByNumeroContrato(Long numeroContrato);
 
     public List<GastoReparacionDto> findByEstado(boolean estado);
 
@@ -24,11 +22,14 @@ public interface IGastoReparacionService {
 
     public List<GastoReparacionDto> findBweteenDiasDuracion(Integer start, Integer end);
 
+    public List<GastoReparacionDto> busquedaMixta(String numContrato, String tipo, String proveedor, String activo, String pago, String startDate, String endDate, String startDuracion, String endDuracion, String startPeriocidad, String endPeriocidad) ;
 
     public List<GastoReparacionDto> findByTipoNombre(String nombre);
 
     public GastoReparacionDto update(GastoReparacionDto gastoReparacionDto);
 
     public GastoReparacionDto create(GastoReparacionDto gastoReparacionDto);
+
+    public List<GastoReparacionDto> findByIdUsingListParam(List<Long> idList);
 
 }

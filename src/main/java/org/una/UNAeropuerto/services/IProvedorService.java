@@ -7,7 +7,7 @@ public interface IProvedorService {
 
     public ProvedorDto getById(long id);
 
-    public ProvedorDto getByNombre(String nombre);
+    public List<ProvedorDto> getByNombre(String nombre);
 
     public List<ProvedorDto> findByActivos(boolean activo);
 

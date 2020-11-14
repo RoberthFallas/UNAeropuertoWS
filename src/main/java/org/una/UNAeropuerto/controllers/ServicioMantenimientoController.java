@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.ServicioMantenimientoDto;
+import org.una.UNAeropuerto.dto.VueloDto;
 import org.una.UNAeropuerto.services.IServicioMantenimientoService;
 
 import java.util.Date;
@@ -17,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/servicios_mantenimientos")
 @Api(tags = {"Servicios de Mantenimiento"})
-
 public class ServicioMantenimientoController {
 
     @Autowired
@@ -38,14 +38,15 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("findByNumeroFactura/{numero}")
     @ResponseBody
-    @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
+    @ApiOperation(value = "Obtiene un  Servicio Mantenimientos basándose en un numero de factura", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
     @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> findByNumeroFactura(@PathVariable(value = "numero") Long numero) {
         try {
-            List<ServicioMantenimientoDto> result = servicioMantenimientoService.getByNumeroFactura(numero);
-            if (!result.isEmpty()) {
+            ServicioMantenimientoDto result = servicioMantenimientoService.getByNumeroFactura(numero);
+            if (result != null) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
@@ -53,6 +54,7 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("findByEstado/{estado}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en su estado", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
@@ -117,12 +119,11 @@ public class ServicioMantenimientoController {
         }
     }
 
-
     @GetMapping("findEntreFechas/{fechaInicio}/{fechaFinal}")
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de Servicio Mantenimientos basándose en el id del avion", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
-    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date fechaFinal){
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_SERVICIOS_AERONAVES') ")
+    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio, @PathVariable(value = "fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFinal) {
         try {
             List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByFechaServicioBetween(fechaInicio, fechaFinal);
             if (!result.isEmpty()) {
@@ -133,8 +134,6 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     @GetMapping("findByTiposServiciosNombre/{nombre}")
     @ResponseBody
@@ -166,7 +165,7 @@ public class ServicioMantenimientoController {
 
     @PutMapping("/update")
     @ResponseBody
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('GERENTE_SERVICIOS_AERONAVES')")
     public ResponseEntity<?> update(@RequestBody ServicioMantenimientoDto servicioMantenimiento) {
         try {
             ServicioMantenimientoDto result = servicioMantenimientoService.update(servicioMantenimiento);
@@ -176,6 +175,47 @@ public class ServicioMantenimientoController {
             return new ResponseEntity<>("No ha sido posible realizar el cambio solicitado (no se encuentró el Servicio Mantenimiento)", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/filter/{matricula}/{tipo}/{numFactura}/{activo}/{pago}/{finalizacion}/{dateDesde}/{dateHasta}")
+    @ResponseBody
+    @ApiOperation(value = "Obtiene una lista de servicios mantenimientos filtrados por medio de los parámetros suministrados", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')  or hasAuthority('AUDITOR_SERVICIOS_AERONAVES') or hasAuthority('ADMINISTRADOR') ")
+    public ResponseEntity<?> filter(
+            @PathVariable(value = "matricula") String matricula,
+            @PathVariable(value = "tipo") String tipo,
+            @PathVariable(value = "numFactura") String numFactura,
+            @PathVariable(value = "activo") String activo,
+            @PathVariable(value = "pago") String pago,
+            @PathVariable(value = "finalizacion") String finalizacion,
+            @PathVariable(value = "dateDesde") String dateDesde,
+            @PathVariable(value = "dateHasta") String dateHasta
+    ) {
+        try {
+            List<ServicioMantenimientoDto> result = servicioMantenimientoService.busquedaMixtaTodosEstados(matricula, tipo, numFactura, activo, pago, finalizacion, dateDesde, dateHasta);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/findByIdUsingListParam")
+    @ResponseBody
+    @ApiOperation(value = "Recibe una lista de valores long. Retorna los servicios a aeronaves cuyo Id se halle dentro de la lista", response = ServicioMantenimientoDto.class, tags = "Servicios de Mantenimiento")
+    @PreAuthorize("hasAuthority('GERENTE_SERVICIOS_AERONAVES')")
+    public ResponseEntity<?> findByIdUsingListParam(@RequestBody List<Long> idList) {
+        try {
+            List<ServicioMantenimientoDto> result = servicioMantenimientoService.findByIdUsingListParam(idList);
+            if (!result.isEmpty()) {
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

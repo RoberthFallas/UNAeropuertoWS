@@ -101,7 +101,7 @@ public class TipoServicioController {
     @GetMapping()
     @ResponseBody
     @ApiOperation(value = "Obtiene una lista de todos los Tipos de Servicios", response = TipoServicioDto.class, responseContainer = "List", tags = "Tipos de Servicios")
-    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES')")
+    @PreAuthorize("hasAuthority('GESTOR_SERVICIOS_AERONAVES') or hasAuthority('AUDITOR_SERVICIOS_AERONAVES') or hasAuthority('ADMINISTRADOR')")
     ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity(tipoServicioService.getAll(), HttpStatus.OK);

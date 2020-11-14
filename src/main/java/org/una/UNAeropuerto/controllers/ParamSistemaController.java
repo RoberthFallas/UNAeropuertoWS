@@ -20,18 +20,9 @@ public class ParamSistemaController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    @PreAuthorize("hasAuthority('ADMINISTRADOR') or hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
     @ApiOperation(value = "Obtiene un solo usuario basado en su Id", response = ParamSistemaDto.class, tags = "Usuarios")
     public ResponseEntity<?> getById(@PathVariable(value = "id") Integer id) {
-//        try {
-//            ParamSistemaDto result = paramSistemaService.getById(id);
-//            if (result != null) {
-//                return new ResponseEntity<>(result, HttpStatus.OK);
-//            }
-//            return new ResponseEntity<>("Sin resultados", HttpStatus.NO_CONTENT);
-//        } catch (Exception ex) {
-//            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
         try {
             return new ResponseEntity(paramSistemaService.getById(id), HttpStatus.OK);
         } catch (Exception e) {

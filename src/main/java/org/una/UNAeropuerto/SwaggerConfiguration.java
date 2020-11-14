@@ -72,7 +72,8 @@ public class SwaggerConfiguration {
                         new Tag("Tipos de Reparaciones","Entidad de Tipo de Reparacion"),
                         new Tag("Tipos de Servicios","Entidad de Tipo de Servicio"),
                         new Tag("Usuarios","Entidad de Usuario"),
-                         new Tag("Vuelos","Entidad de Vuelos"),
+                        new Tag("Vuelos","Entidad de Vuelos"),
+                        new Tag("Tipos de vuelos","Entidad de Tipos de vuelos"),
                         new Tag("Notificaciones","Entidad de Notificaciones")
                 );
     }

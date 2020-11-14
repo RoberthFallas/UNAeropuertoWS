@@ -11,4 +11,6 @@ public interface IParamSistemaService {
 
     public ParamSistemaDto update(ParamSistemaDto paramSistema);
 
+    public Integer getSesionDurationMinutos();
+
 }

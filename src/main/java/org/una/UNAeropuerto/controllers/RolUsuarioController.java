@@ -12,13 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.una.UNAeropuerto.dto.RolUsuarioDto;
 import org.una.UNAeropuerto.dto.UsuarioDto;
 import org.una.UNAeropuerto.services.IRolUsuarioService;
@@ -57,6 +51,20 @@ public class RolUsuarioController {
     public ResponseEntity<?> create(@RequestBody RolUsuarioDto rolUsuario) {
         try {
             RolUsuarioDto result = rolUserService.create(rolUsuario);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (IllegalArgumentException IAE) {
+            return new ResponseEntity<>(IAE, HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/update")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ADMINISTRADOR')")
+    public ResponseEntity<?> update(@RequestBody RolUsuarioDto rolUsuario) {
+        try {
+            RolUsuarioDto result = rolUserService.update(rolUsuario);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (IllegalArgumentException IAE) {
             return new ResponseEntity<>(IAE, HttpStatus.NOT_ACCEPTABLE);
