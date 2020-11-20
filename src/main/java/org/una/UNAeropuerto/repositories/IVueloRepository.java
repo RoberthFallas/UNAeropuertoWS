@@ -31,7 +31,7 @@ public interface IVueloRepository extends JpaRepository<Vuelo, Long> {
     @Query("select v from Vuelo v where (v.horaSalida between :start and :end) or (v.horaLlegada between :start and :end)")
     List<Vuelo> findBitweenHoraYFecha(@Param("start") Date start, @Param("end") Date end);
 
-    @Query("select v from Vuelo v where (DATE(v.horaSalida) between :start and :end) or (DATE(v.horaLlegada) between :start and :end)")
+    @Query("select v from Vuelo v where ((DATE(v.horaSalida) between :start and :end) or (DATE(v.horaLlegada) between :start and :end)) and v.estado <> 3")
     List<Vuelo> findByBetweenDates(@Param("start") Date start, @Param("end") Date end);
 
     @Query("select v from Vuelo v where (DATE(v.horaSalida) = :fecha) or (DATE(v.horaLlegada) = :fecha)")

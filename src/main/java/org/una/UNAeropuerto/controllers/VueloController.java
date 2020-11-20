@@ -156,14 +156,12 @@ public class VueloController {
 
     @GetMapping("/findEntreFechas/{start}/{end}")
     @ResponseBody
-    @ApiOperation(value = "(Formato requerido 'yyyy-MM-dd').Obtiene una lista de vuelos que hallan ocurrido o estén por ocurrir en el lapso suministrado.", response = VueloDto.class, tags = "Vuelos")
-    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS')")
-    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "start") String start,
-            @PathVariable(value = "end") String end) {
+    @ApiOperation(value = "Obtiene una lista de vuelos que hallan ocurrido o estén por ocurrir en el lapso suministrado.", response = VueloDto.class, tags = "Vuelos")
+    @PreAuthorize("hasAuthority('GESTOR_CONTROL_VUELOS') or hasAuthority('AUDITOR_CONTROL_VUELOS') or hasAuthority('ADMINISTRADOR')")
+    public ResponseEntity<?> findEntreFechas(@PathVariable(value = "start") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
+            @PathVariable(value = "end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         try {
-            Date fStart = java.sql.Date.valueOf(start);
-            Date fEnd = java.sql.Date.valueOf(end);
-            List<VueloDto> result = vueloService.findEntreFechas(fStart, fEnd);
+            List<VueloDto> result = vueloService.findEntreFechas(start, end);
             if (!result.isEmpty()) {
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
